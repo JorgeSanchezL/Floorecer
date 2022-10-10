@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../screens/Home';
 import SignUp from '../screens/Signup';
+import NewBusiness from '../screens/NewBusiness';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
   
 const AppStack = () => {
     return (
@@ -35,7 +36,10 @@ const AppStack = () => {
                 name='register'
                 component={Register}
             />
-
+            <Stack.Screen
+                name='newBusiness'
+                component={NewBusiness}
+            />
             
         </Stack.Navigator>
     );
