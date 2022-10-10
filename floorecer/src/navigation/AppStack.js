@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../screens/Home';
 import SignUp from '../screens/Signup';
+import NewBusiness from '../screens/NewBusiness';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
   
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='home'
+            initialRouteName='newBusiness'
             screenOptions={{
                 headerShown: false
             }}
@@ -22,6 +23,10 @@ const AppStack = () => {
             <Stack.Screen
                 name='signUp'
                 component={SignUp}
+            />
+            <Stack.Screen
+                name='newBusiness'
+                component={NewBusiness}
             />
         </Stack.Navigator>
     );
