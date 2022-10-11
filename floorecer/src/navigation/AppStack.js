@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='login'
+            initialRouteName='newBusiness'
             screenOptions={{
                 headerShown: false
             }}

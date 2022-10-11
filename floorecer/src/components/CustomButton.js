@@ -31,7 +31,13 @@ const styles =StyleSheet.create({
         backgroundColor:'#5dc655',
     },
     container_terciario:{
-
+        width:'25%',
+        padding:15,
+        borderRadius:5,
+        alignItems:'center',
+        marginVertical:10,
+        marginHorizontal:10,
+        backgroundColor:'#5dc655',
     },
     text:{
         fontWeight:'bold',
