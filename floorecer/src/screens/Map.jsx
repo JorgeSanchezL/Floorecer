@@ -13,7 +13,8 @@ const Map = () => {
         customMapStyle={mapStyle}
         onMapReady={() => askLocationPermissions()}
         provider={PROVIDER_GOOGLE}
-        showsUserLocation={true} showsMyLocationButton
+        showsUserLocation={true} 
+        showsMyLocationButton={true}
       >
         {markerList.map((element, _) => {
             return <Marker
