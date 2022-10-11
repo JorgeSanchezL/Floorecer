@@ -3,18 +3,25 @@ import { StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
+import { useNavigation } from '@react-navigation/native';
+import Home from './Home';
 const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const {height}=useWindowDimensions();
+
+    const navigation=useNavigation();
     const onInicioPressed=()=>{
         console.warn('MAPA');
+
+        navigation.navigate('home');
     };
     const onOlvidadoPressed=()=>{
         console.warn('Recuperar');
     };
     const onRegistrarPressed=()=>{
       console.warn('Registro');
+
     };
     return (
       <View style={styles.container}>
