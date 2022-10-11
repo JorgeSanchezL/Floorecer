@@ -44,11 +44,14 @@ const Login = () => {
             onPress={onOlvidadoPressed}
             type="terciario"
         />
-        <CustomButton 
-            text="No tienes cuenta aún? Regístrate"
-            onPress={onRegistrarPressed}
-            type="terciario"
-        />
+        <Text style={{color :'gray',fontWeight : 'bold'}}
+      onPress={() => navigation.navigate('register')}>
+  ¿No tienes cuenta aún? 
+  <Text style={{color :'blue',fontWeight : 'bold'}}
+  >
+    Regístrate
+  </Text>
+</Text>
       </View>
 
     );
