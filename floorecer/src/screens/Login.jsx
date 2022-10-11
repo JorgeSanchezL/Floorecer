@@ -4,7 +4,6 @@ import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import Home from './Home';
 const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
@@ -45,10 +44,11 @@ const Login = () => {
             onPress={onOlvidadoPressed}
             type="terciario"
         />
-        <Text style={{color: 'blue'}}
-      onPress={() => navigatiin>
- Registraaaaate
-</Text>
+        <CustomButton 
+            text="No tienes cuenta aún? Regístrate"
+            onPress={onRegistrarPressed}
+            type="terciario"
+        />
       </View>
 
     );
