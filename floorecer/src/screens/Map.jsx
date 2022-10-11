@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import * as Location from 'expo-location';
+import shop from '../../assets/map-icons/shop.png'
 
 const Map = () => {
   const markerList = getAllMarkers() 
@@ -22,7 +23,12 @@ const Map = () => {
                 coordinate={{latitude: element.latitude, longitude: element.longitude}}
                 title={element.title}
                 description={element.description}
-            />
+            >
+              <Image
+                source={shop}
+                style={{ width: 40, height: 40 }}
+              />
+            </Marker>
         })}
       </MapView>
     </View>
