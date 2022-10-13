@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../screens/Home';
 import SignUp from '../screens/Signup';
 import NewBusiness from '../screens/NewBusiness';
+import PublicProfile from '../screens/PublicProfile';
 
 const Stack = createStackNavigator();
   
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='newBusiness'
+            initialRouteName='publicProfile'
             screenOptions={{
                 headerShown: false
             }}
@@ -27,6 +27,10 @@ const AppStack = () => {
             <Stack.Screen
                 name='newBusiness'
                 component={NewBusiness}
+            />
+            <Stack.Screen
+                name='publicProfile'
+                component={PublicProfile}
             />
         </Stack.Navigator>
     );
