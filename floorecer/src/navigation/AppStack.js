@@ -9,7 +9,7 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 
 const Stack = createStackNavigator();
-  
+
 const AppStack = () => {
     return (
         <Stack.Navigator

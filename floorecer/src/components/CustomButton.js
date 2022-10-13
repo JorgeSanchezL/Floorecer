@@ -31,6 +31,8 @@ const styles =StyleSheet.create({
         backgroundColor:'#5dc655',
     },
     container_terciario:{
+    },
+    container_cuaterciario:{
         width:'25%',
         padding:15,
         borderRadius:5,

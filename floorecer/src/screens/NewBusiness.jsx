@@ -12,6 +12,13 @@ const NewBusiness = () => {
 
   const {height}=useWindowDimensions();
 
+  const onSavePressed = () =>{
+    //console.warn(shopName+nif+direction+longitude+latitude)
+    console.warn("save")
+  };
+  const onCancelPressed = () =>{
+    console.warn("cancel")
+  }
   return(
   <View style={styles.mainContainer}>
     <Text style={[styles.title,{marginVertical:height * 0.05}]}>New Business</Text>
@@ -20,10 +27,20 @@ const NewBusiness = () => {
     <MyTextInput name = 'Direction' value={direction} setValue={setDirection}/>
     <MyTextInput name = 'Position' info = 'Longitude' value={longitude} setValue={setLongitude}/>
     <MyTextInput info = 'Latitude' value={latitude} setValue={setLatitude}/>
-
+    
     <View style = {{flex:0, flexDirection:'row'}}>
-      <CustomButton text="Cancel" type = 'terciario'/>
-      <CustomButton text="Save" type = 'terciario'/>
+      
+        <CustomButton 
+          text="Cancel" 
+          type = 'cuaterciario'
+          onPress={onSavePressed}
+          />
+        <CustomButton 
+          text="Save" 
+          type = 'cuaterciario'
+          onPress={onCancelPressed}
+          />
+    
     </View>
     
 
