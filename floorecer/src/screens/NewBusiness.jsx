@@ -1,7 +1,8 @@
 import React, { useState, Component } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Pressable, useWindowDimensions } from "react-native";
+import { View, Text, TextInput, Image, StyleSheet, ScrollView, useWindowDimensions, Dimensions } from "react-native";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
+import ImageCarousel from '../components/Prueba';
 
 const NewBusiness = () => {
   const [shopName, setShopName] = useState("");
@@ -12,6 +13,12 @@ const NewBusiness = () => {
 
   const {height}=useWindowDimensions();
 
+  const images =[
+    'https://www.larazon.es/resizer/rq4rbnMC9g_5NTEuTH25LhXXcMg=/600x400/smart/filters:format(jpg)/cloudfront-eu-central-1.images.arcpublishing.com/larazon/7IGMFSY4XRG3RJ54HLFULH5VP4.JPG',
+    'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg',
+    'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg'
+  ]
+
   const onSavePressed = () =>{
     //console.warn(shopName+nif+direction+longitude+latitude)
     console.warn("save")
@@ -21,13 +28,15 @@ const NewBusiness = () => {
   }
   return(
   <View style={styles.mainContainer}>
-    <Text style={[styles.title,{marginVertical:height * 0.05}]}>New Business</Text>
+    <Text style={[styles.title,{marginTop:height * 0.05}]}>New Business</Text>
     <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
     <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
     <MyTextInput name = 'Direction' value={direction} setValue={setDirection}/>
     <MyTextInput name = 'Position' info = 'Longitude' value={longitude} setValue={setLongitude}/>
     <MyTextInput info = 'Latitude' value={latitude} setValue={setLatitude}/>
     
+    <ImageCarousel images = {images}/>
+
     <View style = {{flex:0, flexDirection:'row'}}>
       
         <CustomButton 
@@ -47,6 +56,7 @@ const NewBusiness = () => {
   </View>
   
 );}
+
 export const MyTextInput = (props) => {
 
   return (
@@ -66,6 +76,7 @@ export const MyTextInput = (props) => {
       />
     </View>
   );
+
 };
 
 

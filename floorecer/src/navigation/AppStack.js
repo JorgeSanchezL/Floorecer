@@ -8,6 +8,8 @@ import NewBusiness from '../screens/NewBusiness';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
+import Prueba from '../components/Prueba';
+
 const Stack = createStackNavigator();
 
 const AppStack = () => {
@@ -39,6 +41,10 @@ const AppStack = () => {
             <Stack.Screen
                 name='newBusiness'
                 component={NewBusiness}
+            />
+            <Stack.Screen
+                name='prueba'
+                component={Prueba}
             />
             
         </Stack.Navigator>
