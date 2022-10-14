@@ -7,8 +7,8 @@ import SignUp from '../screens/Signup';
 import NewBusiness from '../screens/NewBusiness';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
-
-
+import PublicProfile from '../screens/PublicProfile';
+import Map from '../screens/Map';
 
 const Stack = createStackNavigator();
 

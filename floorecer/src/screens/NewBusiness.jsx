@@ -13,11 +13,7 @@ const NewBusiness = () => {
 
   const {height}=useWindowDimensions();
 
-  const images =[
-    'https://www.larazon.es/resizer/rq4rbnMC9g_5NTEuTH25LhXXcMg=/600x400/smart/filters:format(jpg)/cloudfront-eu-central-1.images.arcpublishing.com/larazon/7IGMFSY4XRG3RJ54HLFULH5VP4.JPG',
-    'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg',
-    'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg'
-  ]
+  const images =[]
   
   const onSavePressed = () =>{
     //console.warn(shopName+nif+direction+longitude+latitude)
