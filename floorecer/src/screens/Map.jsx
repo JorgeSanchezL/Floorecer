@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
 
 const Map = () => {
-  const markerList = getAllMarkers() 
+
+  const getAllMarkers = async () => { 
+    try {
+      const response = await fetch('localhost:5000/poi/all');
+      const body = await response.json();
+      
+      if (response.status !== 200) {
+        throw Error(body.message) 
+      }
+      setData(body)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const [data, setData] = useState([])
+  useEffect(() => {getAllMarkers()}, [])
   return (
     <View style={styles.container}>
       <MapView 
@@ -17,10 +33,10 @@ const Map = () => {
         showsUserLocation={true} 
         showsMyLocationButton={true}
       >
-        {markerList.map((element, _) => {
+        {data.map((element, _) => {
             return <Marker
-                key={element.key}
-                coordinate={{latitude: element.latitude, longitude: element.longitude}}
+                key={element.id_poi}
+                coordinate={{latitude: element.location.latitude, longitude: element.location.longitude}}
                 title={element.title}
                 description={element.description}
             >
@@ -100,17 +116,5 @@ const mapStyle = [
     ]
   }
 ]
-
-const getAllMarkers = () => { //TBD - will ask the backend for every marker in the database
-  return [
-    {
-        key: "0",
-        title: "Pueblo",
-        description: "Mi pueblo",
-        latitude: 39.837718,
-        longitude: -0.824200
-    }
-    ]
-}
 
 export default Map;

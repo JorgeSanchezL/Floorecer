@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../screens/Home';
 import SignUp from '../screens/Signup';
-import Map from '../screens/Map'
+import NewBusiness from '../screens/NewBusiness';
+import PublicProfile from '../screens/PublicProfile';
+import Map from '../screens/Map';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
   
 const AppStack = () => {
     return (
@@ -23,6 +24,14 @@ const AppStack = () => {
             <Stack.Screen
                 name='signUp'
                 component={SignUp}
+            />
+            <Stack.Screen
+                name='newBusiness'
+                component={NewBusiness}
+            />
+            <Stack.Screen
+                name='publicProfile'
+                component={PublicProfile}
             />
             <Stack.Screen
                 name='map'
