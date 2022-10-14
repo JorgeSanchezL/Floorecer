@@ -23,8 +23,8 @@ export default class ImageCarousel extends React.Component{
           {
             text: "Yes",
             onPress: () => {
-              this.props.images.splice(0, 1); // 2nd parameter means remove one item only
-             
+              this.props.images.splice(this.state.active, 1); // 2nd parameter means remove one item only
+              this.forceUpdate();
             },
           },
           // The "No" button
@@ -53,11 +53,13 @@ export default class ImageCarousel extends React.Component{
             ))
           }
         </ScrollView>
-        <View style ={styles.closeButtonView}>
+        
+        <View style ={this.props.images.length == 0 ? {display: 'none'} : styles.closeButtonView}>
           <TouchableOpacity style={styles.closeButtonParent} onPress={this.showConfirmDialog}>
             <Image style={styles.closeButton} source={require("../../assets/Delete-Red-X-Button.png")} />
           </TouchableOpacity>
         </View>
+        
         
         <View style= {styles.pagination}>
             {
