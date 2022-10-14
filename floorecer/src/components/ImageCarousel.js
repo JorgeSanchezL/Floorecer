@@ -1,5 +1,7 @@
 import React, { useState, Component } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, Alert, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, Alert, Dimensions, TouchableOpacity,Button } from "react-native";
+import * as ImagePicker from 'expo-image-picker';
+
 const {width} = Dimensions.get("window");
 const height = width * 0.6;
 
@@ -13,7 +15,24 @@ export default class ImageCarousel extends React.Component{
         if(slide !== this.state.active){
             this.setState({active: slide});
         }
-    }
+    };
+    pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+  
+      console.log(result);
+  
+      if (!result.cancelled) {
+        this.props.images.push(result.uri);
+        this.forceUpdate();
+      }
+      
+    };
      showConfirmDialog = () => {
       return Alert.alert(
         "Are your sure?",
@@ -23,8 +42,10 @@ export default class ImageCarousel extends React.Component{
           {
             text: "Yes",
             onPress: () => {
-              this.props.images.splice(this.state.active, 1); // 2nd parameter means remove one item only
-              this.forceUpdate();
+              
+            this.props.images.splice(this.state.active, 1);
+            this.forceUpdate();
+
             },
           },
           // The "No" button
@@ -38,6 +59,11 @@ export default class ImageCarousel extends React.Component{
   render(){
     return(
       <View style ={styles.container}>
+
+        <View style={{alignItems: 'center', justifyContent: 'center' }}>
+          <Button title="Pick an image from camera roll" onPress={this.pickImage} />
+        </View>
+
         <ScrollView  
             pagingEnabled
             horizontal
