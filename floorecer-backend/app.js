@@ -1,43 +1,29 @@
-const express = require('express');
-const cors = require('cors')
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+
+import mapRoutes from './src/routes/map.routes.js';
+import morgan from 'morgan';
 
 const app = express();
 const PORT = 5000;
-const AWS = require('aws-sdk')
-
-AWS.config.loadFromPath('./secrets/config.json');
-
-const client = new AWS.DynamoDB.DocumentClient();
 
 app.use(cors())
+app.use(helmet());
+app.use(express.json());
+app.use(morgan('dev'));
 
 app.get('/', (req, res)=>{
-	res.status(200);
-	res.send("Welcome to root URL of Server");
+	res.send('Floorecer API v1.0.1');
 });
 
-app.get('/poi/all', (req, res) => {
-	var params = {
-        TableName: 'POI'
-    };
+// Routes
 
-    client.scan(params, (err, data) => {
-        if (err) {
-            res.status(404)
-			res.send(err)
-			console.log(err)
-        } else {
-            res.contentType = 'application/json';
-			res.status(200)
-            res.send(data.Items);
-        }
-    });
-})
+app.use('/map', mapRoutes);
 
-app.listen(PORT, (error) =>{
-	if(!error)
-		console.log("Server is Successfully Running, and App is listening on port "+ PORT)
-	else
+app.listen(PORT, (error) => {
+	if(!error) { console.log("Server running on port " + PORT); }
+	else {
 		console.log("Error occurred, server can't start", error);
 	}
-);
+});

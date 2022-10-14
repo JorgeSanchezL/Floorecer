@@ -6,22 +6,26 @@ import shop from '../../assets/map-icons/shop.png'
 
 const Map = () => {
 
+  const [data, setData] = useState(null);
+
   const getAllMarkers = async () => { 
     try {
-      const response = await fetch('localhost:5000/poi/all');
+      const response = await fetch('http://TUIP:5000/map/poi/all', {
+        method: 'GET',
+          headers: {
+          'Content-Type': 'application/json'
+        },
+      });
       const body = await response.json();
-      
-      if (response.status !== 200) {
-        throw Error(body.message) 
-      }
+      console.log(body);
       setData(body)
     } catch (err) {
       console.log(err)
     }
   }
 
-  const [data, setData] = useState([])
   useEffect(() => {getAllMarkers()}, [])
+
   return (
     <View style={styles.container}>
       <MapView 
@@ -33,7 +37,7 @@ const Map = () => {
         showsUserLocation={true} 
         showsMyLocationButton={true}
       >
-        {data.map((element, _) => {
+        {data != null && data.map((element, _) => {
             return <Marker
                 key={element.id_poi}
                 coordinate={{latitude: element.location.latitude, longitude: element.location.longitude}}
