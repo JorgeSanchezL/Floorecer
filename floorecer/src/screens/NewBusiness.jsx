@@ -1,8 +1,8 @@
 import React, { useState, Component } from "react";
-import { View, Text, TextInput, Image, StyleSheet, ScrollView, useWindowDimensions, Dimensions } from "react-native";
+import { View, Text, TextInput, Image, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import ImageCarousel from '../components/Prueba';
+import ImageCarousel from '../components/ImageCarousel';
 
 const NewBusiness = () => {
   const [shopName, setShopName] = useState("");
@@ -18,13 +18,14 @@ const NewBusiness = () => {
     'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg',
     'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg'
   ]
-
+  
   const onSavePressed = () =>{
     //console.warn(shopName+nif+direction+longitude+latitude)
     console.warn("save")
   };
   const onCancelPressed = () =>{
-    console.warn("cancel")
+    console.warn("cancel");
+
   }
   return(
   <View style={styles.mainContainer}>
@@ -42,12 +43,12 @@ const NewBusiness = () => {
         <CustomButton 
           text="Cancel" 
           type = 'cuaterciario'
-          onPress={onSavePressed}
+          onPress={onCancelPressed}
           />
         <CustomButton 
           text="Save" 
           type = 'cuaterciario'
-          onPress={onCancelPressed}
+          onPress={onSavePressed}
           />
     
     </View>

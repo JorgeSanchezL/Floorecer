@@ -1,5 +1,5 @@
 import React, { useState, Component } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, useWindowDimensions, Dimensions } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, Alert, Dimensions, TouchableOpacity } from "react-native";
 const {width} = Dimensions.get("window");
 const height = width * 0.6;
 
@@ -14,6 +14,27 @@ export default class ImageCarousel extends React.Component{
             this.setState({active: slide});
         }
     }
+     showConfirmDialog = () => {
+      return Alert.alert(
+        "Are your sure?",
+        "Are you sure you want to remove this picture?",
+        [
+          // The "Yes" button
+          {
+            text: "Yes",
+            onPress: () => {
+              this.props.images.splice(0, 1); // 2nd parameter means remove one item only
+             
+            },
+          },
+          // The "No" button
+          // Does nothing but dismiss the dialog when tapped
+          {
+            text: "No",
+          },
+        ]
+      );
+    };
   render(){
     return(
       <View style ={styles.container}>
@@ -32,6 +53,12 @@ export default class ImageCarousel extends React.Component{
             ))
           }
         </ScrollView>
+        <View style ={styles.closeButtonView}>
+          <TouchableOpacity style={styles.closeButtonParent} onPress={this.showConfirmDialog}>
+            <Image style={styles.closeButton} source={require("../../assets/Delete-Red-X-Button.png")} />
+          </TouchableOpacity>
+        </View>
+        
         <View style= {styles.pagination}>
             {
                 this.props.images.map((i,k)=>(
@@ -62,4 +89,17 @@ const styles = StyleSheet.create({
     pagination:{flexDirection:'row', position:'absolute', bottom: 0, alignSelf:'center'},
     pagingText: {fontSize: (width/30), color:'#888', margin: 3},
     pagingActiveText: {fontSize: (width/30), color:'#fff', margin: 3},
+    closeButton: {
+      height: 30,
+      width: 30,
+    },
+    closeButtonParent: {
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 9,
+      marginRight:5,
+    },
+    closeButtonView:{
+      flexDirection:'column', position:'absolute', top: 0, alignSelf:'flex-end'
+    },
 })

@@ -8,7 +8,7 @@ import NewBusiness from '../screens/NewBusiness';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 
-import Prueba from '../components/Prueba';
+import Prueba from '../components/ImageCarousel';
 
 const Stack = createStackNavigator();
 
