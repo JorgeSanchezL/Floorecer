@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 
-AWS.config.loadFromPath('./secrets/config.json');
+AWS.config.update({ "accessKeyId": "AKIAYWWUAEJTCXGCC2WP", "secretAccessKey": "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", "region": "eu-west-3" })
 const client = new AWS.DynamoDB.DocumentClient();
 
 export const getAllPOI = async (req, res) => {

@@ -37,18 +37,20 @@ const Map = () => {
         showsUserLocation={true} 
         showsMyLocationButton={true}
       >
-        {data != null && data.map((element, _) => {
-            return <Marker
-                key={element.id_poi}
-                coordinate={{latitude: element.location.latitude, longitude: element.location.longitude}}
-                title={element.title}
-                description={element.description}
-            >
-              <Image
-                source={shop}
-                style={{ width: 40, height: 40 }}
-              />
-            </Marker>
+        {data != null && data.map((element, index) => {
+            return <View key={`marker${index}`}>
+              <Marker
+                  key={element.id_poi}
+                  coordinate={{latitude: element.location.latitude, longitude: element.location.longitude}}
+                  title={element.title}
+                  description={element.description}
+              >
+                <Image
+                  source={shop}
+                  style={{ width: 40, height: 40 }}
+                />
+              </Marker>
+            </View>
         })}
       </MapView>
     </View>
