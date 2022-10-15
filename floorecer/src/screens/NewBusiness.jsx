@@ -2,7 +2,7 @@ import React, { useState, Component } from "react";
 import { View, Text, TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-import ImageCarousel from '../components/ImageCarousel';
+import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
 import CustomDropDowPiker from '../components/DropDownPiker';
 
 import { ScrollView } from "react-native-gesture-handler";
@@ -50,7 +50,7 @@ const NewBusiness = () => {
 
       <MyTextInput name = 'Opening Hours' value={openingHours} setValue={setOpeningHours}/>
 
-      <ImageCarousel images = {images}/>
+      <ImageCarouselPickingImages images = {images}/>
 
     </ScrollView>
   
