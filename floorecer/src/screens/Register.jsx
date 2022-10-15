@@ -3,9 +3,11 @@ import { StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
-const Login = () => {
+const Register = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
+    const [numerodetelefono,setNumber]=useState('');
+
     const {height}=useWindowDimensions();
     const onInicioPressed=()=>{
         console.warn('MAPA');
@@ -35,25 +37,19 @@ const Login = () => {
         <CustomInput 
             placeholder = "Confirmar Contraseña" 
             value={email} 
-            setValue={setEmail}
+            setValue={setPassword}
         />
         <CustomInput 
-            placeholder = "Contraseña" 
+            placeholder = "Numero De telefono" 
             value={password} 
-            setValue={setPassword}
+            setValue={setNumber}
             secureTextEntry={true}
         />
-        <CustomButton text="Iniciar Sesión" onPress={onInicioPressed}/>
-        <CustomButton 
-            text="He olvidado la contraseña"
-            onPress={onOlvidadoPressed}
-            type="terciario"
-        />
-        <CustomButton 
-            text="No tienes cuenta aún? Regístrate"
-            onPress={onRegistrarPressed}
-            type="terciario"
-        />
+        <CustomButton text="Registrar Como Cliente" onPress={onInicioPressed}/>
+        
+         <CustomButton text="Registrar Como Comercio" onPress={onInicioPressed}/>
+        
+       
       </View>
 
     );
@@ -71,4 +67,4 @@ const Login = () => {
     },
   });
   
-  export default Login;
+  export default Register;

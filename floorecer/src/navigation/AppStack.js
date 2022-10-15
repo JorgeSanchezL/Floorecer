@@ -1,29 +1,42 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from '../screens/Home';
 import SignUp from '../screens/Signup';
 import NewBusiness from '../screens/NewBusiness';
+import Login from '../screens/Login';
+import Register from '../screens/Register';
 import PublicProfile from '../screens/PublicProfile';
 import Map from '../screens/Map';
 
 const Stack = createStackNavigator();
-  
+
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='map'
+            initialRouteName='newBusiness'
             screenOptions={{
                 headerShown: false
             }}
         >
             <Stack.Screen
-                name='home'
-                component={Home}
+                name='login'
+                component={Login}
             />
+            
             <Stack.Screen
                 name='signUp'
                 component={SignUp}
+            />
+            <Stack.Screen
+                name='home'
+                component={Home}
+            />
+           
+             <Stack.Screen
+                name='register'
+                component={Register}
             />
             <Stack.Screen
                 name='newBusiness'

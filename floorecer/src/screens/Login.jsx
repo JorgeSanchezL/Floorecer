@@ -3,18 +3,24 @@ import { StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
+import { useNavigation } from '@react-navigation/native';
 const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const {height}=useWindowDimensions();
+
+    const navigation=useNavigation();
     const onInicioPressed=()=>{
         console.warn('MAPA');
+
+        navigation.navigate('home');
     };
     const onOlvidadoPressed=()=>{
         console.warn('Recuperar');
     };
     const onRegistrarPressed=()=>{
       console.warn('Registro');
+
     };
     return (
       <View style={styles.container}>
@@ -32,28 +38,20 @@ const Login = () => {
             setValue={setPassword}
             secureTextEntry={true}
         />
-        <CustomInput 
-            placeholder = "Confirmar Contraseña" 
-            value={email} 
-            setValue={setEmail}
-        />
-        <CustomInput 
-            placeholder = "Contraseña" 
-            value={password} 
-            setValue={setPassword}
-            secureTextEntry={true}
-        />
         <CustomButton text="Iniciar Sesión" onPress={onInicioPressed}/>
         <CustomButton 
             text="He olvidado la contraseña"
             onPress={onOlvidadoPressed}
             type="terciario"
         />
-        <CustomButton 
-            text="No tienes cuenta aún? Regístrate"
-            onPress={onRegistrarPressed}
-            type="terciario"
-        />
+        <Text style={{color :'gray',fontWeight : 'bold'}}
+      onPress={() => navigation.navigate('register')}>
+  ¿No tienes cuenta aún? 
+  <Text style={{color :'blue',fontWeight : 'bold'}}
+  >
+    Regístrate
+  </Text>
+</Text>
       </View>
 
     );
