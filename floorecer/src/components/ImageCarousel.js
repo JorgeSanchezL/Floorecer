@@ -68,7 +68,7 @@ export default class ImageCarousel extends React.Component{
             pagingEnabled
             horizontal
             onScroll={this.change}  
-            style ={styles.container} >
+            style ={styles.scrollView} >
           {
             this.props.images.map((image,index) =>(
               <Image 
@@ -109,14 +109,32 @@ export default class ImageCarousel extends React.Component{
 
 const styles = StyleSheet.create({
     container:
-       {  marginTop:5,
-        width,
-        height,},
-    scrollView: {width,height},
-    image:{width, height, resizeMode:'cover' },
-    pagination:{flexDirection:'row', position:'absolute', bottom: 0, alignSelf:'center'},
-    pagingText: {fontSize: (width/30), color:'#888', margin: 3},
-    pagingActiveText: {fontSize: (width/30), color:'#fff', margin: 3},
+       {  
+        marginTop:10,
+       },
+    scrollView: {
+      marginTop:5,
+      width,height
+    },
+    image:{
+      width, height, 
+      resizeMode:'cover' 
+    },
+    pagination:{
+      flexDirection:'row', 
+    position:'absolute', 
+    bottom: 0, alignSelf:'center'
+  },
+    pagingText: {
+      fontSize: (width/30),
+       color:'#888',
+       margin: 3
+    },
+    pagingActiveText: {
+      fontSize: (width/30), 
+      color:'#fff', 
+      margin: 3
+    },
     closeButton: {
       height: 30,
       width: 30,
@@ -128,6 +146,6 @@ const styles = StyleSheet.create({
       marginRight:5,
     },
     closeButtonView:{
-      flexDirection:'column', position:'absolute', top: 0, alignSelf:'flex-end'
+      flexDirection:'column', position:'absolute', top: 35, alignSelf:'flex-end'
     },
 })

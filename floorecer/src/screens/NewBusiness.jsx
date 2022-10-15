@@ -1,8 +1,11 @@
 import React, { useState, Component } from "react";
-import { View, Text, TextInput, Image, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import ImageCarousel from '../components/ImageCarousel';
+import CustomDropDowPiker from '../components/DropDownPiker';
+
+import { ScrollView } from "react-native-gesture-handler";
 
 const NewBusiness = () => {
   const [shopName, setShopName] = useState("");
@@ -10,8 +13,10 @@ const NewBusiness = () => {
   const [direction, setDirection] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
+  const [openingHours, setOpeningHours] = useState("");
 
-  const {height}=useWindowDimensions();
+  const {height}= useWindowDimensions();
+  const {width} = Dimensions.get("window");
 
   const images =[]
   
@@ -24,15 +29,31 @@ const NewBusiness = () => {
 
   }
   return(
-  <View style={styles.mainContainer}>
+  <View style={[styles.mainContainer]}>
+
     <Text style={[styles.title,{marginTop:height * 0.05}]}>New Business</Text>
-    <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
-    <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
-    <MyTextInput name = 'Direction' value={direction} setValue={setDirection}/>
-    <MyTextInput name = 'Position' info = 'Longitude' value={longitude} setValue={setLongitude}/>
-    <MyTextInput info = 'Latitude' value={latitude} setValue={setLatitude}/>
-    
-    <ImageCarousel images = {images}/>
+
+    <ScrollView 
+      nestedScrollEnabled={true}
+      style={{width,height: height * 0.79, paddingHorizontal:10}}>
+        
+      <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
+      <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
+      <MyTextInput name = 'Direction' value={direction} setValue={setDirection}/>
+      <MyTextInput name = 'Position' info = 'Longitude' value={longitude} setValue={setLongitude}/>
+      <MyTextInput info = 'Latitude' value={latitude} setValue={setLatitude}/>
+      
+      <Text
+        style={{marginTop:14, bottom:0}}
+      >Categories</Text>
+      <CustomDropDowPiker></CustomDropDowPiker>
+
+      <MyTextInput name = 'Opening Hours' value={openingHours} setValue={setOpeningHours}/>
+
+      <ImageCarousel images = {images}/>
+
+    </ScrollView>
+  
 
     <View style = {{flex:0, flexDirection:'row'}}>
       
@@ -81,7 +102,7 @@ export const MyTextInput = (props) => {
 const styles = StyleSheet.create({
     mainContainer:{
       alignItems:'center',
-      paddingHorizontal:20,
+      
     },
     InputContainer:{
       backgroundColor:'white',
