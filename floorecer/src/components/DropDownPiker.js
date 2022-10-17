@@ -7,11 +7,10 @@ const CustomDropDownPicker= (props) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState([]);
   const [items, setItems] = useState([
-    {label: 'fruit store', value: 'fruiStore'},
-    {label: 'supermarket', value: 'Supermarket'},
-    {label: 'Banana', value: 'banana3'},
-    {label: 'Banana', value: 'banana4'},
-    {label: 'Banana', value: 'banana5'},
+    {label: 'Fruit store', value: 'fruiStore'},
+    {label: 'Supermarket', id: 'supermarket'},
+    {label: 'Ropa', value: 'ropa'},
+    {label: 'Rastro', value: 'rastro'},
     
   ]);
 
