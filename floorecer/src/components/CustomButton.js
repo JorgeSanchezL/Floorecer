@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text,StyleSheet, Pressable } from 'react-native';
 
-const CustomButton = ({onPress,text,type="primario"}) => {
+const CustomButton = ({onPress=()=>{},text,type="primario"}) => {
     return(
         <Pressable onPress={onPress} 
         style ={[

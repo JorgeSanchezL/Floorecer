@@ -50,7 +50,7 @@ const Login = () => {
             type="terciario"
         />
         <CustomButton 
-            text="No tienes cuenta aún? Regístrate"
+            text="¿No tienes cuenta aún? Regístrate"
             onPress={onRegistrarPressed}
             type="terciario"
         />
