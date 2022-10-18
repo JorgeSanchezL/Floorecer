@@ -41,9 +41,26 @@ const styles =StyleSheet.create({
         marginHorizontal:10,
         backgroundColor:'#5dc655',
     },
+    container_profile:{
+        width:'25%',
+        height:45,
+        padding:15,
+        borderRadius:5,
+        alignItems:'center',
+        backgroundColor:'#5dc655',
+        marginTop:-40,
+        marginLeft:250
+        
+        
+    },
     text:{
         fontWeight:'bold',
         color:'white',
+    },
+    text_profile:{
+        fontSize: 12,
+        color: 'white',
+        fontWeight: 'bold',
     },
     text_terciario:{
         fontWeight:'bold',

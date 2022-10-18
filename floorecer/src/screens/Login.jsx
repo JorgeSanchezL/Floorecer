@@ -11,16 +11,10 @@ const Login = () => {
 
     const navigation=useNavigation();
     const onInicioPressed=()=>{
-        console.warn('MAPA');
-
-        navigation.navigate('home');
+        navigation.navigate('map');
     };
     const onOlvidadoPressed=()=>{
         console.warn('Recuperar');
-    };
-    const onRegistrarPressed=()=>{
-      console.warn('Registro');
-
     };
     return (
       <View style={styles.container}>
