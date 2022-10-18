@@ -1,24 +1,25 @@
-import { initializeApp } from 'firebase/app';
-import credentials from '../credentials/floorecer-firebase-adminsdk-v4wsr-189d4814f3.json'
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {getFirestore} from "firebase/firestore";
+import {getAuth} from 'firebase/auth';
 
-// Optionally import the services that you want to use
-//import {...} from "firebase/auth";
-//import {...} from "firebase/database";
-import { getFirestore } from "firebase/firestore";
-//import {...} from "firebase/functions";
-//import {...} from "firebase/storage";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Initialize Firebase
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  credential: credential.cert(credentials),
-  authDomain: 'floorecer.firebaseapp.com',
-  databaseURL: 'https://floorecer.eur3.firebaseio.com',
-  projectId: 'floorecer',
-  storageBucket: 'floorecer.appspot.com',
-  messagingSenderId: 'sender-id',
-  appId: 'floorecer'
+  apiKey: "AIzaSyDkdt3kX7UJjmUPPeG-us__QFUfwGkIbRI",
+  authDomain: "floorecer.firebaseapp.com",
+  projectId: "floorecer",
+  storageBucket: "floorecer.appspot.com",
+  messagingSenderId: "736288377672",
+  appId: "1:736288377672:web:3d9d2f671da1476b77817d"
 };
 
-let myApp = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = auth();
 
-export default database = getFirestore(app)
+export default db;
+export{auth};

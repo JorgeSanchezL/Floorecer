@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { getAllPOI } from '../controllers/map.controller.js';
-import { checkUserVerified, verifyCode ,uploadVerifyCode, sendEmail } from '../controllers/map.controller.js';
+import { checkUserVerified, verifyCode ,uploadVerifyCode, sendEmail } from '../controllers/notVerified.controller.js';
 
 const router = Router();
 
