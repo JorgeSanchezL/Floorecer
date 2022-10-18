@@ -1,34 +1,28 @@
 import AWS from 'aws-sdk';
 import Randomatic from 'randomatic'
+import database from '../../firebase.js'
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 AWS.config.update({ "accessKeyId": "AKIAYWWUAEJTCXGCC2WP", "secretAccessKey": "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", "region": "eu-west-3" })
 const client = new AWS.DynamoDB.DocumentClient();
 
 export const checkUserVerified = async (user, req, res) => {
-    const params = {
-        TableName: 'user',
-        Key: {
-            user_id: user
-        },
-    };
+    const citiesRef = collection(db, "user")
+    const q = query(citiesRef, where("user_id", "==", user))
 
-    client.scan(params, (err, data) => {
-        if (err) { res.status(404).json(err); }
-        else { return res.json({'verified': true}); }
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        return doc.data();
     });
 }
 
 export const verifyCode = async (user, code, req, res) => {
-    const params = {
-        TableName: 'verify-code',
-        Key: {
-            user_id: user
-        },
-    };
+    const citiesRef = collection(db, "verify-code")
+    const q = query(citiesRef, where("user_id", "==", user))
 
-    client.scan(params, (err, data) => {
-        if (err) { res.status(404).json(err); }
-        else { return res.json({'verified': code==data.Items.code}); }
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        return doc.data().code == code;
     });
 }
 
@@ -36,7 +30,7 @@ export const updateVerifyCode = async (user, req, res) => {
     const params = {
         TableName: 'verify-code',
         Key: {
-            user_id: user,
+            'user_id': user,
           },
           ExpressionAttributeValues: {
             'code': Randomatic.randomize('000000')
@@ -52,9 +46,25 @@ export const updateVerifyCode = async (user, req, res) => {
       }
 }
 
-export const sendEmail = () => {
-    email(userMail, {
-      subject: 'Verifica tu correo electrónico',
-      body: 'Para poder utilizar Floorecer debes verificar tu cuenta. Para ello accede al siguiente enlace:'
-    }).catch(console.error)
+export const sendEmail = async (mail) => {
+    try{
+        let transporter = nodemailer.createTransport({
+            host: "smtp.ethereal.email",
+            port: 587,
+            secure: false,
+            auth: {
+              user: testAccount.user,
+              pass: testAccount.pass,
+            },
+        })
+
+        let info = await transporter.sendMail({
+            from: '"Floorecer" <info@floorecer.com>',
+            to: mail,
+            subject: "Verifica tu correo electrónico",
+            text: "Para poder utilizar Floorecer debes verificar tu cuenta. Para ello introduce el código recibido en tu correo electrónico"
+        })
+    } catch (err) {
+        console.log(err)
+    }
 }
