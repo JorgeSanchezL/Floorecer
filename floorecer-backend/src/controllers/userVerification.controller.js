@@ -7,22 +7,29 @@ AWS.config.update({ "accessKeyId": "AKIAYWWUAEJTCXGCC2WP", "secretAccessKey": "1
 const client = new AWS.DynamoDB.DocumentClient();
 
 export const checkUserVerified = async (user, req, res) => {
-    const citiesRef = collection(db, "user")
+    const citiesRef = collection(database, "user")
     const q = query(citiesRef, where("user_id", "==", user))
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        return doc.data();
+        if (doc.data().verified == true) {
+            res.json(true)
+            return
+        }
     });
+
 }
 
 export const verifyCode = async (user, code, req, res) => {
-    const citiesRef = collection(db, "verify-code")
+    const citiesRef = collection(database, "verify-code")
     const q = query(citiesRef, where("user_id", "==", user))
 
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        return doc.data().code == code;
+        if (doc.data().code == code) {
+            res.json(true)
+            return
+        }
     });
 }
 

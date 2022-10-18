@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import mapRoutes from './src/routes/map.routes.js';
+import userVerificationRoutes from './src/routes/userVerification.routes.js';
 import morgan from 'morgan';
 
 const app = express();
@@ -20,6 +21,7 @@ app.get('/', (req, res)=>{
 // Routes
 
 app.use('/map', mapRoutes);
+app.use('/user-verification', userVerificationRoutes)
 
 app.listen(PORT, (error) => {
 	if(!error) { console.log("Server running on port " + PORT); }

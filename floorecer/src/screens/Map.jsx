@@ -10,7 +10,7 @@ const Map = () => {
 
   const getAllMarkers = async () => { 
     try {
-      const response = await fetch('http://TUIP:5000/map/poi/all', {
+      const response = await fetch('http://192.168.0.72:5000/map/poi/all', {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json'

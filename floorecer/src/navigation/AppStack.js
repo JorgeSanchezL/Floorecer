@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='userProfile'
+            initialRouteName='map'
             screenOptions={{
                 headerShown: false
             }}
