@@ -7,7 +7,7 @@ const Home = (userMail) => {
 
   const checkVerified = async () => { 
     try {
-      const response = await fetch('http://TUIP:5000/users/verified', {
+      const response = await fetch('http://TUIP:5000/user-verification/user', {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const Home = (userMail) => {
   
   const verify = async () => {
     try {
-      const response = await fetch('http://TUIP:5000/verify', {
+      const response = await fetch('http://TUIP:5000/user-verification/verify', {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json',
@@ -40,8 +40,8 @@ const Home = (userMail) => {
 
   const updateCode = async () => {
     try {
-      const response = await fetch('http://TUIP:5000/verify-code', {
-        method: 'POST',
+      const response = await fetch('http://TUIP:5000/user-verification/code', {
+        method: 'UPDATE',
           headers: {
           'Content-Type': 'application/json',
           'Authorization-Header': ''
@@ -54,7 +54,7 @@ const Home = (userMail) => {
 
   const sendEmail = async () => {
     try {
-      const response = await fetch('http://TUIP:5000/verify-mail', {
+      const response = await fetch('http://TUIP:5000/user-verification/mail', {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json',

@@ -7,6 +7,6 @@ const router = Router();
 router.get('/user', checkUserVerified);
 router.get('/verify', verifyCode);
 router.get('/mail', sendEmail)
-router.post('/code', updateVerifyCode);
+router.update('/code', updateVerifyCode);
 
 export default router;
