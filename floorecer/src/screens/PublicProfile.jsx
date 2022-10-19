@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, Dimensions,
     ScrollView, View, Image, Text } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
@@ -10,6 +10,20 @@ import mercatUPV from '../../assets/image/mercat_upv.png';
 export const width = Dimensions.get('window').width;
 
 const PublicProfile = () => {
+    const [profile, setProfile] = useState(null);
+
+    const getProfile = async () => {
+        const api_call = await fetch('http://192.168.3.13:5000/users/FiL3npoNmaWostR77Dtm6CA3ktf2');
+        const response = await api_call.json();
+        setProfile(response);
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, []);
+
+    if (profile === null) return null;
+
     return (
         <SafeAreaView
             style={{flex: 1}}
@@ -35,7 +49,7 @@ const PublicProfile = () => {
                 ]}>
                     <View>
                         <Text style={styles.userName}>
-                            Carlos Sánchez
+                            {profile.fullname}
                         </Text>
                         <View style={[
                             styles.rowFlex,
@@ -50,7 +64,7 @@ const PublicProfile = () => {
                                 fontSize: 15,
                                 marginLeft: 6
                             }}>
-                                2418 puntos
+                                {profile.points} puntos
                             </Text>
                         </View>
                     </View>
@@ -85,7 +99,9 @@ const PublicProfile = () => {
                         ]}>
                             <Text style={{
                                 fontWeight: 'bold'
-                            }}>137</Text>
+                            }}>
+                                {profile.followers.length}
+                            </Text>
                             <Text style={{
                                 marginLeft: 4
                             }}>
@@ -98,7 +114,9 @@ const PublicProfile = () => {
                         ]}>
                             <Text style={{
                                 fontWeight: 'bold'
-                            }}>101</Text>
+                            }}>
+                                {profile.following.length}
+                            </Text>
                             <Text style={{
                                 marginLeft: 4
                             }}>

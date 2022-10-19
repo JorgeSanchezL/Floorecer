@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import morgan from 'morgan';
 
 import mapRoutes from './src/routes/map.routes.js';
 import userVerificationRoutes from './src/routes/userVerification.routes.js';
-import authenticationRoutes from './src/routes/authentication.routes.js';
 import morgan from 'morgan';
 
 const app = express();
@@ -23,6 +23,7 @@ app.get('/', (req, res)=>{
 
 app.use('/map', mapRoutes);
 app.use('/user-verification', userVerificationRoutes)
+app.use('/users', usersRoutes);
 app.use('/user-authe',authenticationRoutes)
 
 app.listen(PORT, (error) => {
