@@ -1,4 +1,3 @@
-import AWS from 'aws-sdk';
 import { database } from '../../firebase.js'
 import { collection, getDocs } from "firebase/firestore";
 
