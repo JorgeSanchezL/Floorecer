@@ -5,7 +5,8 @@ import morgan from 'morgan';
 
 import mapRoutes from './src/routes/map.routes.js';
 import userVerificationRoutes from './src/routes/userVerification.routes.js';
-import morgan from 'morgan';
+import usersRoutes from './src/routes/users.routes.js';
+import authenticationRoutes from './src/routes/authentication.routes.js';
 
 const app = express();
 const PORT = 5000;

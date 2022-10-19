@@ -8,14 +8,37 @@ const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const {height}=useWindowDimensions();
+    const [user,setUser]=useState(null);
 
     const navigation=useNavigation();
     const onInicioPressed=()=>{
-        navigation.navigate('map');
+      log();
+       // 
     };
     const onOlvidadoPressed=()=>{
         console.warn('Recuperar');
     };
+    const log = async () => { 
+      try {
+        const response = await fetch(`http://192.168.1.161:5000/user-authe/userSign/${email}&${password}`, {
+          method: 'GET',
+            headers: {
+            'Content-Type': 'application/json'
+          },
+            
+        });
+        
+        if(response.status==200){
+          const body = await response.json();
+          setUser(body)
+          navigation.navigate('map')
+        }else{
+          setUser(null)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
     return (
       <View style={styles.container}>
         <Image source={Logo} style={[styles.logo,{height:height *0.3}]} 
