@@ -1,7 +1,8 @@
-import {auth} from '../../firebase.js';
+import {auth,database,app} from '../../firebase.js';
 import {signInWithCustomToken,signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
 import { async } from '@firebase/util';
-
+import { collection, getDocs } from 'firebase/firestore/lite';
+import { doc,setDoc } from 'firebase/firestore';
 export const signIn = async (req,res) => {
     const {email, password } = req.params
     signInWithEmailAndPassword(auth, email,password)
@@ -31,17 +32,47 @@ export const signIn = async (req,res) => {
     });
   };
 export const register = async (req,res) => {
-    const {email, password } = req.body
-    createUserWithEmailAndPassword(auth, 'sasda@upv.es','123456')
+  console.log("hola")
+    const {email, password,numberphone,isBusinessOwner } = req.body
+    createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         // Signed in
-        console.log('re')
+    setDoc(doc(database,"users",userCredential.user.uid) ,{
+    points : 0,
+    followers : {},
+    following : {},
+    isBusinessOwner : isBusinessOwner,
+    numero : numberphone
+     }
+  )
+
+
+          console.log('re')
         const user = userCredential.user;
+        res.status(200);
+        res.send('created succesffuly');
+
+
+        
         // ...
     })
     .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        if(errorCode=='auth/email-already-in-use'){
+          res.status(401);
+          res.send('ya existe una cuenta con ese correo');
+
+          console.log(errorCode)
+        }
+      else{
+          res.status(502);
+          res.send('error de de conexion');
+
+          console.log(errorCode);
+
+      }
+        
     });
   };
 
