@@ -7,6 +7,7 @@ import mapRoutes from './src/routes/map.routes.js';
 import userVerificationRoutes from './src/routes/userVerification.routes.js';
 import usersRoutes from './src/routes/users.routes.js';
 import authenticationRoutes from './src/routes/authentication.routes.js';
+import paymentsRoutes from './src/routes/payments.routes.js';
 
 const app = express();
 const PORT = 5000;
@@ -23,9 +24,10 @@ app.get('/', (req, res)=>{
 // Routes
 
 app.use('/map', mapRoutes);
-app.use('/user-verification', userVerificationRoutes)
+app.use('/user-verification', userVerificationRoutes);
 app.use('/users', usersRoutes);
-app.use('/user-authe',authenticationRoutes)
+app.use('/user-authe', authenticationRoutes);
+app.use('/payments', paymentsRoutes);
 
 app.listen(PORT, (error) => {
 	if(!error) { console.log("Server running on port " + PORT); }

@@ -10,13 +10,15 @@ import Register from '../screens/Register';
 import PublicProfile from '../screens/PublicProfile';
 import Map from '../screens/Map';
 import UserProfile from '../screens/UserProfile';
+import BusinessPlans from '../screens/BusinessPlans';
+import Payment from '../screens/Payment';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='Login'
+            initialRouteName='businessPlans'
             screenOptions={{
                 headerShown: false
             }}
@@ -54,6 +56,14 @@ const AppStack = () => {
             <Stack.Screen
                 name='userProfile'
                 component={UserProfile}
+            />
+            <Stack.Screen
+                name='businessPlans'
+                component={BusinessPlans}
+            />
+            <Stack.Screen
+                name={'payment'}
+                component={Payment}
             />
         </Stack.Navigator>
     );
