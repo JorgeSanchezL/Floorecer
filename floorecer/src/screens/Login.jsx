@@ -20,7 +20,7 @@ const Login = () => {
     };
     const log = async () => { 
       try {
-        const response = await fetch(`http://192.168.1.161:5000/user-authe/userSign/${email}&${password}`, {
+        const response = await fetch(`http://192.168.0.72:5000/user-authe/userSign/${email}&${password}`, {
           method: 'GET',
             headers: {
             'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ const Login = () => {
         if(response.status==200){
           const body = await response.json();
           setUser(body)
-          if (user.isVerified) { //Añadido para la UT de verificar usuario :)
+          if (user.emailVerified) { //Añadido para la UT de verificar usuario :)
             navigation.navigate('map')
           } else {
             navigation.navigate('notVerified')

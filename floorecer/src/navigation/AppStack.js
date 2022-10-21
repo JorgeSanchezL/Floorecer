@@ -12,13 +12,14 @@ import Map from '../screens/Map';
 import UserProfile from '../screens/UserProfile';
 import BusinessPlans from '../screens/BusinessPlans';
 import Payment from '../screens/Payment';
+import NotVerified from '../screens/NotVerified';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='businessPlans'
+            initialRouteName='register'
             screenOptions={{
                 headerShown: false
             }}
@@ -27,7 +28,10 @@ const AppStack = () => {
                 name='login'
                 component={Login}
             />
-            
+            <Stack.Screen
+                name={'notVerified'}
+                component={NotVerified}
+            />            
             <Stack.Screen
                 name='signUp'
                 component={SignUp}

@@ -1,8 +1,9 @@
-import AWS from 'aws-sdk';
+import { sendEmailVerification } from "firebase/auth";
 
 export const sendEmail = async (req, res) => {
+    console.log(req)
     try {
-        req.body.user.sendEmailVerification()
+        sendEmailVerification(req.body.user)
         .then(() => {
             res.status(200)
             res.send("Email sent")
@@ -10,5 +11,6 @@ export const sendEmail = async (req, res) => {
     } catch (err) {
         res.status(502)
         res.send("Error")
+        console.log(err)
     }
 }

@@ -11,23 +11,23 @@ const Register = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [numerodetelefono,setNumber]=useState('');
-    const [user,setUser]=useState(null); //Añadido para la UT de verificar usuario :)
     const navigation = useNavigation();
 
 
     const {height}=useWindowDimensions();
-    const sendEmail = async () => {
+    const sendEmail = async (user) => {
       try {
-        const response = await fetch('http://TUIP:5000/user-verification/mail', {
+        const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
           method: 'POST',
             headers: {
             'Content-Type': 'application/json',
             'Authorization-Header': ''
           },
-          body: {
-            user: email
-          }
+          body: JSON.stringify({
+            user: user
+          })
         });
+        console.log(user)
       } catch (err) {
         console.log(err)
       }
@@ -55,7 +55,7 @@ const Register = () => {
     const SignUpNowCliente = async () => { 
       console.log("wow")
       try {
-        const response = await fetch("http://192.168.1.143:5000/user-authe/userRegister", {
+        const response = await fetch("http://192.168.0.72:5000/user-authe/userRegister", {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -73,15 +73,22 @@ const Register = () => {
         
         );
         console.log(response.status);
+        const res = await response.json()
         
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { setUser(response.body.user); sendEmail(); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { sendEmail(res._tokenResponse); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
           Alert.alert(':(', '¡ Ya existe una cuenta con ese correo !', [
+            
+            { text: 'OK' },
+          ]);
+        }
+        else if(response.status == 406 ) {
+          Alert.alert(':(', '¡ La contraseña es demasiado débil !', [
             
             { text: 'OK' },
           ]);
@@ -101,7 +108,7 @@ const Register = () => {
     const SignUpComercio = async () => { 
       console.log("wow")
       try {
-        const response = await fetch("http://192.168.1.143:5000/user-authe/userRegister", {
+        const response = await fetch("http://192.168.0.72:5000/user-authe/userRegister", {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -122,7 +129,7 @@ const Register = () => {
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { setUser(response.body.user); sendEmail(); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { sendEmail(res._tokenResponse); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {

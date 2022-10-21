@@ -50,6 +50,7 @@ export const register = async (req,res) => {
           console.log('re')
         const user = userCredential.user;
         res.status(200);
+        console.log(userCredential)
         res.send(userCredential); //Cambiado para la UT de verificar usuario :)
 
 
@@ -62,6 +63,11 @@ export const register = async (req,res) => {
         if(errorCode=='auth/email-already-in-use'){
           res.status(401);
           res.send('ya existe una cuenta con ese correo');
+
+          console.log(errorCode)
+        } else if(errorCode=='auth/weak-password'){
+          res.status(406);
+          res.send('la contraseña es demasiado débil');
 
           console.log(errorCode)
         }

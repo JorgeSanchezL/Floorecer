@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import HyperLink from '../components/Hyperlink';
+//import HyperLink from '../components/Hyperlink';
 
 const Home = () => {
 
   const [value, setValue] = useState(null)
-
-  const navigation = useNavigation();
 
   const user = {
     
@@ -14,7 +12,7 @@ const Home = () => {
 
   const sendEmail = async () => {
     try {
-      const response = await fetch('http://TUIP:5000/user-verification/mail', {
+      const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
         method: 'POST',
           headers: {
           'Content-Type': 'application/json'
@@ -36,7 +34,7 @@ const Home = () => {
       <Text style={styles.subtitle}>
         Para continuar debes verificar tu cuenta a través del enlace recibido por correo electrónico.
       </Text>
-      <HyperLink text={"Volver a enviar el correo"} onClick={sendEmail} />
+      {/*<HyperLink text={"Volver a enviar el correo"} onClick={sendEmail} />*/}
     </View>
   );
 }
