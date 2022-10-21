@@ -11,10 +11,27 @@ const Register = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [numerodetelefono,setNumber]=useState('');
+    const [user,setUser]=useState(null); //Añadido para la UT de verificar usuario :)
     const navigation = useNavigation();
 
 
     const {height}=useWindowDimensions();
+    const sendEmail = async () => {
+      try {
+        const response = await fetch('http://TUIP:5000/user-verification/mail', {
+          method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization-Header': ''
+          },
+          body: {
+            user: email
+          }
+        });
+      } catch (err) {
+        console.log(err)
+      }
+    }
     const onRegisterPressedCliente=()=>{
       console.log(checkInputs());
       if(checkInputs()) {
@@ -60,7 +77,7 @@ const Register = () => {
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => navigation.navigate("login") },
+            { text: 'OK', onPress: () => { setUser(response.body.user); sendEmail(); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -105,7 +122,7 @@ const Register = () => {
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => navigation.navigate("login") },
+            { text: 'OK', onPress: () => { setUser(response.body.user); sendEmail(); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {

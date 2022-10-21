@@ -1,64 +1,26 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import HyperLink from '../components/Hyperlink';
 
-const Home = (userMail) => {
+const Home = () => {
 
   const [value, setValue] = useState(null)
 
-  const checkVerified = async () => { 
-    try {
-      const response = await fetch('http://TUIP:5000/user-verification/user', {
-        method: 'GET',
-          headers: {
-          'Content-Type': 'application/json',
-          'Authorization-Header': ''
-        }
-      });
-      return (await response.json()).verified;
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  
-  const verify = async () => {
-    try {
-      const response = await fetch('http://TUIP:5000/user-verification/verify', {
-        method: 'GET',
-          headers: {
-          'Content-Type': 'application/json',
-          'Authorization-Header': ''
-        },
-        body: {
-          'code': value
-        }
-      });
-      return (await response.json()).verified;
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  const navigation = useNavigation();
 
-  const updateCode = async () => {
-    try {
-      const response = await fetch('http://TUIP:5000/user-verification/code', {
-        method: 'UPDATE',
-          headers: {
-          'Content-Type': 'application/json',
-          'Authorization-Header': ''
-        }
-      });
-    } catch (err) {
-      console.log(err)
-    }
+  const user = {
+    
   }
 
   const sendEmail = async () => {
     try {
       const response = await fetch('http://TUIP:5000/user-verification/mail', {
-        method: 'GET',
+        method: 'POST',
           headers: {
-          'Content-Type': 'application/json',
-          'Authorization-Header': ''
+          'Content-Type': 'application/json'
+        },
+        body: {
+          user: user
         }
       });
     } catch (err) {
@@ -72,18 +34,9 @@ const Home = (userMail) => {
         Floorecer
       </Text>
       <Text style={styles.subtitle}>
-        Para continuar debes verificar tu cuenta de correo electrónico. Introduce el código recibido en tu email.
+        Para continuar debes verificar tu cuenta a través del enlace recibido por correo electrónico.
       </Text>
-      <CustomInput
-        value={value}
-        setValue={setValue}
-        placeholder={'******'}
-      />
-      <CustomButton 
-        text={'Aceptar'}
-        type={'cuaterciario'}
-        onClick={null}
-      />
+      <HyperLink text={"Volver a enviar el correo"} onClick={sendEmail} />
     </View>
   );
 }

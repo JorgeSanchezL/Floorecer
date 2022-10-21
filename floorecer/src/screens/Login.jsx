@@ -31,7 +31,11 @@ const Login = () => {
         if(response.status==200){
           const body = await response.json();
           setUser(body)
-          navigation.navigate('map')
+          if (user.isVerified) { //Añadido para la UT de verificar usuario :)
+            navigation.navigate('map')
+          } else {
+            navigation.navigate('notVerified')
+          }
         }else{
           setUser(null)
         }

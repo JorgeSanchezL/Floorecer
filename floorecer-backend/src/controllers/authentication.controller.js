@@ -50,7 +50,7 @@ export const register = async (req,res) => {
           console.log('re')
         const user = userCredential.user;
         res.status(200);
-        res.send('created succesffuly');
+        res.send(userCredential); //Cambiado para la UT de verificar usuario :)
 
 
         
