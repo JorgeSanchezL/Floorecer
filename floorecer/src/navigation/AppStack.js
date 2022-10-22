@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='userProfile'
+            initialRouteName='publicProfile'
             screenOptions={{
                 headerShown: false
             }}

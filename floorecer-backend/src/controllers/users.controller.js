@@ -12,7 +12,7 @@ export const getUser = async (req, res) => {
 }
 
 export const searchUser = async (req, res) => {
-    const { user } = req.params;
+    const { contains } = req.params;
 
     let body = []
 
