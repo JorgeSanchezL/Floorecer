@@ -3,6 +3,7 @@ import {signInWithCustomToken,signInWithEmailAndPassword,createUserWithEmailAndP
 import { async } from '@firebase/util';
 import { collection, getDocs } from 'firebase/firestore/lite';
 import { doc,setDoc } from 'firebase/firestore';
+import { sendEmailFromBackend } from './userVerification.controller.js'
 export const signIn = async (req,res) => {
     const {email, password } = req.params
     signInWithEmailAndPassword(auth, email,password)
@@ -11,7 +12,8 @@ export const signIn = async (req,res) => {
         console.log('eg')
         const user = userCredential.user;
         res.status(200);
-        res.send(user);
+        res.send(auth.currentUser);
+        return userCredential
     })
     .catch((error) => {
         const errorCode = error.code;
@@ -33,11 +35,13 @@ export const signIn = async (req,res) => {
   };
 export const register = async (req,res) => {
   console.log("hola")
-    const {email, password,numberphone,isBusinessOwner } = req.body
+    const {email,username,password,numberphone,isBusinessOwner } = req.body
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         // Signed in
     setDoc(doc(database,"users",userCredential.user.uid) ,{
+    username: username,
+    usernameForSearch: usernameForSearch,
     points : 0,
     followers : {},
     following : {},
@@ -49,9 +53,12 @@ export const register = async (req,res) => {
 
           console.log('re')
         const user = userCredential.user;
+        signInWithEmailAndPassword(auth, email,password)
+          .then((loggedUser) => {
+            sendEmailFromBackend(loggedUser);
+        })
         res.status(200);
-        console.log(userCredential)
-        res.send(userCredential); //Cambiado para la UT de verificar usuario :)
+        res.send(auth.currentUser); //Cambiado para la UT de verificar usuario :)
 
 
         

@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='register'
+            initialRouteName='publicProfile'
             screenOptions={{
                 headerShown: false
             }}
@@ -29,7 +29,7 @@ const AppStack = () => {
                 component={Login}
             />
             <Stack.Screen
-                name={'notVerified'}
+                name='notVerified'
                 component={NotVerified}
             />            
             <Stack.Screen

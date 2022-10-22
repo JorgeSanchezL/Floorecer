@@ -9,12 +9,21 @@ import { TextInput } from 'react-native-gesture-handler';
 //import { response } from 'express';
 const Register = () => {
     const [email,setEmail]=useState('');
+    const [username, setUsername]=useState('')
     const [password,setPassword]=useState('');
     const [numerodetelefono,setNumber]=useState('');
     const navigation = useNavigation();
 
 
     const {height}=useWindowDimensions();
+
+    const getUsernameForSearch = () => {
+      let result = []
+      for (let index = 0; index < username.length; index++) {
+        result[index] = username.substring(0, index+1)
+      }
+    }
+
     const sendEmail = async (user) => {
       try {
         const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
@@ -59,6 +68,7 @@ const Register = () => {
           method: 'POST',
           body: JSON.stringify({
             email: email,
+            username: username,
             password: password,
             numberphone : numerodetelefono,
             isBusinessOwner : false,
@@ -73,12 +83,11 @@ const Register = () => {
         
         );
         console.log(response.status);
-        const res = await response.json()
         
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(res._tokenResponse); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -112,6 +121,7 @@ const Register = () => {
           method: 'POST',
           body: JSON.stringify({
             email: email,
+            usernameForSearch: getUsernameForSearch(),
             password: password,
             numberphone : numerodetelefono,
             isBusinessOwner : true,
@@ -129,7 +139,7 @@ const Register = () => {
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(res._tokenResponse); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { sendEmail(res); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -187,6 +197,11 @@ return true;
             setValue={setEmail}
         />
         <CustomInput 
+            placeholder = "Nombre de usuario" 
+            value={username} 
+            setValue={setUsername}
+        />
+        <CustomInput 
             placeholder = "Contraseña" 
             value={password} 
             setValue={setPassword}
@@ -206,7 +221,7 @@ return true;
         />
         <CustomButton text="Registrar Como Cliente" onPress={onRegisterPressedCliente}/>
         
-         <CustomButton text="Registrar Como Comercio" onPress={onRegisterPressedComercio}/>
+        <CustomButton text="Registrar Como Comercio" onPress={onRegisterPressedComercio}/>
         
        
       </View>

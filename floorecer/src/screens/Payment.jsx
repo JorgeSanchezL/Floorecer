@@ -27,7 +27,8 @@ const Payment = ({ navigation, route }) => {
                 body: JSON.stringify({
                     // the 'uid' will come from register screen
                     // put some uid from firestore to test it
-                    uid: '4xrCYVu3yFQYNY9j8Y0OGaq9wDm1'
+                    uid: '4xrCYVu3yFQYNY9j8Y0OGaq9wDm1',
+                    subsType: plan != 0 ? 2 : 1
                 })
             });
             const response = await api_call.json();
