@@ -1,15 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, Pressable } from 'react-native';
 
-const Hyperlink = (text, onClick = () => {}) => {
-    return <Text styles={styles.title} onClick={onClick}>{text}</Text>
-}
-
-const styles = StyleSheet.create({
-    title: {
-      color: '#acacac',
-      fontWeight: 'bold'
+const Hyperlink = ({text, onClick = () => {}}) => {
+  return (
+    <Pressable onPress={onClick}>
+    {({ pressed }) =>
+      <Text style={{
+        textDecorationLine: 'underline',
+        color: pressed ? 'red' : 'blue'
+      }}>{text}</Text>
     }
-});
+    </Pressable>
+  )
+}
 
 export default Hyperlink;

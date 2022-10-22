@@ -73,12 +73,11 @@ const Register = () => {
         
         );
         console.log(response.status);
-        const res = await response.json()
         
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(res._tokenResponse); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -129,7 +128,7 @@ const Register = () => {
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(res._tokenResponse); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { sendEmail(res); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
