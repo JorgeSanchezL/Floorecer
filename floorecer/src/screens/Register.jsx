@@ -9,12 +9,21 @@ import { TextInput } from 'react-native-gesture-handler';
 //import { response } from 'express';
 const Register = () => {
     const [email,setEmail]=useState('');
+    const [username, setUsername]=useState('')
     const [password,setPassword]=useState('');
     const [numerodetelefono,setNumber]=useState('');
     const navigation = useNavigation();
 
 
     const {height}=useWindowDimensions();
+
+    const getUsernameForSearch = () => {
+      let result = []
+      for (let index = 0; index < username.length; index++) {
+        result[index] = username.substring(0, index+1)
+      }
+    }
+
     const sendEmail = async (user) => {
       try {
         const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
@@ -59,6 +68,7 @@ const Register = () => {
           method: 'POST',
           body: JSON.stringify({
             email: email,
+            username: username,
             password: password,
             numberphone : numerodetelefono,
             isBusinessOwner : false,
@@ -111,6 +121,7 @@ const Register = () => {
           method: 'POST',
           body: JSON.stringify({
             email: email,
+            usernameForSearch: getUsernameForSearch(),
             password: password,
             numberphone : numerodetelefono,
             isBusinessOwner : true,
@@ -186,6 +197,11 @@ return true;
             setValue={setEmail}
         />
         <CustomInput 
+            placeholder = "Nombre de usuario" 
+            value={username} 
+            setValue={setUsername}
+        />
+        <CustomInput 
             placeholder = "Contraseña" 
             value={password} 
             setValue={setPassword}
@@ -205,7 +221,7 @@ return true;
         />
         <CustomButton text="Registrar Como Cliente" onPress={onRegisterPressedCliente}/>
         
-         <CustomButton text="Registrar Como Comercio" onPress={onRegisterPressedComercio}/>
+        <CustomButton text="Registrar Como Comercio" onPress={onRegisterPressedComercio}/>
         
        
       </View>

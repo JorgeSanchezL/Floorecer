@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='notVerified'
+            initialRouteName='userProfile'
             screenOptions={{
                 headerShown: false
             }}

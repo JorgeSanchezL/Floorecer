@@ -35,11 +35,13 @@ export const signIn = async (req,res) => {
   };
 export const register = async (req,res) => {
   console.log("hola")
-    const {email, password,numberphone,isBusinessOwner } = req.body
+    const {email,username,password,numberphone,isBusinessOwner } = req.body
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         // Signed in
     setDoc(doc(database,"users",userCredential.user.uid) ,{
+    username: username,
+    usernameForSearch: usernameForSearch,
     points : 0,
     followers : {},
     following : {},
