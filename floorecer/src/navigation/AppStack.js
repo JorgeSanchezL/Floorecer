@@ -14,13 +14,14 @@ import BusinessPlans from '../screens/BusinessPlans';
 import Payment from '../screens/Payment';
 import NotVerified from '../screens/NotVerified';
 import MyShops from '../screens/MyShops';
+import ConfigureBusiness from '../screens/ConfigureBusiness';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='register'
+            initialRouteName='configureBusiness'
             screenOptions={{
                 headerShown: false
             }}
@@ -49,6 +50,10 @@ const AppStack = () => {
             <Stack.Screen
                 name='newBusiness'
                 component={NewBusiness}
+            />
+            <Stack.Screen
+                name='configureBusiness'
+                component={ConfigureBusiness}
             />
             <Stack.Screen
                 name='publicProfile'

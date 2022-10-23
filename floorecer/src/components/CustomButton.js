@@ -30,10 +30,14 @@ const styles =StyleSheet.create({
     container_primario:{
         backgroundColor:'#5dc655',
     },
+    container_secundario:{
+        alignItems:"flex-start",
+        padding:0
+    },
     container_terciario:{
     },
     container_cuaterciario:{
-        width:'25%',
+        width:'45%',
         padding:15,
         borderRadius:5,
         alignItems:'center',
@@ -61,6 +65,10 @@ const styles =StyleSheet.create({
         fontSize: 12,
         color: 'white',
         fontWeight: 'bold',
+    },
+    text_secundario:{
+        fontWeight:'bold',
+        color:'turquoise',
     },
     text_terciario:{
         fontWeight:'bold',
