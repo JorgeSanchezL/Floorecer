@@ -27,7 +27,7 @@ const Register = () => {
 
     const sendEmail = async (user) => {
       try {
-        const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
+        const response = await fetch('http://192.168.1.143:5000/user-verification/mail', { 
           method: 'POST',
             headers: {
             'Content-Type': 'application/json',
