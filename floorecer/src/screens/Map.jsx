@@ -1,10 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Image } from 'react-native';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import React, { useEffect, useState, useMemo } from 'react';
+import { StyleSheet, View, SafeAreaView, Text, Image } from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
+import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
-import MapFilters from '../components/MapFilters';
+
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import Animated, {
+  Extrapolation,
+  interpolate,
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import * as Animatable from 'react-native-animatable';
+
 
 const Map = () => {
 
@@ -12,7 +23,7 @@ const Map = () => {
 
   const getAllMarkers = async () => { 
     try {
-      const response = await fetch('http://192.168.1.39:5000/map/poi/all', {
+      const response = await fetch('http://192.168.1.88:5000/business/getAllBusinesses', {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json'
@@ -28,6 +39,9 @@ const Map = () => {
 
   useEffect(() => {getAllMarkers()}, [])
 
+  const [isInfoVisible,setInfoVisible] = useState(false)
+  const [business,setBusiness] = useState(null)
+  console.log(business)
   return (
     <SafeAreaView
           style={{flex: 1}}
@@ -38,7 +52,7 @@ const Map = () => {
           />
     <MapFilters></MapFilters>
     <View style={styles.container}>
-    
+      
       <MapView 
         style={styles.map} 
         showsPointsOfInterest={false}
@@ -51,10 +65,10 @@ const Map = () => {
         {data != null && data.map((element, index) => {
             return <View key={`marker${index}`}>
               <Marker
-                  key={element.id_poi}
                   coordinate={{latitude: element.location.latitude, longitude: element.location.longitude}}
                   title={element.title}
                   description={element.description}
+                  onPress={()=> {setBusiness(element)}}
               >
                 <Image
                   source={shop}
@@ -63,12 +77,31 @@ const Map = () => {
               </Marker>
             </View>
         })}
-        
       </MapView>
-      
+      {business && <BusinessDetailsCard  business={business}/>}
+
     </View>
     </SafeAreaView>
   );
+}
+
+const BusinessDetailsCard = (props) => {
+  const snapPoints = useMemo(()=> ['30%','80%'],[])
+  return (
+    <BottomSheet snapPoints={[200,500]}>
+      <Animatable.View
+        style={styles.header}
+        animation="fadeInUp"
+        delay={500}
+        easing="ease-in-out"
+        duration={400}
+      >
+        <Text style={styles.title}>{props.business.name}</Text>
+        <Text style={styles.title}>{props.business.category || "unknown category"}</Text>
+      </Animatable.View>
+
+    </BottomSheet>
+  )
 }
 
 const askLocationPermissions = async () => {
@@ -85,9 +118,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  infoContainer: {
+    zIndex:1000,
+    flex: 1,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   map: {
     width: '100%',
     height: '100%',
+    zIndex: 0
+  },
+  header: {
+    paddingVertical: 8,
+    paddingHorizontal: 8,
   }
 });
 

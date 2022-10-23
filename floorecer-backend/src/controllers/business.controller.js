@@ -21,6 +21,16 @@ export const newBusiness = async(req,res) => {
 
 }
 
+export const getAllBusinesses = async (req, res) => {
+    const querySnapshot = await getDocs(collection(database, "business"));
+    let body = []
+    querySnapshot.forEach((doc) => {
+      body.push(doc.data())
+    });
+    res.json(body)
+}
+
+
 export const getBusinesses = async(req,res) => {
     const owner = req.body.owner;
 try {
