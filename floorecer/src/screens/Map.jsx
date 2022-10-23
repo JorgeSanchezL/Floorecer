@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
+import { StyleSheet, View, SafeAreaView, Image } from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
+import MapFilters from '../components/MapFilters';
 
 const Map = () => {
 
@@ -10,7 +12,7 @@ const Map = () => {
 
   const getAllMarkers = async () => { 
     try {
-      const response = await fetch('http://192.168.0.72:5000/map/poi/all', {
+      const response = await fetch('http://192.168.1.39:5000/map/poi/all', {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json'
@@ -27,7 +29,16 @@ const Map = () => {
   useEffect(() => {getAllMarkers()}, [])
 
   return (
+    <SafeAreaView
+          style={{flex: 1}}
+      >
+        <FocusAwareStatusBar
+              barStyle='dark-content'
+              backgroundColor={'#fff'}
+          />
+    <MapFilters></MapFilters>
     <View style={styles.container}>
+    
       <MapView 
         style={styles.map} 
         showsPointsOfInterest={false}
@@ -52,8 +63,11 @@ const Map = () => {
               </Marker>
             </View>
         })}
+        
       </MapView>
+      
     </View>
+    </SafeAreaView>
   );
 }
 

@@ -51,3 +51,8 @@ export const updateBusiness = async (req, res) => {
         res.status(500).json({saved: false});
     }
 }
+export const getCategories = async(req,res) => {
+    const docSnap = await getDoc(doc(database, "Categories",'Categories'));
+    res.json(docSnap.data())
+
+}

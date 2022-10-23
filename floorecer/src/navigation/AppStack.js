@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='configureBusiness'
+            initialRouteName='map'
             screenOptions={{
                 headerShown: false
             }}

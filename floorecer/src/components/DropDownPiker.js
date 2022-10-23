@@ -1,18 +1,17 @@
 import DropDownPicker from 'react-native-dropdown-picker';
-import React, { useState, Component } from "react";
-import { View,  TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
-
+import React, { useState, useEffect } from "react";
+import {  TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
+import { getCategories } from '../../utils/actions';
 
 const CustomDropDownPicker= (props) => {
   const [open, setOpen] = useState(false);
+ 
+  const [items, setItems] = useState([]);
 
-  const [items, setItems] = useState([
-    {label: 'Fruit store', value: 'fruiStore'},
-    {label: 'Supermarket', value: 'supermarket'},
-    {label: 'Ropa', value: 'ropa'},
-    {label: 'Rastro', value: 'rastro'},
-    
-  ]);
+  const changeData = async ()=>{
+    setItems(await getCategories())
+  }
+  useEffect(() => {changeData()}, [])
 
   return (
     
