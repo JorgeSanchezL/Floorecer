@@ -35,7 +35,7 @@ export const signIn = async (req,res) => {
   };
 export const register = async (req,res) => {
   console.log("hola")
-    const {email,username,password,numberphone,isBusinessOwner } = req.body
+    const {email,username,usernameForSearch,password,numberphone,isBusinessOwner } = req.body
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         // Signed in
