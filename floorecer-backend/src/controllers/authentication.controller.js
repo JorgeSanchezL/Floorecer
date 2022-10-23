@@ -41,7 +41,7 @@ export const register = async (req,res) => {
         // Signed in
     setDoc(doc(database,"users",userCredential.user.uid) ,{
     username: username,
-    usernameForSearch: usernameForSearch,
+    //usernameForSearch: usernameForSearch,
     points : 0,
     followers : {},
     following : {},

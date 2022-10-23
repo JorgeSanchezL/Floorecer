@@ -13,6 +13,7 @@ import UserProfile from '../screens/UserProfile';
 import BusinessPlans from '../screens/BusinessPlans';
 import Payment from '../screens/Payment';
 import NotVerified from '../screens/NotVerified';
+import MyShops from '../screens/MyShops';
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,10 @@ const AppStack = () => {
             <Stack.Screen
                 name={'payment'}
                 component={Payment}
+            />
+            <Stack.Screen
+                name={'myshops'}
+                component={MyShops}
             />
         </Stack.Navigator>
     );

@@ -8,6 +8,7 @@ import userVerificationRoutes from './src/routes/userVerification.routes.js';
 import usersRoutes from './src/routes/users.routes.js';
 import authenticationRoutes from './src/routes/authentication.routes.js';
 import paymentsRoutes from './src/routes/payments.routes.js';
+import businessRoutes from './src/routes/business.routes.js';
 
 const app = express();
 const PORT = 5000;
@@ -28,6 +29,7 @@ app.use('/user-verification', userVerificationRoutes);
 app.use('/users', usersRoutes);
 app.use('/user-authe', authenticationRoutes);
 app.use('/payments', paymentsRoutes);
+app.use('/business',businessRoutes);
 
 app.listen(PORT, (error) => {
 	if(!error) { console.log("Server running on port " + PORT); }

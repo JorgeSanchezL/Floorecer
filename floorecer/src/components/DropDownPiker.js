@@ -5,10 +5,10 @@ import { View,  TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } 
 
 const CustomDropDownPicker= (props) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState([]);
+
   const [items, setItems] = useState([
     {label: 'Fruit store', value: 'fruiStore'},
-    {label: 'Supermarket', id: 'supermarket'},
+    {label: 'Supermarket', value: 'supermarket'},
     {label: 'Ropa', value: 'ropa'},
     {label: 'Rastro', value: 'rastro'},
     
@@ -19,19 +19,16 @@ const CustomDropDownPicker= (props) => {
         <DropDownPicker
             style={styles.dropdown}
             listMode="SCROLLVIEW"
-            placeholder='Select up to 5 categories'
+            placeholder='Selecciona la Categoría'
             placeholderStyle={{
                 color: "grey",
                 
               }}
-            multiple={true}
-            min={0}
-            max={4}
             open={open}
-            value={value}
+            value={props.value}
             items={items}
             setOpen={setOpen}
-            setValue={setValue}
+            setValue={props.setValue}
             setItems={setItems}
         />
     

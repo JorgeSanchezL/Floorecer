@@ -1,6 +1,5 @@
 import React, { useState, Component } from "react";
 import { View, Text, TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
-import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
 import CustomDropDowPiker from '../components/DropDownPiker';
@@ -14,15 +13,40 @@ const NewBusiness = () => {
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [openingHours, setOpeningHours] = useState("");
+  const images =[];
+  const[category, setCategory] =useState("");
 
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
 
-  const images =[]
-  
+  const SaveBusiness = async () => {
+    try {
+      const response = await fetch('http://192.168.1.39:5000/business/newBusiness', {
+        method: 'POST',
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        },
+        body:JSON.stringify({
+          owner:'XiwTNPIGkAT2txAIRwUUMeBUVvH2', //uid from the business owner
+          name: shopName,
+          nif: nif,
+          direction: direction,
+          latitude: latitude,
+          longitude: longitude ,
+          openingHours: openingHours,
+          category: category,
+
+        }),
+      });
+      
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const onSavePressed = () =>{
-    //console.warn(shopName+nif+direction+longitude+latitude)
-    console.warn("save")
+    SaveBusiness();
   };
   const onCancelPressed = () =>{
     console.warn("cancel");
@@ -46,7 +70,11 @@ const NewBusiness = () => {
       <Text
         style={{marginTop:14, bottom:0}}
       >Categories</Text>
-      <CustomDropDowPiker></CustomDropDowPiker>
+      <CustomDropDowPiker 
+        value={category}
+        setValue={setCategory}
+        
+        ></CustomDropDowPiker>
 
       <MyTextInput name = 'Opening Hours' value={openingHours} setValue={setOpeningHours}/>
 

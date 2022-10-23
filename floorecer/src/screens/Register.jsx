@@ -1,5 +1,6 @@
 import React ,{useState} from 'react';
 import { Alert,StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native';
+import { HelperText } from 'react-native-paper';
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -43,17 +44,21 @@ const Register = () => {
       }
     }
     const onRegisterPressedCliente=()=>{
+      if(numerodetelefono!='' && password!='' && checkPassword() && checkPhoneNumber()) {
       console.log(checkInputs());
       if(checkInputs()) {
         if(isValidEmail(email))
                 SignUpNowCliente();
       }
+    }
     };
     const onRegisterPressedComercio = () => {
+      if(numerodetelefono!='' && password!='' && checkPassword() && checkPhoneNumber()) {
       if(checkInputs()) {
         if(isValidEmail(email))
         SignUpComercio();
       }
+    }
 
     };
     const onOlvidadoPressed=()=>{
@@ -65,7 +70,7 @@ const Register = () => {
     const SignUpNowCliente = async () => { 
       console.log("wow")
       try {
-        const response = await fetch("http://192.168.0.72:5000/user-authe/userRegister", {
+        const response = await fetch("http://192.168.1.143:5000/user-authe/userRegister", {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -84,12 +89,12 @@ const Register = () => {
         
         
         );
-        console.log(response.status);
+        //console.log(Object.getOwnPropertyNames(response));
         
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { sendEmail(response);navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -117,9 +122,9 @@ const Register = () => {
       }
     }
     const SignUpComercio = async () => { 
-      console.log("wow")
+      console.log("woow")
       try {
-        const response = await fetch("http://192.168.0.72:5000/user-authe/userRegister", {
+        const response = await fetch("http://192.168.1.143:5000/user-authe/userRegister", {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -137,12 +142,12 @@ const Register = () => {
         
         
         );
-        console.log(response.status);
+        console.log(Object.getOwnPropertyNames(response.status));
         
         if(response.status==200){
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(res); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { sendEmail(response); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -188,6 +193,14 @@ return false;;
 return true;
 
   }
+  function checkPhoneNumber()  {
+        return numerodetelefono.length == 9 ;
+            }
+ function checkPassword()
+{
+    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return re.test(password)  ;
+}
 
     return (
       <View style={styles.container}>
@@ -208,8 +221,12 @@ return true;
             placeholder = "Contraseña" 
             value={password} 
             setValue={setPassword}
-            secureTextEntry={true}
+            secureTextEntry={true}            
         />
+        {!checkPassword() && password != '' ? <HelperText type="error" visible={true}>
+          La contraseña debe contener al menos 6 carácteres, un símbolo, un número, una mayúscula y una minúscula.
+        </HelperText> : null}
+        
         <CustomInput 
             placeholder = "Confirmar Contraseña" 
             value={password} 
@@ -220,9 +237,14 @@ return true;
             value={numerodetelefono} 
             setValue={setNumber}
             keyboardType = 'numeric'
-
         />
-        <CustomButton text="Registrar Como Cliente" onPress={onRegisterPressedCliente}/>
+        {!checkPhoneNumber() && numerodetelefono!=''? <HelperText type="error" visible={true}>
+             El número de teléfono debe contener 9 carácteres.
+        </HelperText> : null}
+                       
+        <CustomButton text="Registrar Como Cliente" onPress={
+          
+          onRegisterPressedCliente}/>
         
         <CustomButton text="Registrar Como Comercio" onPress={onRegisterPressedComercio}/>
         
