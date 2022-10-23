@@ -7,14 +7,17 @@ import { Image, TouchableOpacity, Modal, Icon} from "react-native";
 import MapView from 'react-native-maps'
 import * as Location from 'expo-location';
 import { ScrollView } from "react-native-gesture-handler";
+import { DayTimeSlots } from "./ConfigureBusiness";
+
+const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
 const NewBusiness = () => {
   const [shopName, setShopName] = useState("");
   const [nif, setNif] = useState("");
-  const [direction, setDirection] = useState("");
+  const [adress, setAdress] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
-  const [openingHours, setOpeningHours] = useState("");
+  const [openingHours, setOpeningHours] = useState({Domingo:[],Lunes:[],Martes:[], Miércoles:[],Jueves:[],Viernes:[],Sábado:[]});
   const images =[];
   const[category, setCategory] =useState("");
 
@@ -34,9 +37,8 @@ const NewBusiness = () => {
           owner:'XiwTNPIGkAT2txAIRwUUMeBUVvH2', //uid from the business owner
           name: shopName,
           nif: nif,
-          direction: direction,
-          latitude: latitude,
-          longitude: longitude ,
+          Adress: adress,
+          location: location,
           openingHours: openingHours,
           category: category,
 
@@ -69,8 +71,8 @@ const NewBusiness = () => {
       <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
       <MyTextInput 
             name = 'Dirección' 
-            value={direction} 
-            setValue={setDirection}
+            value={adress} 
+            setValue={setAdress}
             isLocation
             setIsVisibleMap={setIsVisibleMap}
         />
@@ -82,22 +84,32 @@ const NewBusiness = () => {
       />
       
       <Text
-        style={{marginTop:14, bottom:0}}
-      >Categories</Text>
+        style={styles.header2}
+      >Categoria</Text>
       <CustomDropDowPiker 
         value={category}
         setValue={setCategory}
         
         ></CustomDropDowPiker>
 
-      <MyTextInput name = 'Opening Hours' value={openingHours} setValue={setOpeningHours}/>
-
+      
+      <Text style={styles.header2}>Horario de apertura</Text>
+      {
+        openingHours!=null && diasDeLaSemana.map((day)=>{
+            return(
+                <DayTimeSlots 
+                  day={day} 
+                  slots={openingHours[day]} 
+                  openingHours={openingHours} 
+                  setOpeningHours={setOpeningHours}
+                />
+            )
+    
+        })
+      }
       <ImageCarouselPickingImages images = {images}/>
 
-    </ScrollView>
-  
-
-    <View style = {{flex:0, flexDirection:'row'}}>
+      <View style = {{flex:0, flexDirection:'row'}}>
       
         <CustomButton 
           text="Cancel" 
@@ -111,8 +123,7 @@ const NewBusiness = () => {
           />
     
     </View>
-    
-
+    </ScrollView>
   </View>
   
 );}
@@ -123,7 +134,7 @@ export const MyTextInput = (props) => {
     <View
       style={{width:'100%',}}
     >
-      <Text style={{ marginTop: props.name ? 10 : 0 ,height: !props.name ? 10 : null, fontSize:20, fontWeight:"bold" }}>
+      <Text style={styles.header2}>
         {props.name}
       </Text>
       <View style={styles.sectionStyle}>
@@ -236,7 +247,7 @@ const getCurrentLocation = async () => {
 const styles = StyleSheet.create({
     mainContainer:{
       alignItems:'center',
-      
+      height:'100%'
     },
     InputContainer:{
       backgroundColor:'white',
@@ -304,6 +315,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
+    },
+    header2:{
+      marginTop:10, 
+      fontSize:20, 
+      fontWeight:"bold" 
     },
   });
 

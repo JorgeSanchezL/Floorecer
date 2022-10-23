@@ -5,14 +5,14 @@ import {  getDocs } from 'firebase/firestore/lite';
 import { doc,setDoc,GeoPoint,collection, getDoc,updateDoc } from 'firebase/firestore';
 
 export const newBusiness = async(req,res) => {
-    const{owner,name,nif,direction,latitude,longitude,openingHours,category} = req.body
+    const{owner,name,nif,Adress,location,openingHours,category} = req.body
 
     await setDoc(doc(collection(database,"business")), {
         owner:owner,
         name: name,
-        direction: direction,
+        Adress: Adress,
         NIF: nif,
-        location: new GeoPoint(latitude, longitude),
+        location: location,
         openingHours: openingHours,
         state: 'Activo',
         category: category,
