@@ -23,6 +23,7 @@ const Register = () => {
       for (let index = 0; index < username.length; index++) {
         result[index] = username.substring(0, index+1)
       }
+      return result
     }
 
     const sendEmail = async (user) => {
@@ -74,6 +75,7 @@ const Register = () => {
           body: JSON.stringify({
             email: email,
             username: username,
+            usernameForSearch: getUsernameForSearch(),
             password: password,
             numberphone : numerodetelefono,
             isBusinessOwner : false,
@@ -126,7 +128,7 @@ const Register = () => {
           method: 'POST',
           body: JSON.stringify({
             email: email,
-            username : username,
+            username: username,
             usernameForSearch: getUsernameForSearch(),
             password: password,
             numberphone : numerodetelefono,
