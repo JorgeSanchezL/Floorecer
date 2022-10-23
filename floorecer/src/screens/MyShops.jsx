@@ -1,39 +1,32 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity} from 'react-native';
+var datos = null;
 
-const DATA = [
-  {
-    name: 'Mercadona',
-    nif : 'YAAAAAX',
-    direction: 'Valencia',
+const MyShops = () => {
+  const [data, setData] = useState(null);
 
+const getbusiness= async () =>{ 
+  try {
+    const response = await fetch("http://192.168.1.143:5000/business/getbusiness", {
+      method: 'POST',
+      body: JSON.stringify({
+       owner : 'Uh5buardYaXoPOPMYiP3Sa5lgJo1'
+    }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        },     
+    }   
+    );
+     const body = await response.json();
+     setData(body)
+    }
 
-  },
-  {
-    name: 'Consum',
-    nif : 'YAAAAAX',
-    direction: 'Alicante',
+ catch (err) {
 
-  },
-  {
-    name: 'Carrefour',
-    nif : 'YAAAAAX',
-    direction: 'Madrid',
+  console.log(err)
 
-  },
-  {
-    name: 'Carrefour',
-    nif : 'YAAAAAX',
-    direction: 'Madrid',
-
-  },
-  {
-    name: 'Carrefour',
-    nif : 'YAAAAAX',
-    direction: 'Madrid',
-
-  },
-];
+ }}
+ useEffect(() => {getbusiness()}, [])
 function onPressButton (shop) {
 
  console.log("the title of the button is " + shop.name);
@@ -69,21 +62,23 @@ const Item = ({ shop }) => (
 </View>
 );
 
-const MyShops = () => {
+
+
+
   const renderItem = ({ item }) => (
     <Item shop={item} />
   );
-
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={DATA}
+        data={data}
         renderItem={renderItem}
        // keyExtractor={item => item.name}
       />
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

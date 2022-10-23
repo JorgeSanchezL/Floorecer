@@ -14,13 +14,14 @@ import BusinessPlans from '../screens/BusinessPlans';
 import Payment from '../screens/Payment';
 import NotVerified from '../screens/NotVerified';
 import MyShops from '../screens/MyShops';
+import MyShopss from '../screens/MyShops';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='register'
+            initialRouteName='myshops'
             screenOptions={{
                 headerShown: false
             }}
