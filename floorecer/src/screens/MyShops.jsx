@@ -1,13 +1,15 @@
 import React, { useEffect,useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity} from 'react-native';
 var datos = null;
+import { useNavigation } from '@react-navigation/native';
 
 const MyShops = () => {
   const [data, setData] = useState(null);
+  const navigation=useNavigation();
 
 const getbusiness= async () =>{ 
   try {
-    const response = await fetch("http://192.168.1.143:5000/business/getbusinesses", {
+    const response = await fetch("http://192.168.1.88:5000/business/getbusinesses", {
       method: 'POST',
       body: JSON.stringify({
        owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
@@ -29,8 +31,7 @@ const getbusiness= async () =>{
  useEffect(() => {getbusiness()}, [])
 function onPressButton (shop) {
 
- console.log("the title of the button is " + shop.name);
-
+  navigation.navigate("configureBusiness",shop)
 }
 const Item = ({ shop }) => (
     <View style={styles.greenBox}>  

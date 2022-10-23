@@ -7,53 +7,32 @@ import DropDownTimePicker from "../components/DropDownTimePicker";
 import { ScrollView, Switch } from "react-native-gesture-handler";
 import { Image, TouchableOpacity, Modal, Icon} from "react-native";
 import MapView from 'react-native-maps'
+import { useNavigation } from '@react-navigation/native';
 
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
 
-const ConfigureBusiness = () => {
+const ConfigureBusiness = ({ route }) => {
+  const navigation=useNavigation();
 
-  const getBusiness = async () => {
-    try {
-      const response = await fetch('http://192.168.1.143:5000/business/getBusiness', {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      });
-      const body = await response.json();
-      setResponse(body)
-    } catch (error) {
-      console.log(err)
-      return {}
-    }
-  }
-  useEffect(() => {getBusiness()}, [])
-
-
-  const [shopName, setShopName] = useState("");
-  const [nif, setNif] = useState("");
-  const [address, setAddress] = useState("");
-  const [openingHours, setOpeningHours] = useState(null);
+  const [shopName, setShopName] = useState(route.params.name);
+  const [nif, setNif] = useState(route.params.NIF);
+  const [address, setAddress] = useState(route.params.address);
+  const [openingHours, setOpeningHours] = useState(route.params.openingHours);
   const [isVisibleMap, setIsVisibleMap] = useState(false)
-  const [location, setLocation] = useState(null)
+  const [category, setCategory] = useState(route.params.category)
+  const [location, setLocation] = useState(route.params.location)
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
 
-  const images =[]
+    console.log(category)
   
-  const setResponse = (body) => {
-    setShopName(body.name)
-    setNif(body.NIF)
-    setAddress(body.address)
-    setOpeningHours(body.openingHours)
-    setLocation(body.location)
-  }
+  const images =[]
 
   const updateBusiness = async () => {
     try {
-      const api_call = await fetch('http://192.168.1.143:5000/business/updateBusiness', {
+      const api_call = await fetch('http://192.168.1.88:5000/business/updateBusiness', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -73,7 +52,7 @@ const ConfigureBusiness = () => {
             const response = await api_call.json();
 
             if (response.saved) {
-                navigation.navigate('newBusiness');
+                navigation.navigate('myshops');
             } else { throw -1; }
     } catch (error) {
       console.log(err)
@@ -82,10 +61,9 @@ const ConfigureBusiness = () => {
   const onSavePressed = () =>{
     console.log("save pressed")
     updateBusiness()
-    // ir a "Ver mis comercios"
   };
   const onCancelPressed = () =>{
-    // ir a "Ver mis comercios"
+    navigation.navigate('myshops');
   }
 
   return(
@@ -114,7 +92,7 @@ const ConfigureBusiness = () => {
         setLocation={setLocation}
       />}
       <Text style={styles.header2}>Categoría</Text>
-      <CustomDropDownPiker></CustomDropDownPiker>
+      <CustomDropDownPiker value={category} setValue={setCategory} ></CustomDropDownPiker>
 
       <Text style={styles.header2}>Horario de apertura</Text>
       {
