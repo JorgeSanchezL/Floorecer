@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='configureBusiness'
+            initialRouteName='myshops'
             screenOptions={{
                 headerShown: false
             }}

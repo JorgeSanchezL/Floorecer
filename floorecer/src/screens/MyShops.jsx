@@ -10,7 +10,7 @@ const getbusiness= async () =>{
     const response = await fetch("http://192.168.1.143:5000/business/getbusinesses", {
       method: 'POST',
       body: JSON.stringify({
-       owner : 'Uh5buardYaXoPOPMYiP3Sa5lgJo1'
+       owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
     }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -33,24 +33,23 @@ function onPressButton (shop) {
 
 }
 const Item = ({ shop }) => (
-    <View style={styles.greenBox}>
-      
-    <View >
+    <View style={styles.greenBox}>  
+        <Text style = {(shop.state== 'Activo') ? styles.green : styles.red} > {shop.state}</Text>
+      <View >
     <Text style={styles.textData}>
-    {shop.name}  {"\n"}
-            
-        </Text>
+       {shop.name} {"\n"}
+             </Text>
     </View>
-
+   
     <View >
         <Text style={styles.textData}>
-            {shop.nif}
+            {shop.NIF}
         </Text>
     </View>
 
     <View >
         <Text style={styles.textData }>
-            {shop.direction}
+            {shop.Adress}
         </Text>
     </View>
 
@@ -100,9 +99,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#353535',
     textAlign : 'left',
-    marginTop : '10%',
+    marginTop : '5%',
     marginLeft : '5%'
 },
+       red : {
+        fontWeight: 'bold',
+        color: 'red',
+        marginLeft : '75%',
+        marginTop : '3%',
+        alignItems : 'center',
+        
+
+       },
+       green : {
+        fontWeight: 'bold',
+        color: 'green',
+        marginLeft : '75%',
+        marginTop : '3%',
+        alignItems : 'center',
+       }
+
+
+    
+  ,
 
 appButtonContainer: {
   backgroundColor: "#009688",
@@ -111,7 +130,7 @@ appButtonContainer: {
   paddingHorizontal: 5,
   height : 30,
   width : 100,
-  marginTop : '-10%',
+  marginTop : '-5%',
   marginLeft : '65%',
   
 
