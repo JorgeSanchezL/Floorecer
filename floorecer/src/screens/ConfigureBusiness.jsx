@@ -16,7 +16,7 @@ const ConfigureBusiness = () => {
 
   const getBusiness = async () => {
     try {
-      const response = await fetch('http://192.168.1.39:5000/business/getBusiness', {
+      const response = await fetch('http://192.168.1.143:5000/business/getBusiness', {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ const ConfigureBusiness = () => {
 
   const updateBusiness = async () => {
     try {
-      const api_call = await fetch('http://192.168.1.88:5000/business/updateBusiness', {
+      const api_call = await fetch('http://192.168.1.143:5000/business/updateBusiness', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

@@ -1,7 +1,7 @@
 import {auth,database,app} from '../../firebase.js';
 import {signInWithCustomToken,signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
 import { async } from '@firebase/util';
-import { doc,setDoc,GeoPoint,collection, getDocs,updateDoc } from 'firebase/firestore';
+import { doc,setDoc,GeoPoint,collection, getDocs,getDoc,updateDoc,query,where } from 'firebase/firestore';
 
 export const newBusiness = async(req,res) => {
     const{owner,name,nif,Adress,location,openingHours,category} = req.body

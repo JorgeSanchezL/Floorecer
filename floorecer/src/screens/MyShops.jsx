@@ -7,7 +7,7 @@ const MyShops = () => {
 
 const getbusiness= async () =>{ 
   try {
-    const response = await fetch("http://192.168.1.143:5000/business/getbusiness", {
+    const response = await fetch("http://192.168.1.143:5000/business/getbusinesses", {
       method: 'POST',
       body: JSON.stringify({
        owner : 'Uh5buardYaXoPOPMYiP3Sa5lgJo1'
