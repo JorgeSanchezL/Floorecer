@@ -5,6 +5,7 @@ import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
+import promotedshop from '../../assets/promoted.png'
 import { getAllBusinesses } from '../../utils/actions';
 import { useNavigation } from '@react-navigation/native';
 
@@ -52,8 +53,6 @@ export const Map = () => {
       />
       <View>
         <CustomButton 
-          //onPress={navigation.navigate('userProfile')}
-          text='Mi perfil'
           type='cuaterciario'
         />
         <CustomButton 
@@ -79,10 +78,16 @@ export const Map = () => {
                   description={element.description}
                   onPress={()=> {setBusiness(element)}}
               >
-                <Image
+                { element.promoted == true ?     < Image 
+                  source={promotedshop}
+                  style={{ width: 40, height: 40 }}
+                />  :    
+                < Image 
                   source={shop}
                   style={{ width: 40, height: 40 }}
                 />
+                
+                }
               </Marker>
             </View>
         })}
