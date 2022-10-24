@@ -6,7 +6,7 @@ import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
 import { getAllBusinesses } from '../../utils/actions';
-import CustomMenu, { Custom } from '../components/CustomMenu';
+import { useNavigation } from '@react-navigation/native';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import Animated, {
@@ -17,15 +17,14 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import * as Animatable from 'react-native-animatable';
+import CustomButton from '../components/CustomButton';
 
 
 
 export const Map = () => {
 
   const [data, setData] = useState(null);
-  const [menuVisible, setMenuVisible] = useState(false)
-  const openMenu = () => setMenuVisible(true)
-  const closeMenu = () => setMenuVisible(false)
+  const navigation=useNavigation();
   
 
   const getMapMarkers = async (category) => { 
@@ -51,21 +50,18 @@ export const Map = () => {
       <MapFilters
         setData={setData}
       />
-      <CustomMenu 
-        items={[
-          {
-            label: 'AAA',
-            action: () => {}
-          },
-          {
-            label: 'BBB',
-            action: () => {}
-          }
-        ]}
-        visible={menuVisible}
-        openMenu={openMenu}
-        closeMenu={closeMenu}
-      />
+      <View>
+        <CustomButton 
+          onPress={navigation.navigate('userProfile')}
+          text='Mi perfil'
+          type='cuaterciario'
+        />
+        <CustomButton 
+          onPress={navigation.navigate('userSearch')}
+          text='Buscar usuarios'
+          type='cuaterciario'
+        />
+      </View>
       <MapView 
         style={styles.map} 
         showsPointsOfInterest={false}
