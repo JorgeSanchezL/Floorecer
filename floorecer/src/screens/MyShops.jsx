@@ -50,7 +50,7 @@ const Item = ({ shop }) => (
 
     <View >
         <Text style={styles.textData }>
-            {shop.Adress}
+            {shop.Address}
         </Text>
     </View>
 

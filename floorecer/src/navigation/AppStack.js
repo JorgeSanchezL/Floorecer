@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='userSearch'
+            initialRouteName='map'
             screenOptions={{
                 headerShown: false
             }}

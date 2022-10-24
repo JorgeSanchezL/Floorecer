@@ -14,7 +14,7 @@ const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sába
 const NewBusiness = () => {
   const [shopName, setShopName] = useState("");
   const [nif, setNif] = useState("");
-  const [adress, setAdress] = useState("");
+  const [address, setAddress] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [openingHours, setOpeningHours] = useState({Domingo:[],Lunes:[],Martes:[], Miércoles:[],Jueves:[],Viernes:[],Sábado:[]});
@@ -28,7 +28,7 @@ const NewBusiness = () => {
 
   const SaveBusiness = async () => {
     try {
-      const response = await fetch('http://192.168.1.39:5000/business/newBusiness', {
+      const response = await fetch('http://192.168.1.40:5000/business/newBusiness', {
         method: 'POST',
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -37,7 +37,7 @@ const NewBusiness = () => {
           owner:'XiwTNPIGkAT2txAIRwUUMeBUVvH2', //uid from the business owner
           name: shopName,
           nif: nif,
-          Adress: adress,
+          Address: address,
           location: location,
           openingHours: openingHours,
           category: category,
@@ -71,8 +71,8 @@ const NewBusiness = () => {
       <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
       <MyTextInput 
             name = 'Dirección' 
-            value={adress} 
-            setValue={setAdress}
+            value={address} 
+            setValue={setAddress}
             isLocation
             setIsVisibleMap={setIsVisibleMap}
         />
