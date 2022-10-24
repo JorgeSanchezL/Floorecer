@@ -5,6 +5,7 @@ import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
+import { getAllBusinesses } from '../../utils/actions';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import Animated, {
@@ -17,27 +18,18 @@ import Animated, {
 import * as Animatable from 'react-native-animatable';
 
 
-const Map = () => {
+
+export const Map = () => {
 
   const [data, setData] = useState(null);
+  
 
-  const getAllMarkers = async () => { 
-    try {
-      const response = await fetch('http://192.168.1.88:5000/business/getAllBusinesses', {
-        method: 'GET',
-          headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-      const body = await response.json();
-      console.log(body);
-      setData(body)
-    } catch (err) {
-      console.log(err)
-    }
+  const getMapMarkers = async (category) => { 
+    setData(await getAllBusinesses(category))
+    
   }
 
-  useEffect(() => {getAllMarkers()}, [])
+  useEffect(() => {getMapMarkers(null)}, [])
 
   const [isInfoVisible,setInfoVisible] = useState(false)
   const [business,setBusiness] = useState(null)
@@ -50,7 +42,10 @@ const Map = () => {
               barStyle='dark-content'
               backgroundColor={'#fff'}
           />
-    <MapFilters></MapFilters>
+    <MapFilters
+      setData={setData}
+    >
+    </MapFilters>
     <View style={styles.container}>
       
       <MapView 
@@ -84,6 +79,8 @@ const Map = () => {
     </SafeAreaView>
   );
 }
+
+
 
 const BusinessDetailsCard = (props) => {
   const snapPoints = useMemo(()=> ['30%','80%'],[])

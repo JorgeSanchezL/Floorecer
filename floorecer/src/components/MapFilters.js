@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, View, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { getCategories } from '../../utils/actions';
+import { getAllBusinesses } from '../../utils/actions';
+
 
 const MapFilters = (props) => {
 
@@ -15,6 +17,11 @@ const MapFilters = (props) => {
       
     }
     useEffect(() => {changeData()}, []);
+
+    const getMapMarkers = async (category) => { 
+      props.setData(await getAllBusinesses(category))
+      console.log(category)
+    }
 
     const Item = ({ item, onPress, backgroundColor, textColor }) => (
         <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, backgroundColor]}>
@@ -32,7 +39,15 @@ const MapFilters = (props) => {
           return (
             <Item
               item={item}
-              onPress={() => {selectedId == item.value ? setSelectedId(null):setSelectedId(item.value)}}
+              onPress={() => {
+              if(selectedId == item.value){ 
+                setSelectedId(null)
+                getMapMarkers(null)
+              }
+              else{
+                setSelectedId(item.value)
+                getMapMarkers(item.value);
+              }}}
               backgroundColor={{ backgroundColor }}
               textColor={{ color }}
             />

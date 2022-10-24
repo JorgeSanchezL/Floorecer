@@ -4,21 +4,18 @@ import { async } from '@firebase/util';
 import { doc,setDoc,GeoPoint,collection, getDocs,getDoc,updateDoc,query,where } from 'firebase/firestore';
 
 export const newBusiness = async(req,res) => {
-    const{owner,name,nif,Adress,location,openingHours,category} = req.body
+    const{owner,name,nif,Address,location,openingHours,category} = req.body
 
     await setDoc(doc(collection(database,"business")), {
         owner:owner,
         name: name,
-        Adress: Adress,
+        Address: Address,
         NIF: nif,
         location: location,
         openingHours: openingHours,
-        state: 'Activo',
+        active: true,
         category: category,
     });
-
-
-
 }
 
 export const getAllBusinesses = async (req, res) => {
@@ -30,6 +27,30 @@ export const getAllBusinesses = async (req, res) => {
     res.json(body)
 }
 
+export const getAllBusinessesByCategory = async (req, res) => {
+    const {category} = req.params
+    try {
+        const b = collection(database, "business");
+    
+        const q = query(b, where("category", "==", category));
+        const businessquery = await getDocs(q);
+        console.log("holsa")
+    
+    
+        let businesslist = [];
+        businessquery.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            businesslist.push(doc.data());
+          });   
+          console.log("hh " + businesslist)
+    
+    res.json(businesslist);
+        }
+        catch (error) {
+          console.log(error)
+    
+        }
+}
 
 export const getBusinesses = async(req,res) => {
     const owner = req.body.owner;
