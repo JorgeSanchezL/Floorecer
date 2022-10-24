@@ -59,11 +59,29 @@ const styles =StyleSheet.create({
         
         
     },
+    container_profile2:{
+        width:'25%',
+        height:45,
+        padding:15,
+        borderRadius:5,
+        alignItems:'center',
+        backgroundColor:'#5dc655',
+        marginTop:-30,
+        marginLeft:160,
+        marginBottom:-4
+        
+        
+    },
     text:{
         fontWeight:'bold',
         color:'white',
     },
     text_profile:{
+        fontSize: 12,
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    text_profile2:{
         fontSize: 12,
         color: 'white',
         fontWeight: 'bold',

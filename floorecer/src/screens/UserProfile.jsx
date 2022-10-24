@@ -71,6 +71,11 @@ const UserProfile = () => {
     boxEmail=<Text style={styles.textData}> {profile.email}</Text>;
     boxPhone=<Text style={styles.textData}> {profile.numero}</Text>;
   }
+  const onCancelPressed=()=>{
+    setEditable(false);
+    setText('Editar');
+    getProfile(); 
+  }
   
   const onEditPressed=()=>{
     if(editable){
@@ -119,6 +124,12 @@ const UserProfile = () => {
                           
                       </Text>
                       <View style={styles.cont}>
+                      {editable?<CustomButton 
+                         text='Cancelar'
+                         type = 'profile2'
+                         onPress={onCancelPressed}
+                        >
+                        </CustomButton> :null}
                       <CustomButton 
                          text={text}
                          type = 'profile'

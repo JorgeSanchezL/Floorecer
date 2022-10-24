@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from "react";
 import { View,Text,StyleSheet,TouchableOpacity,Image  ,FlatList,TextInput,ActivityIndicator} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { ScrollView } from "react-native-gesture-handler";
 import user from '../../assets/image/user.png';
 
 const UserSearch = () => {
@@ -15,7 +14,7 @@ const UserSearch = () => {
 
     const fetchData = async ()=>{
         try{
-            const response=await fetch(`http://192.168.1.143:5000/users/search/${text}`);
+            const response=await fetch(`http://192.168.1.161:5000/users/search/${text}`);
             let body=await response.json();
             
             if(!Array.isArray(body)){
@@ -82,9 +81,13 @@ const UserSearch = () => {
       }
       const renderEmpty=()=>{
         return(
-            <View> 
-              <Text>  </Text>
-            </View>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+ 
+          <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
+            No se han encontrado usuarios
+          </Text>
+   
+        </View>
         )
       }
     return(
@@ -99,7 +102,7 @@ const UserSearch = () => {
            <FlatList
             data={filteredData}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => alert('Item pressed!')}>
+              <TouchableOpacity onPress={() => navigation.navigate('publicProfile')}>
                 <View
                   style={{
                     flexDirection: 'row',
