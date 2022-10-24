@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, View, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
-
+import { getCategories } from '../../utils/actions';
 
 const MapFilters = (props) => {
 
 
     const [choice, setChoice] = useState('');
 
-    const DATA = [
-        {label: 'Fruit store', value: 'fruiStore'},
-        {label: 'Supermarket', value: 'supermarket'},
-        {label: 'Ropa', value: 'ropa'},
-        {label: 'Rastro', value: 'rastro'},
-    ];
+    const [DATA, setData] = useState([]);
+
+    const changeData = async ()=>{
+
+      setData(await getCategories());
+      
+    }
+    useEffect(() => {changeData()}, []);
+
     const Item = ({ item, onPress, backgroundColor, textColor }) => (
         <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, backgroundColor]}>
           <Text style={[styles.title, textColor]}>{item.label}</Text>
@@ -37,7 +40,7 @@ const MapFilters = (props) => {
         };
       
         return (
-          <SafeAreaView style={styles.container2}>
+          
             <View style={styles.container}>
                 <FlatList
                     horizontal
@@ -48,8 +51,7 @@ const MapFilters = (props) => {
                     extraData={selectedId}
                 />
             </View>
-            
-          </SafeAreaView>
+    
         );
       };
       const Size = 14;

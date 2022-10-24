@@ -23,11 +23,12 @@ const Register = () => {
       for (let index = 0; index < username.length; index++) {
         result[index] = username.substring(0, index+1)
       }
+      return result
     }
 
     const sendEmail = async (user) => {
       try {
-        const response = await fetch('http://192.168.1.161:5000/user-verification/mail', {
+        const response = await fetch('http://192.168.1.143:5000/user-verification/mail', { 
           method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -74,6 +75,7 @@ const Register = () => {
           body: JSON.stringify({
             email: email,
             username: username,
+            usernameForSearch: getUsernameForSearch(),
             password: password,
             numberphone : numerodetelefono,
             isBusinessOwner : false,
@@ -126,7 +128,7 @@ const Register = () => {
           method: 'POST',
           body: JSON.stringify({
             email: email,
-            username : username,
+            username: username,
             usernameForSearch: getUsernameForSearch(),
             password: password,
             numberphone : numerodetelefono,

@@ -7,5 +7,6 @@ export const getAllPOI = async (req, res) => {
     querySnapshot.forEach((doc) => {
       body.push(doc.data())
     });
+    
     res.json(body)
 }
