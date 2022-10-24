@@ -9,7 +9,7 @@ const MyShops = () => {
 
 const getbusiness= async () =>{ 
   try {
-    const response = await fetch("http://192.168.1.88:5000/business/getbusinesses", {
+    const response = await fetch("http://192.168.1.143:5000/business/getbusinesses", {
       method: 'POST',
       body: JSON.stringify({
        owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
@@ -35,7 +35,7 @@ function onPressButton (shop) {
 }
 const Item = ({ shop }) => (
     <View style={styles.greenBox}>  
-        <Text style = {(shop.state== 'Activo') ? styles.green : styles.red} > {shop.state}</Text>
+         {shop.active == true? <Text style = {styles.green}> Activo </Text>: <Text style = {styles.red}> Inactivo </Text> }
       <View >
     <Text style={styles.textData}>
        {shop.name} {"\n"}

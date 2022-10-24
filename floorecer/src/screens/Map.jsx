@@ -52,12 +52,12 @@ export const Map = () => {
       />
       <View>
         <CustomButton 
-          onPress={navigation.navigate('userProfile')}
+          //onPress={navigation.navigate('userProfile')}
           text='Mi perfil'
           type='cuaterciario'
         />
         <CustomButton 
-          onPress={navigation.navigate('userSearch')}
+          //onPress={navigation.navigate('register')}
           text='Buscar usuarios'
           type='cuaterciario'
         />
