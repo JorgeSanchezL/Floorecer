@@ -32,7 +32,7 @@ const ConfigureBusiness = ({ route }) => {
 
   const updateBusiness = async () => {
     try {
-      const api_call = await fetch('http://192.168.1.88:5000/business/updateBusiness', {
+      const api_call = await fetch('http://13.39.87.231:5000/business/updateBusiness', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

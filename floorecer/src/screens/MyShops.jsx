@@ -9,7 +9,7 @@ const MyShops = () => {
 
 const getbusiness= async () =>{ 
   try {
-    const response = await fetch("http://192.168.1.143:5000/business/getbusinesses", {
+    const response = await fetch("http://13.39.87.231:5000/business/getbusinesses", {
       method: 'POST',
       body: JSON.stringify({
        owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
@@ -39,7 +39,7 @@ async function onPressButtonPromotion (shop) {
   console.log(shop.uid)
   
     try {
-      const response = await fetch("http://192.168.1.143:5000/business/promoteBusiness", { 
+      const response = await fetch("http://13.39.87.231:5000/business/promoteBusiness", { 
         method: 'POST',
         body: JSON.stringify({
          uid : shop.uid

@@ -9,7 +9,7 @@ const Home = () => {
   const sendEmail = async () => {
     try {
       var userToken = await SecureStore.getItemAsync('userToken')
-      const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
+      const response = await fetch('http://13.39.87.231:5000/user-verification/mail', {
         method: 'POST',
           headers: {
           'Content-Type': 'application/json'

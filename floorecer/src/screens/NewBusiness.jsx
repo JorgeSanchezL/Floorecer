@@ -28,7 +28,7 @@ const NewBusiness = () => {
 
   const SaveBusiness = async () => {
     try {
-      const response = await fetch('http://192.168.1.40:5000/business/newBusiness', {
+      const response = await fetch('http://13.39.87.231:5000/business/newBusiness', {
         method: 'POST',
         headers: {
           "Content-type": "application/json; charset=UTF-8"

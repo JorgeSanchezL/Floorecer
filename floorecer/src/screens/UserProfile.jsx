@@ -22,14 +22,14 @@ const UserProfile = () => {
   const [mail, setMail] = useState('');
 
   const getProfile = async () => {
-      const api_call = await fetch('http://192.168.1.161:5000/users/gPASbD6K2bOwU3dK3SpqwlG8Rhl2');
+      const api_call = await fetch('http://13.39.87.231:5000/users/gPASbD6K2bOwU3dK3SpqwlG8Rhl2');
       const response = await api_call.json();
       setProfile(response);
       console.log(response);
   }
   const getProfile2 = async () => {
         try {
-          const response = await fetch("http://192.168.1.161:5000/user-authe/userProfile", {
+          const response = await fetch("http://13.39.87.231:5000/user-authe/userProfile", {
             method: 'POST',
             body: JSON.stringify({
               newEmail: mail,
