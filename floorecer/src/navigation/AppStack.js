@@ -17,13 +17,14 @@ import MyShops from '../screens/MyShops';
 
 
 import ConfigureBusiness from '../screens/ConfigureBusiness';
+import UserSearch from '../screens/UserSearch';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='myshops'
+            initialRouteName='userSearch'
             screenOptions={{
                 headerShown: false
             }}
@@ -80,6 +81,10 @@ const AppStack = () => {
             <Stack.Screen
                 name={'myshops'}
                 component={MyShops}
+            />
+            <Stack.Screen
+                name={'userSearch'}
+                component={UserSearch}
             />
         </Stack.Navigator>
     );
