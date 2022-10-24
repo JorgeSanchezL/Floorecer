@@ -15,11 +15,11 @@ const UserSearch = () => {
 
     const fetchData = async ()=>{
         try{
-            const response=await fetch(`http://192.168.1.161:5000/users/search/${text}`);
+            const response=await fetch(`http://192.168.1.143:5000/users/search/${text}`);
             let body=await response.json();
             
             if(!Array.isArray(body)){
-                body=[body];
+                body=[];
             }
             setFilteredData(body);
             console.log(body)
@@ -82,7 +82,9 @@ const UserSearch = () => {
       }
       const renderEmpty=()=>{
         return(
-            renderHeader
+            <View> 
+              <Text>  </Text>
+            </View>
         )
       }
     return(
@@ -120,7 +122,6 @@ const UserSearch = () => {
             )}
             ItemSeparatorComponent={renderSeparator}
             ListHeaderComponent={renderHeader}
-            ListFooterComponent={renderFooter}
             ListEmptyComponent={renderEmpty}
             
           />
