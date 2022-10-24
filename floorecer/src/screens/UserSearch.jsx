@@ -14,7 +14,7 @@ const UserSearch = () => {
 
     const fetchData = async ()=>{
         try{
-            const response=await fetch(`http://192.168.1.161:5000/users/search/${text}`);
+            const response=await fetch(`http://13.39.87.231:5000/users/search/${text}`);
             let body=await response.json();
             
             if(!Array.isArray(body)){

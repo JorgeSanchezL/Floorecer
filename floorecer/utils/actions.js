@@ -1,4 +1,4 @@
-const MyIP = '192.168.0.72' //Change by your IP address
+const MyIP = '13.39.87.231' //Change by your IP address
 
 export const getCategories = async () => { 
     try {

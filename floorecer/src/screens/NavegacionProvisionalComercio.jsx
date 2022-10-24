@@ -14,10 +14,6 @@ const NavegacionProvisionalComercio = () => {
             title="Mapa"
         />
         <Button 
-            onPress={() => navigation.navigate('configureBusiness')}
-            title="Configurar comercio"
-        />
-        <Button 
             onPress={() => navigation.navigate('myshops')}
             title="Mis tiendas"
         />

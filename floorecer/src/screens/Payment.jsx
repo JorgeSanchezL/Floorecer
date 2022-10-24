@@ -18,7 +18,7 @@ const Payment = ({ navigation, route }) => {
 
     const onSubmit = async (data) => {
         try {
-            const api_call = await fetch('http://YOUR_IP:5000/payments', {
+            const api_call = await fetch('http://13.39.87.231:5000/payments', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

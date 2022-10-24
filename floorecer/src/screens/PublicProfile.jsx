@@ -13,7 +13,7 @@ const PublicProfile = () => {
     const [profile, setProfile] = useState(null);
 
     const getProfile = async () => {
-        const api_call = await fetch('http://192.168.0.72:5000/users/FiL3npoNmaWostR77Dtm6CA3ktf2');
+        const api_call = await fetch('http://13.39.87.231:5000/users/FiL3npoNmaWostR77Dtm6CA3ktf2');
         const response = await api_call.json();
         setProfile(response);
     }
