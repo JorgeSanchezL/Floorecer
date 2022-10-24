@@ -76,7 +76,7 @@ const MapFilters = (props) => {
           marginTop: StatusBar.currentHeight || 0,
         },
         container: {
-            
+            marginTop: 34,
             backgroundColor: 'transparent',
             alignItems: 'flex-start',
             justifyContent: 'center',

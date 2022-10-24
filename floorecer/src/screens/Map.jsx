@@ -42,12 +42,11 @@ export const Map = () => {
               barStyle='dark-content'
               backgroundColor={'#fff'}
           />
-    <MapFilters
-      setData={setData}
-    >
-    </MapFilters>
+    
     <View style={styles.container}>
-      
+      <MapFilters
+        setData={setData}
+      />
       <MapView 
         style={styles.map} 
         showsPointsOfInterest={false}
@@ -72,6 +71,7 @@ export const Map = () => {
               </Marker>
             </View>
         })}
+        
       </MapView>
       {business && <BusinessDetailsCard  business={business}/>}
 
