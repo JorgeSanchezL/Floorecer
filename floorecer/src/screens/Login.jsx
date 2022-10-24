@@ -30,9 +30,9 @@ const Login = () => {
         
         if(response.status==200){
           const body = await response.json();
-          await SecureStore.setItemAsync('userToken', response)
+          await SecureStore.setItemAsync('userToken', JSON.stringify(response))
           //navigation.navigate('map')
-          navigation.navigate('navegacionProvisional')
+          navigation.navigate('navegacionProvisionalUsuario')
         }
       } catch (err) {
         Alert.alert(':(', err, [

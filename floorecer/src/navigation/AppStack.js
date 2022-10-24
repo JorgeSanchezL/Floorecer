@@ -14,7 +14,8 @@ import BusinessPlans from '../screens/BusinessPlans';
 import Payment from '../screens/Payment';
 import NotVerified from '../screens/NotVerified';
 import MyShops from '../screens/MyShops';
-import NavegacionProvisional from '../screens/NavegacionProvisional';
+import NavegacionProvisionalComercio from '../screens/NavegacionProvisionalComercio';
+import NavegacionProvisionalUsuario from '../screens/NavegacionProvisionalUsuario';
 
 
 import ConfigureBusiness from '../screens/ConfigureBusiness';
@@ -88,8 +89,12 @@ const AppStack = () => {
                 component={UserSearch}
             />
             <Stack.Screen
-                name={'navegacionProvisional'}
-                component={NavegacionProvisional}
+                name={'navegacionProvisionalComercio'}
+                component={NavegacionProvisionalComercio}
+            />
+            <Stack.Screen
+                name={'navegacionProvisionalUsuario'}
+                component={NavegacionProvisionalUsuario}
             />
         </Stack.Navigator>
     );
