@@ -6,6 +6,7 @@ import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
+import * as SecureStore from 'expo-secure-store';
 
 //import { response } from 'express';
 const Register = () => {
@@ -92,6 +93,7 @@ const Register = () => {
         //console.log(Object.getOwnPropertyNames(response));
         
         if(response.status==200){
+          await SecureStore.setItemAsync('userToken', response)
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
             { text: 'OK', onPress: () => { sendEmail(response);navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
@@ -145,6 +147,7 @@ const Register = () => {
         console.log(Object.getOwnPropertyNames(response.status));
         
         if(response.status==200){
+          await SecureStore.setItemAsync('userToken', response)
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
             { text: 'OK', onPress: () => { sendEmail(response); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)

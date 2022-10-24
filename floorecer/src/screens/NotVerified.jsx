@@ -6,19 +6,16 @@ const Home = () => {
 
   const [value, setValue] = useState(null)
 
-  const user = {
-    
-  }
-
   const sendEmail = async () => {
     try {
+      var userToken = await SecureStore.getItemAsync('userToken')
       const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
         method: 'POST',
           headers: {
           'Content-Type': 'application/json'
         },
         body: {
-          user: user
+          user: userToken
         }
       });
     } catch (err) {

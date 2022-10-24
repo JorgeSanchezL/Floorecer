@@ -1,5 +1,6 @@
 import React ,{useState} from 'react';
 import { Alert,StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native';
+import * as SecureStore from 'expo-secure-store'
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -8,7 +9,6 @@ const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const {height}=useWindowDimensions();
-    const [user,setUser]=useState(null);
 
     const navigation=useNavigation();
     const onInicioPressed=()=>{
@@ -30,10 +30,8 @@ const Login = () => {
         
         if(response.status==200){
           const body = await response.json();
-          setUser(body)
+          await SecureStore.setItemAsync('userToken', response)
           navigation.navigate('map')
-        }else{
-          setUser(null)
         }
       } catch (err) {
         Alert.alert(':(', err, [

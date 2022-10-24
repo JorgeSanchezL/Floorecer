@@ -6,6 +6,7 @@ import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
 import shop from '../../assets/map-icons/shop.png'
 import { getAllBusinesses } from '../../utils/actions';
+import CustomMenu, { Custom } from '../components/CustomMenu';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import Animated, {
@@ -22,6 +23,9 @@ import * as Animatable from 'react-native-animatable';
 export const Map = () => {
 
   const [data, setData] = useState(null);
+  const [menuVisible, setMenuVisible] = useState(false)
+  const openMenu = () => setMenuVisible(true)
+  const closeMenu = () => setMenuVisible(false)
   
 
   const getMapMarkers = async (category) => { 
@@ -46,6 +50,21 @@ export const Map = () => {
     <View style={styles.container}>
       <MapFilters
         setData={setData}
+      />
+      <CustomMenu 
+        items={[
+          {
+            label: 'AAA',
+            action: () => {}
+          },
+          {
+            label: 'BBB',
+            action: () => {}
+          }
+        ]}
+        visible={menuVisible}
+        openMenu={openMenu}
+        closeMenu={closeMenu}
       />
       <MapView 
         style={styles.map} 
