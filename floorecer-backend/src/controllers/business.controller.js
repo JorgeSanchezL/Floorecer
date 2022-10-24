@@ -15,6 +15,7 @@ export const newBusiness = async(req,res) => {
         openingHours: openingHours,
         active: true,
         category: category,
+        promoted: false,
     });
 }
 
@@ -64,8 +65,10 @@ try {
 
     let businesslist = [];
     businessquery.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        businesslist.push(doc.data());
+        let miarray = doc.data() ;
+        miarray.uid = doc.id;
+
+        businesslist.push(miarray );
       });   
       console.log("hh " + businesslist)
 
@@ -75,6 +78,17 @@ res.json(businesslist);
       console.log(error)
 
     }
+}
+
+export const promoteBusiness = async (req,res) => {
+    const uid=req.body.uid
+    try {
+        const docRef = doc(database, "business", uid);
+      await updateDoc(docRef, { promoted: true});
+    } catch(error) {
+        console.log(error)
+    }
+    
 }
 
 export const getBusiness = async(req,res) => {

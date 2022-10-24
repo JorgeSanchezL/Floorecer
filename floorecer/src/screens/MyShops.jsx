@@ -9,7 +9,7 @@ const MyShops = () => {
 
 const getbusiness= async () =>{ 
   try {
-    const response = await fetch("http://192.168.1.88:5000/business/getbusinesses", {
+    const response = await fetch("http://192.168.1.143:5000/business/getbusinesses", {
       method: 'POST',
       body: JSON.stringify({
        owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
@@ -33,12 +33,52 @@ function onPressButton (shop) {
 
   navigation.navigate("configureBusiness",shop)
 }
+
+async function onPressButtonPromotion (shop) {
+
+  console.log(shop.uid)
+  
+    try {
+      const response = await fetch("http://192.168.1.143:5000/business/promoteBusiness", { 
+        method: 'POST',
+        body: JSON.stringify({
+         uid : shop.uid
+      }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          },     
+      }   
+      );
+       const body = await response.json();
+     
+      }
+  
+   catch (err) {
+  
+    console.log(err)
+  
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 const Item = ({ shop }) => (
     <View style={styles.greenBox}>  
-        <Text style = {(shop.state== 'Activo') ? styles.green : styles.red} > {shop.state}</Text>
+         {shop.active == true? <Text style = {styles.green}> Activo </Text>: <Text style = {styles.red}> Inactivo </Text> }
       <View >
     <Text style={styles.textData}>
        {shop.name} {"\n"}
+  
              </Text>
     </View>
    
@@ -58,6 +98,13 @@ const Item = ({ shop }) => (
     <TouchableOpacity onPress={()=>{onPressButton(shop)}} style={styles.appButtonContainer}>
         <Text style={styles.appButtonText}>Editar</Text>
                 </TouchableOpacity>
+    </View>
+    
+    <View >
+    {shop.active == true? 
+     <TouchableOpacity onPress={()=>{onPressButtonPromotion(shop)}} style={styles.appButtonContainer1}>
+        <Text style={styles.appButtonText}>Promocionar</Text>
+                </TouchableOpacity> : null}
     </View>
 </View>
 );
@@ -132,6 +179,18 @@ appButtonContainer: {
   height : 30,
   width : 100,
   marginTop : '-5%',
+  marginLeft : '65%',
+  
+
+},
+appButtonContainer1: {
+  backgroundColor: "#009688",
+  borderRadius: 10,
+  paddingVertical: 5,
+  paddingHorizontal: 5,
+  height : 30,
+  width : 100,
+  marginTop : '-20%',
   marginLeft : '65%',
   
 
