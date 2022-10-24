@@ -1,5 +1,5 @@
 import React ,{useState} from 'react';
-import { StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native';
+import { Alert,StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native';
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
@@ -20,7 +20,7 @@ const Login = () => {
     };
     const log = async () => { 
       try {
-        const response = await fetch(`http://192.168.0.72:5000/user-authe/userSign/${email}&${password}`, {
+        const response = await fetch(`http://192.168.1.161:5000/user-authe/userSign/${email}&${password}`, {
           method: 'GET',
             headers: {
             'Content-Type': 'application/json'
@@ -31,15 +31,15 @@ const Login = () => {
         if(response.status==200){
           const body = await response.json();
           setUser(body)
-          if (user.emailVerified) { //Añadido para la UT de verificar usuario :)
-            navigation.navigate('map')
-          } else {
-            navigation.navigate('notVerified')
-          }
+          navigation.navigate('map')
         }else{
           setUser(null)
         }
       } catch (err) {
+        Alert.alert(':(', err, [
+            
+          { text: 'OK'},
+        ]);
         console.log(err)
       }
     }

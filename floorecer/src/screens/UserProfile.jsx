@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React ,{useEffect,useState} from 'react';
 import { StyleSheet, SafeAreaView, Dimensions,
   ScrollView, View, Image, Text ,TouchableButton,Button} from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
@@ -15,23 +15,73 @@ export const width = Dimensions.get('window').width;
 const UserProfile = () => {
   const [editable, setEditable] = useState(false);
   const [text, setText] = useState("Editar");
-  let vista=<Edit></Edit>;
-  if(editable){
-    vista=<Save></Save>;
-    
-  }else{
-    vista=<Edit></Edit>;
+  const [profile, setProfile] = useState(null);
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [mail, setMail] = useState('');
+
+  const getProfile = async () => {
+      const api_call = await fetch('http://192.168.1.161:5000/users/gPASbD6K2bOwU3dK3SpqwlG8Rhl2');
+      const response = await api_call.json();
+      setProfile(response);
+      console.log(response);
   }
+  const getProfile2 = async () => {
+        try {
+          const response = await fetch("http://192.168.1.161:5000/user-authe/userProfile", {
+            method: 'POST',
+            body: JSON.stringify({
+              newEmail: mail,
+              newName: name,
+              newPassword: password,
+              newPhone : phone,
+              oldEmail:profile.email,
+              oldPassword:profile.password
   
+          }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8"
+              },
+            
+          });
+            
+        } catch (err) {
+          console.log(err)
+        }
+      }
+
+
+
+  useEffect(() => {
+      getProfile();
+  }, []);
+
+  if (profile === null) return null;
+  
+  let boxName,boxPassword,boxEmail,boxPhone; 
+  if(editable){
+    boxName= <TextInput defaultValue={profile.username} onChangeText={setName}/>  ;
+    boxPassword=<TextInput defaultValue={profile.password} onChangeText={setPassword} secureTextEntry={true}/>  ;
+    boxEmail=<TextInput defaultValue={profile.email} onChangeText={setMail}/>  ;
+    boxPhone=<TextInput defaultValue={profile.numero} onChangeText={setPhone}/>  ;
+  }else{
+    boxName=<Text style={styles.textData}>{profile.username}</Text>;
+    boxPassword=<Text style={styles.textData}>{profile.password}</Text>;
+    boxEmail=<Text style={styles.textData}> {profile.email}</Text>;
+    boxPhone=<Text style={styles.textData}> {profile.numero}</Text>;
+  }
   
   const onEditPressed=()=>{
     if(editable){
       setEditable(false);
       setText('Editar');
+      getProfile2();
     }
     else{
       setEditable(true); 
-      setText('Guardar')
+      setText('Guardar');
+      getProfile();
     }
   };
   return (
@@ -56,7 +106,7 @@ const UserProfile = () => {
               />
               <View stylestyle={styles.cont}>
                   <Text style={styles.userName}>
-                    Carlos Sánchez
+                    {profile.username}
                   </Text>   
               </View>
               <ScrollView
@@ -76,7 +126,40 @@ const UserProfile = () => {
                         >
                         </CustomButton> 
                       </View>
-                      {vista}
+                        <View style={styles.greenBox}>
+                        <View style={styles.rowFlex}>
+                            <Text style={styles.dataBox}>
+                                Nombre de usuario
+                            </Text>
+                        </View>
+                        <View style={styles.commentsBox}>
+                            {boxName}
+                        </View>
+                        <View style={styles.rowFlex}>
+                            <Text style={styles.dataBox}>
+                                Contraseña
+                            </Text>
+                        </View>
+                        <View style={styles.commentsBox}>
+                            {boxPassword}   
+                        </View>
+                        <View style={styles.rowFlex}>
+                            <Text style={styles.dataBox}>
+                                Correo
+                            </Text>
+                        </View>
+                        <View style={styles.commentsBox}>
+                            {boxEmail}
+                        </View>
+                        <View style={styles.rowFlex}>
+                            <Text style={styles.dataBox}>
+                                Teléfono
+                            </Text>
+                        </View>
+                        <View style={styles.commentsBox}>
+                            {boxPhone}
+                        </View>
+                    </View>
                   </View>
                   <Text style={styles.title}>
                       Mis vehículos
@@ -97,95 +180,7 @@ const UserProfile = () => {
   );
 }
 
-export const Edit =()=>{
-  return(
-  <View style={styles.greenBox}>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Nombre de usuario
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-      <Text style={styles.textData}>
-              Carlos sa
-          </Text>
-      </View>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Contraseña
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-          <Text style={styles.textData}>
-              floorecer
-          </Text>
-      </View>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Correo
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-          <Text style={styles.textData}>
-              asda@upv.es
-          </Text>
-      </View>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Teléfono
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-          <Text style={styles.textData}>
-          621231232
-          </Text>
-      </View>
-  </View>
-  );
-}
-export const Save =()=>{
-  const [name, setName] = useState('Carlos sa');
-  const [password, setPassword] = useState('floorecer');
-  const [phone, setPhone] = useState('621321611');
-  const [mail, setMail] = useState('asdsa@upv.es');
-  
-  return(
-  <View style={styles.greenBox}>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Nombre de usuario
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-      <TextInput value={name} onChangeText={setName}/>   
-      </View>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Contraseña
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-        <TextInput value={password} onChangeText={setPassword} secureTextEntry={true}/>  
-      </View>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Correo
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-        <TextInput value={mail} onChangeText={setMail}/>  
-      </View>
-      <View style={styles.rowFlex}>
-          <Text style={styles.dataBox}>
-              Teléfono
-          </Text>
-      </View>
-      <View style={styles.commentsBox}>
-      <TextInput value={phone} onChangeText={setPhone}/>  
-      </View>
-  </View>
-  );
-}
+
 
 const styles = StyleSheet.create({
   rowFlex: {

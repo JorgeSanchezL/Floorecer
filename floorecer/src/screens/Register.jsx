@@ -27,7 +27,7 @@ const Register = () => {
 
     const sendEmail = async (user) => {
       try {
-        const response = await fetch('http://192.168.0.72:5000/user-verification/mail', {
+        const response = await fetch('http://192.168.1.161:5000/user-verification/mail', {
           method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const Register = () => {
     const SignUpNowCliente = async () => { 
       console.log("wow")
       try {
-        const response = await fetch("http://192.168.1.143:5000/user-authe/userRegister", {
+        const response = await fetch("http://192.168.1.161:5000/user-authe/userRegister", {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -122,7 +122,7 @@ const Register = () => {
     const SignUpComercio = async () => { 
       console.log("woow")
       try {
-        const response = await fetch("http://192.168.1.143:5000/user-authe/userRegister", {
+        const response = await fetch("http://192.168.1.161:5000/user-authe/userRegister", {
           method: 'POST',
           body: JSON.stringify({
             email: email,

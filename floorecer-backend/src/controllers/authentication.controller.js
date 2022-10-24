@@ -1,8 +1,8 @@
 import {auth,database,app} from '../../firebase.js';
-import {signInWithCustomToken,signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
+import {signInWithCustomToken,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateEmail,updatePassword} from "firebase/auth";
 import { async } from '@firebase/util';
 import { collection, getDocs } from 'firebase/firestore/lite';
-import { doc,setDoc } from 'firebase/firestore';
+import { doc,setDoc ,updateDoc} from 'firebase/firestore';
 import { sendEmailFromBackend } from './userVerification.controller.js'
 export const signIn = async (req,res) => {
     const {email, password } = req.params
@@ -46,8 +46,10 @@ export const register = async (req,res) => {
     followers : {},
     following : {},
     isBusinessOwner : isBusinessOwner,
-    numero : numberphone
-     }
+    numero : numberphone,
+    email:email,
+    password:password
+    }
   )
 
 
@@ -88,17 +90,54 @@ export const register = async (req,res) => {
         
     });
   };
+export const profileUser=async (req, res)=>{
+ const {newEmail,newName,newPassword,newPhone,oldEmail,oldPassword}=req.body;
+ console.log(newEmail+''+ newPassword+''+newPhone);
+ try{
+  signInWithEmailAndPassword(auth, oldEmail,oldPassword)
+    .then((loggedUser) => {
+      updateEmail(loggedUser.user, newEmail).then(() => {
+        console.log('email act')
+      })
+      updatePassword(loggedUser.user, newPassword).then(() => {
+        console.log('contra act')
+      })
 
+   })
+  
+  const uid='gPASbD6K2bOwU3dK3SpqwlG8Rhl2';
+  const userRef = doc(database, 'users', uid); 
+  if(newEmail!=''){await updateDoc(userRef, { email: newEmail});}
+  if(newPassword!=''){await updateDoc(userRef, { password:newPassword});}
+  if(newName!=''){await updateDoc(userRef, { username: newName});}
+  if(newPhone!=''){await updateDoc(userRef, { numero:newPhone});}
+}catch(err){
+  console.log(err)
+}
 
-
-{/*signInWithCustomToken(auth, token)
-  .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
+}
+export const updateAuthMail = (user) => {
+ 
+    updateEmail(user, newEmail).then(() => {
+      console.log('email act')
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if(errorCode=='auth/email-already-in-use'){
+        return 401;
+      }
+    });
+}
+export const updateAuthPass = (user) => {
+ 
+  updatePassword(user, newPassword).then(() => {
+    console.log('contra act')
+  }).catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    // ...
-  });*/}
+    if(errorCode=='auth/weak-password'){
+      return 406;
+    }
+
+  });
+}
