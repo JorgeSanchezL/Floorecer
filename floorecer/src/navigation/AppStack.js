@@ -14,6 +14,7 @@ import BusinessPlans from '../screens/BusinessPlans';
 import Payment from '../screens/Payment';
 import NotVerified from '../screens/NotVerified';
 import MyShops from '../screens/MyShops';
+import NavegacionProvisional from '../screens/NavegacionProvisional';
 
 
 import ConfigureBusiness from '../screens/ConfigureBusiness';
@@ -24,7 +25,7 @@ const Stack = createStackNavigator();
 const AppStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='userSearch'
+            initialRouteName='login'
             screenOptions={{
                 headerShown: false
             }}
@@ -85,6 +86,10 @@ const AppStack = () => {
             <Stack.Screen
                 name={'userSearch'}
                 component={UserSearch}
+            />
+            <Stack.Screen
+                name={'navegacionProvisional'}
+                component={NavegacionProvisional}
             />
         </Stack.Navigator>
     );

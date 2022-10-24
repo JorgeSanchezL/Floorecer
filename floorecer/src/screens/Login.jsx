@@ -20,7 +20,7 @@ const Login = () => {
     };
     const log = async () => { 
       try {
-        const response = await fetch(`http://192.168.1.161:5000/user-authe/userSign/${email}&${password}`, {
+        const response = await fetch(`http://13.39.87.231:5000/user-authe/userSign/${email}&${password}`, {
           method: 'GET',
             headers: {
             'Content-Type': 'application/json'
@@ -31,7 +31,8 @@ const Login = () => {
         if(response.status==200){
           const body = await response.json();
           await SecureStore.setItemAsync('userToken', response)
-          navigation.navigate('map')
+          //navigation.navigate('map')
+          navigation.navigate('navegacionProvisional')
         }
       } catch (err) {
         Alert.alert(':(', err, [

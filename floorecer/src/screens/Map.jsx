@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, Image } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Text, Image, TouchableOpacity } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
@@ -25,7 +25,9 @@ export const Map = () => {
 
   const [data, setData] = useState(null);
   const navigation=useNavigation();
-  
+  const navigate = (screen) => {
+    navigation.navigate(screen)
+  }
 
   const getMapMarkers = async (category) => { 
     setData(await getAllBusinesses(category))
@@ -50,18 +52,6 @@ export const Map = () => {
       <MapFilters
         setData={setData}
       />
-      <View>
-        <CustomButton 
-          onPress={navigation.navigate('userProfile')}
-          text='Mi perfil'
-          type='cuaterciario'
-        />
-        <CustomButton 
-          onPress={navigation.navigate('userSearch')}
-          text='Buscar usuarios'
-          type='cuaterciario'
-        />
-      </View>
       <MapView 
         style={styles.map} 
         showsPointsOfInterest={false}
@@ -145,6 +135,16 @@ const styles = StyleSheet.create({
   header: {
     paddingVertical: 8,
     paddingHorizontal: 8,
+  },
+  appButtonContainer: {
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    height : 30,
+    width : 100,
+    marginTop : '-5%',
+    marginLeft : '65%',
   }
 });
 
