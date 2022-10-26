@@ -28,7 +28,7 @@ const NewBusiness = () => {
 
   const SaveBusiness = async () => {
     try {
-      const response = await fetch('http://13.39.87.231:5000/business/newBusiness', {
+      const response = await fetch('http://192.168.43.205:5000/business/newBusiness', {
         method: 'POST',
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -52,7 +52,23 @@ const NewBusiness = () => {
   }
 
   const onSavePressed = () =>{
-    SaveBusiness();
+    if(location == null){
+      
+      Alert.alert(
+        "Tiene que seleccionar una ubicación en el mapa",
+        "",
+        [
+          {
+            text: "Seleccionar",
+            onPress: () => { setIsVisibleMap(true)}
+          },
+          
+        ]
+      )
+    }else{
+      SaveBusiness();
+    }
+    
   };
   const onCancelPressed = () =>{
     console.warn("cancel");
@@ -288,6 +304,7 @@ const styles = StyleSheet.create({
       width: 25,
       resizeMode: 'stretch',
       alignItems: 'center',
+      
     },
     mapStyle:{
       width:"100%",
