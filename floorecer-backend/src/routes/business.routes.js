@@ -1,11 +1,15 @@
 import { Router } from 'express';
 
-import { newBusiness, getBusinesses,getBusiness,updateBusiness, getCategories, getAllBusinesses, getAllBusinessesByCategory ,promoteBusiness} from '../controllers/business.controller.js';
+import upload from '../middlewares/imgUpload.js';
+
+import { newBusiness, getBusinesses, getBusiness, updateBusiness,
+    getCategories, getAllBusinesses, getAllBusinessesByCategory,
+    promoteBusiness} from '../controllers/business.controller.js';
 
 
 const router = Router();
 
-router.post('/newBusiness',newBusiness);
+router.post('/newBusiness', upload, newBusiness);
 router.get('/getBusiness',getBusiness);
 router.post('/updateBusiness',updateBusiness);
 router.post('/getbusinesses',getBusinesses);

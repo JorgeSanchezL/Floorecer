@@ -1,13 +1,17 @@
-import React, { useState, Component,useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, Alert, useWindowDimensions, Dimensions } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, StyleSheet, Alert,
+  useWindowDimensions, Dimensions, Image, TouchableOpacity,
+  Modal } from "react-native";
 import CustomButton from '../components/CustomButton';
-import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
 import CustomDropDowPiker from '../components/DropDownPiker';
-import { Image, TouchableOpacity, Modal, Icon} from "react-native";
-import MapView from 'react-native-maps'
+import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 import { ScrollView } from "react-native-gesture-handler";
 import { DayTimeSlots } from "./ConfigureBusiness";
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons';
+
+import { BACKEND_URL } from '@env';
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
@@ -18,36 +22,48 @@ const NewBusiness = () => {
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [openingHours, setOpeningHours] = useState({Domingo:[],Lunes:[],Martes:[], Miércoles:[],Jueves:[],Viernes:[],Sábado:[]});
-  const images =[];
+  const [image, setImage] = useState(null);
   const[category, setCategory] =useState("");
 
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
-  const [isVisibleMap, setIsVisibleMap] = useState(false)
-  const [location, setLocation] = useState(null)
+  const [isVisibleMap, setIsVisibleMap] = useState(false);
+  const [location, setLocation] = useState(null);
 
   const SaveBusiness = async () => {
-    try {
-      const response = await fetch('http://192.168.43.205:5000/business/newBusiness', {
-        method: 'POST',
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
-        },
-        body:JSON.stringify({
-          owner:'XiwTNPIGkAT2txAIRwUUMeBUVvH2', //uid from the business owner
-          name: shopName,
-          nif: nif,
-          Address: address,
-          location: location,
-          openingHours: openingHours,
-          category: category,
 
-        }),
+    if (image == null) { Alert.alert('Atención',
+      'Debe seleccionar al menos una imagen para su comercio'); }
+    else {
+      const formData = new FormData();
+
+      // uid from the business owner
+      formData.append('owner', 'XiwTNPIGkAT2txAIRwUUMeBUVvH2')
+      formData.append('name', shopName);
+      formData.append('nif', nif);
+      formData.append('address', address);
+      formData.append('location', JSON.stringify(location));
+      formData.append('openingHours',
+        JSON.stringify(openingHours));
+      formData.append('category', category);
+
+      const imgName = image.split('/').pop();
+      const imgType = imgName.split('.').pop();
+      formData.append('image', {
+        uri: image,
+        type: `image/${imgType}`,
+        name: imgName
       });
-      
 
-    } catch (err) {
-      console.log(err)
+      try {
+        const api_request = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'multipart/form-data' },
+          body: formData
+        });
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
@@ -74,6 +90,26 @@ const NewBusiness = () => {
     console.warn("cancel");
 
   }
+
+  const pickImage = async () => {
+    let permission = await ImagePicker.getMediaLibraryPermissionsAsync(true);
+    if (!permission.granted) {
+        permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!permission.granted) { return; }
+    }
+    
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+    
+    if (!result.cancelled && result.type === 'image') {
+        setImage(result.uri);
+    }
+  };
+
   return(
   <View style={[styles.mainContainer]}>
 
@@ -123,7 +159,40 @@ const NewBusiness = () => {
     
         })
       }
-      <ImageCarouselPickingImages images = {images}/>
+
+      <View style={styles.container}>
+        { image
+            ? <View>
+                <TouchableOpacity
+                    onPress={pickImage}
+                    activeOpacity={0.8}
+                >
+                    <Image
+                        source={{ uri: image }}
+                        style={styles.imgPicker}
+                    />
+                </TouchableOpacity>
+            </View>
+            : <TouchableOpacity
+                onPress={pickImage}
+                activeOpacity={0.8}
+                style={{alignItems: 'center'}}
+            >
+                <MaterialIcons
+                    name='image-search'
+                    size={35}
+                    color={'#606060'}
+                    style={{paddingTop: 10}}
+                />
+                <Text style={{ 
+                    color: '#000',
+                    paddingVertical: 10
+                }}>
+                  Pulsa para seleccionar una imagen
+                </Text>
+            </TouchableOpacity>
+        }
+      </View>
 
       <View style = {{flex:0, flexDirection:'row'}}>
       
@@ -179,8 +248,7 @@ function Mapa ({isVisibleMap, setIsVisibleMap, setLocation}){
       (async()=>{
           const response = await getCurrentLocation()
           if(response.status){
-              setNewRegion(response.location)
-              console.log(response.location)
+              setNewRegion(response.location);
           }
       })()
       },[])
@@ -337,6 +405,16 @@ const styles = StyleSheet.create({
       marginTop:10, 
       fontSize:20, 
       fontWeight:"bold" 
+    },
+    container: {
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      marginVertical: 20
+    },
+    imgPicker: {
+      width: '100%',
+      height: 200,
+      borderRadius: 4
     },
   });
 

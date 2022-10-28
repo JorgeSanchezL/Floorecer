@@ -1,21 +1,43 @@
-import {auth,database,app} from '../../firebase.js';
-import {signInWithCustomToken,signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
-import { async } from '@firebase/util';
-import { doc,setDoc,GeoPoint,collection, getDocs,getDoc,updateDoc,query,where } from 'firebase/firestore';
+import { database, storage } from '../../firebase.js';
+import { doc, setDoc, collection, getDocs,
+    getDoc, updateDoc, query, where } from 'firebase/firestore';
+import { ref, uploadBytes } from 'firebase/storage';
+import randomatic from 'randomatic';
+import path from 'path';
+
 
 export const newBusiness = async(req,res) => {
-    const{owner,name,nif,Address,location,openingHours,category} = req.body
+    const{
+        owner,
+        name,
+        nif,
+        address,
+        location,
+        openingHours,
+        category
+    } = req.body
 
-    await setDoc(doc(collection(database,"business")), {
-        owner:owner,
-        name: name,
-        Address: Address,
-        NIF: nif,
-        location: location,
-        openingHours: openingHours,
-        active: true,
-        category: category,
-        promoted: false,
+    const file = req.file;
+
+    const fileName = randomatic('Aa0', 32)
+        + path.extname(file.originalname);
+
+    const storageRef = ref(storage, fileName);
+
+    uploadBytes(storageRef, file.buffer)
+      .then(async (snapshot) => {
+        await setDoc(doc(collection(database, "business")), {
+            owner: owner,
+            name: name,
+            Address: address,
+            NIF: nif,
+            location: JSON.parse(location),
+            openingHours: JSON.parse(openingHours),
+            active: true,
+            category: category,
+            promoted: false,
+            imageURL: snapshot.ref._location.path_
+        });
     });
 }
 
