@@ -1,10 +1,15 @@
 import React ,{useEffect,useState} from 'react';
 import { StyleSheet, SafeAreaView, Dimensions,
-  ScrollView, View, Image, Text ,TouchableButton,Button} from 'react-native';
+  ScrollView, View, Image, Text ,TouchableButton,Button,TouchableOpacity,Modal,Pressable } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
+import SvgQRCode from 'react-native-qrcode-svg';
+
 
 import user from '../../assets/image/user.png';
+import qrCode from '../../assets/image/qrCode.png';
+
+
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -20,6 +25,7 @@ const UserProfile = () => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [mail, setMail] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const getProfile = async () => {
       const api_call = await fetch('http://13.39.87.231:5000/users/gPASbD6K2bOwU3dK3SpqwlG8Rhl2');
@@ -109,6 +115,32 @@ const UserProfile = () => {
                   source={user}
                   style={styles.userCircle}
               />
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+          <SvgQRCode style = {{width :'100%'}} 
+      value='gPASbD6K2bOwU3dK3SpqwlG8Rhl2'
+    />
+           <CustomButton
+           text = 'Close'
+           onPress ={() => setModalVisible(!modalVisible)}
+
+
+           />
+          </View>
+        </View>
+      </Modal>
+              <TouchableOpacity  onPress={() =>setModalVisible(true)}>
+                <Image style={styles.qrCode} source={qrCode} />
+              </TouchableOpacity >
+                   
               <View stylestyle={styles.cont}>
                   <Text style={styles.userName}>
                     {profile.username}
@@ -233,6 +265,13 @@ const styles = StyleSheet.create({
       height: 125,
       marginTop: -62.5
   },
+  userCode : {
+    width: 10,
+    height: 10,    
+    marginLeft  : '60%',
+
+
+  },
   userName: {
       fontSize: 22,
       fontWeight: 'bold',
@@ -272,7 +311,41 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#353535'
 },
-
+centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+     margin: 60,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 60,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 15
+  },
+  button: {
+    borderRadius: 10,
+    padding: 10,
+  },
+ 
+  buttonClose: {
+    backgroundColor: "#2196F3",
+    marginTop : '10%'
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  }
 
 });
 export default UserProfile;
