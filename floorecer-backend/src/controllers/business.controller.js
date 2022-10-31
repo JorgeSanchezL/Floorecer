@@ -47,6 +47,7 @@ export const getAllBusinesses = async (req, res) => {
     querySnapshot.forEach((doc) => {
       body.push(doc.data())
     });
+    
     res.json(body)
 }
 
@@ -54,20 +55,42 @@ export const getAllBusinessesByCategory = async (req, res) => {
     const {category} = req.params
     try {
         const b = collection(database, "business");
-    
-        const q = query(b, where("category", "==", category));
-        const businessquery = await getDocs(q);
-        console.log("holsa")
-    
-    
         let businesslist = [];
-        businessquery.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            businesslist.push(doc.data());
-          });   
-          console.log("hh " + businesslist)
+        //console.log(category.split(","))
+        
+        var promise = new Promise((resolve,reject)=>{
+            category.split(',').forEach(async(cat, index, array) => {
+                console.log(cat)
+                const q = query(b, where("category", "==", cat));
+                const businessquery = await getDocs(q);
+            
+                businessquery.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    businesslist.push(doc.data());
+                });   
+
+                if (index === array.length -1) resolve();
+
+                
+                
+            });
+        })
+        /* category.split(',').forEach(async(cat) => {
+            console.log(cat)
+            const q = query(b, where("category", "==", cat));
+            const businessquery = await getDocs(q);
+        
+            businessquery.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                businesslist.push(doc.data());
+            });   
+            console.log("hh " + businesslist)
+        }); */
+        
     
-    res.json(businesslist);
+        promise.then(()=>{
+            res.json( businesslist);
+        })
         }
         catch (error) {
           console.log(error)

@@ -3,12 +3,13 @@ import { FlatList, View, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpa
 import { getCategories } from '../../utils/actions';
 import { getAllBusinesses } from '../../utils/actions';
 
+const categories =  [];
 
 const MapFilters = (props) => {
 
 
     const [choice, setChoice] = useState('');
-
+    
     const [DATA, setData] = useState([]);
 
     const changeData = async ()=>{
@@ -20,7 +21,7 @@ const MapFilters = (props) => {
 
     const getMapMarkers = async (category) => { 
       props.setData(await getAllBusinesses(category))
-      console.log(category)
+      //console.log(category)
     }
 
     const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -29,25 +30,55 @@ const MapFilters = (props) => {
         </TouchableOpacity>
       );
       
-  
-        const [selectedId, setSelectedId] = useState(null);
-      
+        
+        const [selected, setSelected] = useState(null);
+       
         const renderItem = ({ item }) => {
-          const backgroundColor = item.value === selectedId ? "#88c484" : "#white";
-          const color = item.value === selectedId ? 'white' : 'black';
+          const backgroundColor = categories.includes(item.value) ? "#88c484" : "#white";
+          const color = categories.includes(item.value) ? 'white' : 'black';
       
           return (
             <Item
               item={item}
               onPress={() => {
-              if(selectedId == item.value){ 
-                setSelectedId(null)
+              if(categories.includes(item.value)){
+                const index = categories.indexOf(item.value);
+                if (index > -1) { // only splice array when item is found
+                  categories.splice(index, 1); // 2nd parameter means remove one item only
+                }
+               
+                if(selected == 0) setSelected(1);
+                else setSelected(0);
+                getMapMarkers(categories)
+                console.log(categories)
+
+              }else{
+                categories.push(item.value)
+                
+                if(selected == 0) setSelected(1);
+                else setSelected(0);
+                getMapMarkers(categories)
+                console.log(categories)
+              }
+              
+              /* if(selected == item.value){ 
+                const index = categories.indexOf(item.value);
+                if (index > -1) { // only splice array when item is found
+                  categories.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                console.log(categories)
+                setSelected(null)
+
                 getMapMarkers(null)
               }
               else{
-                setSelectedId(item.value)
+                if(!categories.includes(item.value))categories.push(item.value)
+                console.log(categories)
+                setSelected(item.value);
+
                 getMapMarkers(item.value);
-              }}}
+              } */
+            }}
               backgroundColor={{ backgroundColor }}
               textColor={{ color }}
             />
@@ -63,7 +94,7 @@ const MapFilters = (props) => {
                     data={DATA}
                     renderItem={renderItem}
                     keyExtractor={(item) => item.value}
-                    extraData={selectedId}
+                    extraData={selected}
                 />
             </View>
     

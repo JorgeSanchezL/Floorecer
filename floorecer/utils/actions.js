@@ -1,4 +1,4 @@
-const MyIP = '13.39.87.231' //Change by your IP address
+const MyIP = '192.168.1.34' //Change by your IP address
 
 export const getCategories = async () => { 
     try {
@@ -17,11 +17,11 @@ export const getCategories = async () => {
     }
   }
 
-export const getAllBusinesses = async (category) => {
+export const getAllBusinesses = async ( category) => {
 
   let type = 'getAllBusinesses'
-  if(category != null) type = `getAllBusinessesByCategory/${category}`
-  
+  if(category != null && category.length > 0) type = `getAllBusinessesByCategory/${category}`
+  console.log(category)
   try {
     const response = await fetch(`http://${MyIP}:5000/business/${type}`, {
       method: 'GET',
@@ -31,7 +31,7 @@ export const getAllBusinesses = async (category) => {
      
     });
     const body = await response.json();
-    console.log(body);
+    //console.log(body);
     return body
   } catch (err) {
     console.log(err)

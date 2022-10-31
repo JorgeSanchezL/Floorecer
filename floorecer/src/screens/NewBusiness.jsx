@@ -56,7 +56,7 @@ const NewBusiness = () => {
       });
 
       try {
-        const api_request = await fetch(BACKEND_URL, {
+        const api_request = await fetch(`http://${BACKEND_URL}:5000/business/newBusiness`, {
           method: 'POST',
           headers: { 'Content-Type': 'multipart/form-data' },
           body: formData
