@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { StyleSheet, View, SafeAreaView, Text, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, SafeAreaView, Image} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
@@ -9,16 +9,7 @@ import promotedshop from '../../assets/promoted.png'
 import { getAllBusinesses } from '../../utils/actions';
 import { useNavigation } from '@react-navigation/native';
 
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  interpolateColor,
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
-import * as Animatable from 'react-native-animatable';
-import CustomButton from '../components/CustomButton';
+import BusinessDetailsCard from '../components/BusinessDetailsCard';
 
 
 
@@ -37,7 +28,6 @@ export const Map = () => {
 
   useEffect(() => {getMapMarkers(null)}, [])
 
-  const [isInfoVisible,setInfoVisible] = useState(false)
   const [business,setBusiness] = useState(null)
   console.log(business)
   return (
@@ -85,7 +75,7 @@ export const Map = () => {
         })}
         
       </MapView>
-      {business && <BusinessDetailsCard  business={business}/>}
+      {business && <BusinessDetailsCard  business={business} setBusiness={setBusiness}/>}
 
     </View>
     </SafeAreaView>
@@ -93,25 +83,6 @@ export const Map = () => {
 }
 
 
-
-const BusinessDetailsCard = (props) => {
-  const snapPoints = useMemo(()=> ['30%','80%'],[])
-  return (
-    <BottomSheet snapPoints={[200,500]}>
-      <Animatable.View
-        style={styles.header}
-        animation="fadeInUp"
-        delay={500}
-        easing="ease-in-out"
-        duration={400}
-      >
-        <Text style={styles.title}>{props.business.name}</Text>
-        <Text style={styles.title}>{props.business.category || "unknown category"}</Text>
-      </Animatable.View>
-
-    </BottomSheet>
-  )
-}
 
 const askLocationPermissions = async () => {
   let { status } = await Location.requestForegroundPermissionsAsync();
@@ -138,10 +109,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     zIndex: 0
-  },
-  header: {
-    paddingVertical: 8,
-    paddingHorizontal: 8,
   },
   appButtonContainer: {
     backgroundColor: "#009688",
