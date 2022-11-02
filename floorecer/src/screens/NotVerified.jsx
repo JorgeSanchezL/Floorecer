@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import HyperLink from '../components/Hyperlink';
+import * as SecureStore from 'expo-secure-store';
+import {BACKEND_URL} from '@env'
 
 const Home = () => {
 
@@ -9,13 +11,14 @@ const Home = () => {
   const sendEmail = async () => {
     try {
       var userToken = await SecureStore.getItemAsync('userToken')
-      const response = await fetch('http://13.39.87.231:5000/user-verification/mail', {
+      
+      const response = await fetch(`http://${BACKEND_URL}/user-verification/mail`, {
         method: 'POST',
           headers: {
           'Content-Type': 'application/json'
         },
         body: {
-          user: userToken
+          user: JSON.parse(userToken)
         }
       });
     } catch (err) {

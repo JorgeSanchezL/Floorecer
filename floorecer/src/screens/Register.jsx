@@ -7,6 +7,7 @@ import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from 'react-native-gesture-handler';
 import * as SecureStore from 'expo-secure-store';
+import {BACKEND_URL} from '@env'
 
 //import { response } from 'express';
 const Register = () => {
@@ -29,7 +30,7 @@ const Register = () => {
 
     const sendEmail = async (user) => {
       try {
-        const response = await fetch('http://13.39.87.231:5000/user-verification/mail', { 
+        const response = await fetch(`http://${BACKEND_URL}/user-verification/mail`, { 
           method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -69,9 +70,10 @@ const Register = () => {
       console.warn('Registro');
     };
     const SignUpNowCliente = async () => { 
-      console.log("wow")
+      
       try {
-        const response = await fetch("http://13.39.87.231:5000/user-authe/userRegister", {
+        console.log(`http://${BACKEND_URL}/user-authe/userRegister`)
+        const response = await fetch(`http://${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -93,7 +95,8 @@ const Register = () => {
         //console.log(Object.getOwnPropertyNames(response));
         
         if(response.status==200){
-          await SecureStore.setItemAsync('userToken', response)
+          const res=await response.json()
+          await SecureStore.setItemAsync('userToken', JSON.stringify(res))
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
             { text: 'OK', onPress: () => { sendEmail(response);navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
@@ -126,7 +129,7 @@ const Register = () => {
     const SignUpComercio = async () => { 
       console.log("woow")
       try {
-        const response = await fetch("http://13.39.87.231:5000/user-authe/userRegister", {
+        const response = await fetch(`http://${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,

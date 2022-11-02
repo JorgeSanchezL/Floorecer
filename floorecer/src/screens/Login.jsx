@@ -5,6 +5,7 @@ import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import {BACKEND_URL} from '@env'
 const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
@@ -20,7 +21,7 @@ const Login = () => {
     };
     const log = async () => { 
       try {
-        const response = await fetch(`http://13.39.87.231:5000/user-authe/userSign/${email}&${password}`, {
+        const response = await fetch(`http://${BACKEND_URL}/user-authe/userSign/${email}&${password}`, {
           method: 'GET',
             headers: {
             'Content-Type': 'application/json'
