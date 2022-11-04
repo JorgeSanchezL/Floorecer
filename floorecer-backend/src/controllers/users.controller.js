@@ -1,5 +1,6 @@
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { database } from '../../firebase.js';
+import { ref, getDownloadURL, deleteObject } from 'firebase/storage';
+import { database, storage } from '../../firebase.js';
 
 export const getUser = async (req, res) => {
     const { uuid } = req.params;
@@ -7,9 +8,35 @@ export const getUser = async (req, res) => {
     const userRef = doc(database, 'users', uuid);
     const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) { res.json(userSnap.data()); }
-    else { res.status(404).json({}); }
+    if (userSnap.exists()) {
+        const user = userSnap.data();
+
+        const imageRef = ref(storage, user.profileImage);
+        const imageURL = await getDownloadURL(imageRef);
+
+        user.profileImage = imageURL;
+        res.json(user);
+    } else { res.status(404).json({}); }
 }
+
+export const deleteProfileImage = async (req, res) => {
+    const { uuid } = req.body;
+
+    const userRef = doc(database, 'users', uuid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+        const user = userSnap.data();
+
+        const imageRef = ref(storage, user.profileImage);
+        const deleted = await deleteObject(imageRef);
+
+        res.json({ deleted: true });
+    } else { res.status(404).json({
+        deleted: false
+    }); }
+}
+
 export const getAllUser = async (req, res) => {
 
     const querySnapshot = await getDocs(collection(database, "users"));

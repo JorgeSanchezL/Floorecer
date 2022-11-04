@@ -3,8 +3,8 @@ import { StyleSheet, SafeAreaView, Dimensions,
     ScrollView, View, Image, Text } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
+import { BACKEND_URL } from '@env';
 
-import user from '../../assets/image/user.png';
 import mercatUPV from '../../assets/image/mercat_upv.png';
 
 export const width = Dimensions.get('window').width;
@@ -13,7 +13,7 @@ const PublicProfile = () => {
     const [profile, setProfile] = useState(null);
 
     const getProfile = async () => {
-        const api_call = await fetch('http://13.39.87.231:5000/users/FiL3npoNmaWostR77Dtm6CA3ktf2');
+        const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
         const response = await api_call.json();
         setProfile(response);
     }
@@ -37,7 +37,7 @@ const PublicProfile = () => {
             </View>
             <View style={styles.container}>
                 <Image
-                    source={user}
+                    source={{uri: profile.profileImage}}
                     style={styles.userCircle}
                 />
                 <View style={[
@@ -49,7 +49,7 @@ const PublicProfile = () => {
                 ]}>
                     <View>
                         <Text style={styles.userName}>
-                            {profile.fullname}
+                            {profile.username}
                         </Text>
                         <View style={[
                             styles.rowFlex,
