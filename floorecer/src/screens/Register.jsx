@@ -30,7 +30,7 @@ const Register = () => {
 
     const sendEmail = async (user) => {
       try {
-        const response = await fetch(`http://${BACKEND_URL}/user-verification/mail`, { 
+        const response = await fetch(`${BACKEND_URL}/user-verification/mail`, { 
           method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -72,8 +72,8 @@ const Register = () => {
     const SignUpNowCliente = async () => { 
       
       try {
-        console.log(`http://${BACKEND_URL}/user-authe/userRegister`)
-        const response = await fetch(`http://${BACKEND_URL}/user-authe/userRegister`, {
+        console.log(`${BACKEND_URL}/user-authe/userRegister`)
+        const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -129,7 +129,7 @@ const Register = () => {
     const SignUpComercio = async () => { 
       console.log("woow")
       try {
-        const response = await fetch(`http://${BACKEND_URL}/user-authe/userRegister`, {
+        const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,

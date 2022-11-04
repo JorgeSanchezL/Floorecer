@@ -11,7 +11,7 @@ export const getUser = async (req, res) => {
     if (userSnap.exists()) {
         const user = userSnap.data();
 
-        const imageRef = ref(storage, user.profileImage);
+        const imageRef = ref(storage, `profiles/${user.profileImage}`);
         const imageURL = await getDownloadURL(imageRef);
 
         user.profileImage = imageURL;
@@ -28,8 +28,8 @@ export const deleteProfileImage = async (req, res) => {
     if (userSnap.exists()) {
         const user = userSnap.data();
 
-        const imageRef = ref(storage, user.profileImage);
-        const deleted = await deleteObject(imageRef);
+        const imageRef = ref(storage, `profiles/${user.profileImage}`);
+        await deleteObject(imageRef);
 
         res.json({ deleted: true });
     } else { res.status(404).json({

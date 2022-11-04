@@ -9,6 +9,7 @@ import SvgQRCode from 'react-native-qrcode-svg';
 import user from '../../assets/image/user.png';
 import qrCode from '../../assets/image/qrCode.png';
 
+import { BACKEND_URL } from '@env';
 
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
@@ -28,14 +29,14 @@ const UserProfile = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const getProfile = async () => {
-      const api_call = await fetch('http://13.39.87.231:5000/users/gPASbD6K2bOwU3dK3SpqwlG8Rhl2');
+      const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
       const response = await api_call.json();
       setProfile(response);
       console.log(response);
   }
   const getProfile2 = async () => {
         try {
-          const response = await fetch("http://13.39.87.231:5000/user-authe/userProfile", {
+          const response = await fetch(`${BACKEND_URL}/user-authe/userProfile`, {
             method: 'POST',
             body: JSON.stringify({
               newEmail: mail,

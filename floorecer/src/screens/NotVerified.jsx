@@ -12,7 +12,7 @@ const Home = () => {
     try {
       var userToken = await SecureStore.getItemAsync('userToken')
       
-      const response = await fetch(`http://${BACKEND_URL}/user-verification/mail`, {
+      await fetch(`${BACKEND_URL}/user-verification/mail`, {
         method: 'POST',
           headers: {
           'Content-Type': 'application/json'
