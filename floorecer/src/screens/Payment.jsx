@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, View, Text,
     TouchableOpacity, Alert } from 'react-native';
 import { useForm } from 'react-hook-form';
-
+import { BACKEND_URL } from '@env';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import CustomTextInput from '../components/CustomTextInput';
 
@@ -18,7 +18,7 @@ const Payment = ({ navigation, route }) => {
 
     const onSubmit = async (data) => {
         try {
-            const api_call = await fetch('http://13.39.87.231:5000/payments', {
+            const api_call = await fetch(`${BACKEND_URL}/payments`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -27,7 +27,7 @@ const Payment = ({ navigation, route }) => {
                 body: JSON.stringify({
                     // the 'uid' will come from register screen
                     // put some uid from firestore to test it
-                    uid: '4xrCYVu3yFQYNY9j8Y0OGaq9wDm1',
+                    uid: '1JhCe6jIwlheYfXT1of8gJI8q693',
                     subsType: plan != 0 ? 2 : 1
                 })
             });

@@ -26,7 +26,7 @@ const ConfigureBusiness = ({ route }) => {
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
 
-    console.log(category)
+   // console.log(category)
   
   const images =[]
 
@@ -78,7 +78,7 @@ const ConfigureBusiness = ({ route }) => {
     
   };
   const onCancelPressed = () =>{
-    navigation.navigate('myshops');
+    navigation.navigate('myShops');
   }
 
   return(
@@ -204,7 +204,7 @@ export const DayTimeSlots = (props) => {
         ...currValue,
         [day]:slots
       }))
-      console.log(JSON.stringify(props.openingHours))
+      //console.log(JSON.stringify(props.openingHours))
     },[slots])
     
     return (
