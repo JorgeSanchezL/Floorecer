@@ -10,4 +10,5 @@ router.get('/search/:contains', searchUser);
 router.delete('/profileImage', deleteProfileImage);
 router.post('/getActualPlan',getActualPlan)
 
+
 export default router;

@@ -65,6 +65,7 @@ export const searchUser = async (req, res) => {
     }
 }
 
+
 export const getActualPlan = async (req,res)=>{
     const { uuid } = req.body;
     console.log('aqui')

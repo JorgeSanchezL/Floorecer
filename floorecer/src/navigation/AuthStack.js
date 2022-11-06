@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import NotVerified from '../screens/NotVerified';
+import ScanQr from '../screens/ScanQr';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,10 @@ const AuthStack = () => {
             <Stack.Screen
                 name='notVerified'
                 component={NotVerified}
+            />
+            <Stack.Screen
+                name='scanQr'
+                component={ScanQr}
             />
         </Stack.Navigator>
     );
