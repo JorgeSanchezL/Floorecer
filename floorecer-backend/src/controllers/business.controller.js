@@ -157,6 +157,41 @@ export const getBusiness = async(req,res) => {
     
 }
 
+export const upgradePoints = async (req,res) => {
+    const {uid , shopName,wonpoints }=req.body;
+    
+    try {
+        console.log("hola")
+        const docRef = doc(database, "users", uid);
+        const user = await getDoc(docRef);
+        const actualPoints = user.data().points;
+        const Historico = user.data().Historico;
+        let newUpdate = {
+           shopName : shopName,
+           points : wonpoints,
+
+        }
+         Historico.push (newUpdate);
+        console.log(Historico)
+      await updateDoc(docRef, { 
+        points: actualPoints+wonpoints,
+        Historico : Historico, 
+    
+    }
+        
+        );
+    } catch(error) {
+        console.log(error)
+    }
+
+
+
+
+
+}
+
+
+
 export const updateBusiness = async (req, res) => {
     const { uid, body } = req.body;
 

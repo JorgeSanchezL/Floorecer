@@ -64,3 +64,15 @@ export const searchUser = async (req, res) => {
         res.status(404).json({})
     }
 }
+
+
+export const getActualPlan = async (req,res)=>{
+    const { uuid } = req.body;
+    console.log('aqui')
+    const userRef = doc(database, 'users', uuid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) { res.json(userSnap.data().subscription); }
+    else { res.json(null); }
+
+}
