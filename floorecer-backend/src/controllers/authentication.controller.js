@@ -41,7 +41,7 @@ export const signIn = async (req,res) => {
       });
   };
 export const register = async (req,res) => {
-  console.log("hola")
+  console.log(req.body)
     const {email,username,usernameForSearch,password,numberphone,isBusinessOwner } = req.body
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
@@ -65,9 +65,9 @@ export const register = async (req,res) => {
         signInWithEmailAndPassword(auth, email,password)
           .then((loggedUser) => {
             sendEmailFromBackend(loggedUser);
+            res.status(200);
+            res.send(loggedUser);
         })
-        res.status(200);
-        res.send(auth.currentUser); //Cambiado para la UT de verificar usuario :)
 
 
         

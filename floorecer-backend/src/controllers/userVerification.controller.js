@@ -1,9 +1,9 @@
 import { sendEmailVerification } from "firebase/auth";
+import { auth } from './../../firebase.js'
 
 export const sendEmail = async (req, res) => {
-    console.log(req.body)
     try {
-        sendEmailVerification(req.body.user)
+        sendEmailVerification(auth.currentUser)
         .then(() => {
             res.status(200)
             res.send("Email sent")

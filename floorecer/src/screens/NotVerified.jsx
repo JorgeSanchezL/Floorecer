@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import HyperLink from '../components/Hyperlink';
 import * as SecureStore from 'expo-secure-store';
@@ -6,21 +6,62 @@ import {BACKEND_URL} from '@env'
 
 const Home = () => {
 
-  const [value, setValue] = useState(null)
+
+  
 
   const sendEmail = async () => {
     try {
+      console.log(`${BACKEND_URL}/user-authe/userRegister2`)
       var userToken = await SecureStore.getItemAsync('userToken')
-      
-      await fetch(`${BACKEND_URL}/user-verification/mail`, {
+      const response = await fetch(`http://192.168.0.72:5000/user-verification/mail`, {
         method: 'POST',
+        body: userToken,
           headers: {
-          'Content-Type': 'application/json'
-        },
-        body: {
-          user: JSON.parse(userToken)
-        }
-      });
+            "Content-type": "application/json; charset=UTF-8"
+          },
+        
+      }
+      
+      
+      );
+      //console.log(Object.getOwnPropertyNames(response));
+      console.log(JSON.stringify({
+        email: email,
+        username: username,
+        usernameForSearch: getUsernameForSearch(),
+        password: password,
+        numberphone : numerodetelefono,
+        isBusinessOwner : false,
+
+    }))
+      if(response.status==200){
+        const res=await response.json()
+        await SecureStore.setItemAsync('userToken', JSON.stringify(res))
+        Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
+          
+          { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+        ]);
+      }
+      else if(response.status == 401 ) {
+        Alert.alert(':(', '¡ Ya existe una cuenta con ese correo !', [
+          
+          { text: 'OK' },
+        ]);
+      }
+      else if(response.status == 406 ) {
+        Alert.alert(':(', '¡ La contraseña es demasiado débil !', [
+          
+          { text: 'OK' },
+        ]);
+      }
+      else {
+        Alert.alert(':(', '¡ Hay un problema de conexion !', [
+          
+          { text: 'OK'},
+        ]);
+      }
+
+        
     } catch (err) {
       console.log(err)
     }

@@ -28,23 +28,7 @@ const Register = () => {
       return result
     }
 
-    const sendEmail = async (user) => {
-      try {
-        const response = await fetch(`${BACKEND_URL}/user-verification/mail`, { 
-          method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            'Authorization-Header': ''
-          },
-          body: JSON.stringify({
-            user: user
-          })
-        });
-        console.log(user)
-      } catch (err) {
-        console.log(err)
-      }
-    }
+    
     const onRegisterPressedCliente=()=>{
       if(numerodetelefono!='' && password!='' && checkPassword() && checkPhoneNumber()) {
       console.log(checkInputs());
@@ -73,7 +57,7 @@ const Register = () => {
       
       try {
         console.log(`${BACKEND_URL}/user-authe/userRegister`)
-        const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
+        const response = await fetch(`http://192.168.0.72:5000/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -93,13 +77,21 @@ const Register = () => {
         
         );
         //console.log(Object.getOwnPropertyNames(response));
-        
+        console.log(JSON.stringify({
+          email: email,
+          username: username,
+          usernameForSearch: getUsernameForSearch(),
+          password: password,
+          numberphone : numerodetelefono,
+          isBusinessOwner : false,
+
+      }))
         if(response.status==200){
           const res=await response.json()
           await SecureStore.setItemAsync('userToken', JSON.stringify(res))
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(response);navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
@@ -153,7 +145,7 @@ const Register = () => {
           await SecureStore.setItemAsync('userToken', response)
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
-            { text: 'OK', onPress: () => { sendEmail(response); navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
+            { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
           ]);
         }
         else if(response.status == 401 ) {
