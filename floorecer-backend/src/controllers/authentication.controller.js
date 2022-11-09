@@ -55,7 +55,8 @@ export const register = async (req,res) => {
     isBusinessOwner : isBusinessOwner,
     numero : numberphone,
     email:email,
-    password:password
+    password:password,
+    item: {}
     }
   )
 
