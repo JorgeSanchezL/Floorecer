@@ -11,14 +11,14 @@ const Stack = createStackNavigator();
 const AuthStack = () => {
     return (
         <Stack.Navigator
-            initialRouteName='itemShop'
+            initialRouteName='login'
             screenOptions={{
                 headerShown: false
             }}
         >
             <Stack.Screen
-                name='itemShop'
-                component={ItemShop}
+                name='login'
+                component={Login}
             />
             <Stack.Screen
                 name='register'
