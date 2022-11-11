@@ -7,11 +7,11 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { BACKEND_URL } from '@env';
 
-import AuthContext from './src/context/AuthContext';
+import AuthContext from './src/context/AuthContext.js';
 
-import AuthStack from './src/navigation/AuthStack';
-import UserTabs from './src/navigation/UserTabs';
-import BusinessTabs from './src/navigation/BusinessTabs'
+import AuthStack from './src/navigation/AuthStack.js';
+import UserTabs from './src/navigation/UserTabs.js';
+import BusinessTabs from './src/navigation/BusinessTabs.js'
 
 SplashScreen.preventAutoHideAsync();
 
@@ -111,7 +111,9 @@ export default App = () => {
             } else { return {
               signInError: 'Email o contraseña no son correctos'
             }}
-          } catch (signInError) { return {signInError}; }
+          } catch (signInError) { return {
+            signInError: 'Problema de red'
+          }; }
         },
         signOut: () => {
             removeData('auth0');

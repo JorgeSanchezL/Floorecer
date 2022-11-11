@@ -23,7 +23,7 @@ const Login = () => {
     };
     const log = async () => { 
       const response = await signIn(email, password);
-      if (response) {
+      if (response && response.signInError) {
         Alert.alert('Alerta',
           response.signInError);
       }
