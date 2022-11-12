@@ -180,6 +180,9 @@ export const upgradePoints = async (req,res) => {
     }
         
         );
+        res.status (200);
+        res.send();
+
     } catch(error) {
         console.log(error)
     }

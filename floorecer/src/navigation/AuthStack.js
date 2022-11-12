@@ -28,10 +28,7 @@ const AuthStack = () => {
                 name='notVerified'
                 component={NotVerified}
             />
-            <Stack.Screen
-                name='scanQr'
-                component={ScanQr}
-            />
+           
         </Stack.Navigator>
     );
 }

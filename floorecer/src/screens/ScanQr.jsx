@@ -1,27 +1,63 @@
-import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity,Button,Modal} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect,useState } from 'react';
+import { SafeAreaView, View, Alert, StyleSheet, Text, StatusBar ,TouchableOpacity,Button,Modal} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import DropDownPicker from 'react-native-dropdown-picker';
+import * as SecureStore from 'expo-secure-store';
 import {BACKEND_URL} from '@env';
+import AuthContext from '../context/AuthContext';
+import { setItemAsync, getItemAsync,
+  deleteItemAsync } from 'expo-secure-store';
 
 var datos = null;
 
 
 
-const ScanQr =  () =>  {
+const ScanQr =   () =>  {
+
+
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
-      {label: 'Shop1', value: 'shop1'},
-      {label: 'Shop2', value: 'shop2'}
-    ]);
+    const [items, setItems] = useState([]);
+    const [importe, onChangeImporte] = useState(null);
+ 
+    const getbusiness= async () =>{ 
+      try {
+        const response = await fetch(`${BACKEND_URL}/business/getbusinesses`, {
+          method: 'POST',
+          body: JSON.stringify({
+           owner : auth0.uid
+        }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },     
+        }   
+        );
+         const body = await response.json();
+         console.log("is it donee?")
+         let dropDownData = [];
+         var count = Object.keys(body).length;
+         console.log(count)
+      for (var i = 0; i < count; i++) {
+        console.log(body[i].name)
+        dropDownData.push({ value: body[i].name, label: body[i].name }); 
+    }
 
+    setItems(dropDownData);
+    console.log("haha")
+        }
+    
+     catch (err) {
+    
+      console.log(err)
+    
+     }}
+     useEffect(() => {getbusiness()}, [])
     useEffect(() => {
       const getBarCodeScannerPermissions = async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -33,34 +69,56 @@ const ScanQr =  () =>  {
   
     const handleBarCodeScanned = async ({ type, data }) => {
       setScanned(true);
+
+      let importeInt = parseInt(importe);
+      let wonpoints = 0;
+      switch(true) {
+         case importeInt <10 :
+          wonpoints = 1;
+          break;
+          case importeInt <20 :
+            wonpoints = 1.5;
+            break
+          case importeInt <40 :
+            wonpoints = 4;
+            break
+          case importeInt <90 :
+            wonpoints = 6;
+            break
+          case importeInt >= 90:
+            wonpoints = 10;
+            break;
+     }
+      
       try {
         console.log(`${BACKEND_URL}/business/upgradePoints`)
-        const response = await fetch(`${BACKEND_URL}/business/upgradePoints`, {
+        var response = await fetch(`${BACKEND_URL}/business/upgradePoints`, {
           method: 'POST',
           body: JSON.stringify({
            uid : data,
-           wonpoints : 15,
+           wonpoints : wonpoints,
            shopName : value, 
 
         }),
             headers: {
               "Content-type": "application/json; charset=UTF-8"
             },
-          
         }
-        
-        
-        );
+         );
+         
     }
+    
         catch(error) {
             console.log(error)
         }
-       
-     
+        if(response.status = 200 ) {
+          console.log("fuckof")
+          Alert.alert('Alerta',
+          "se ha guardado la compra de forma correcta !")
+          setModalVisible(false)
+         
 
-
-
-
+        }
       console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
     };
   
@@ -108,6 +166,9 @@ const ScanQr =  () =>  {
         style={styles.input}
         placeholder="Importe"
         keyboardType="numeric"
+        onChangeText=  {onChangeImporte}
+        value ={importe}
+        
         
       />
        <Text  style = {styles.Currency}> €</Text>  
@@ -127,13 +188,6 @@ const ScanQr =  () =>  {
     
     
     };
-
-
-
-
-
-
-
 
       const styles = StyleSheet.create({
         container: {

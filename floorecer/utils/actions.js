@@ -24,6 +24,7 @@ export const getAllBusinesses = async ( category) => {
   if(category != null && category.length > 0) type = `getAllBusinessesByCategory/${category}`
   console.log(category)
   try {
+    console.log(BACKEND_URL)
     const response = await fetch(`${BACKEND_URL}/business/${type}`, {
       method: 'GET',
       headers: {

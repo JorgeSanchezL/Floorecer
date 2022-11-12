@@ -74,7 +74,9 @@ export default App = () => {
               if (now < expirationTime) {
                 session = {
                   token: auth0.token,
-                  isBusinessOwner: auth0.isBusinessOwner
+                  isBusinessOwner: auth0.isBusinessOwner,
+                  uid : auth0.uid,
+
                 }
               }
             }
@@ -88,6 +90,7 @@ export default App = () => {
     const authContext = React.useMemo(() => ({
         signIn: async (email, password) => {
           try {
+            console.log(BACKEND_URL)
             const response = await fetch(`${BACKEND_URL}/user-authe/userSign/${email}&${password}`, {
               method: 'GET',
                 headers: {
@@ -96,16 +99,20 @@ export default App = () => {
             });
             
             if (response.status == 200) {
+
               const body = await response.json();
-              
+              console.log(Object.getOwnPropertyNames(body))
               const auth0 = {
                 token: body.token,
                 expirationTime: new Date().getTime()+4.32e+8,
-                isBusinessOwner: body.isBusinessOwner
+                isBusinessOwner: body.isBusinessOwner,
+                uid : body.uid,
               };
               dispatch({ type: 'SIGN_IN', session: {
                 token: body.token,
-                isBusinessOwner: body.isBusinessOwner
+                isBusinessOwner: body.isBusinessOwner,
+                uid : body.uid,
+
               }});
               saveData('auth0', JSON.stringify(auth0));
             } else { return {

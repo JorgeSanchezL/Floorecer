@@ -5,6 +5,7 @@ import { Ionicons } from 'react-native-vector-icons';
 import Map from '../screens/Map';
 import BusinesStack from './BusinesStack';
 import NewBusiness from '../screens/NewBusiness';
+import ScanQr from '../screens/ScanQr';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,10 @@ const BusinessTabs = () => {
                     } else if (route.name == 'newBusiness') {
                         iconName = focused ? 'add-circle' : 'add-circle-outline'
                     }
+                 else if (route.name == 'ScanQr') {
+                    iconName = focused ? 'qr-code' : 'qr-code-outline'
+                }
+
 
                     return (
                         <Ionicons
@@ -40,6 +45,8 @@ const BusinessTabs = () => {
             <Tab.Screen name='home' component={Map} />
             <Tab.Screen name='businesStack' component={BusinesStack} />
             <Tab.Screen name='newBusiness' component={NewBusiness} />
+            <Tab.Screen name='ScanQr' component={ScanQr} />
+
         </Tab.Navigator>
     );
 }

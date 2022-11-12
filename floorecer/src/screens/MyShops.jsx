@@ -1,11 +1,13 @@
-import React, { useEffect,useState } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity} from 'react-native';
 var datos = null;
 import { useNavigation } from '@react-navigation/native';
 import { BACKEND_URL } from '@env';
+import AuthContext from '../context/AuthContext';
 
 const getActualPlan = async()=>{
   try {
+    console.log("hh" + BACKEND_URL)
       const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {
         method: 'POST',
         body: JSON.stringify({
@@ -33,12 +35,13 @@ const MyShops = () => {
   const [data, setData] = useState(null);
   const navigation=useNavigation();
 
+ 
 const getbusiness= async () =>{ 
   try {
     const response = await fetch(`${BACKEND_URL}/business/getbusinesses`, {
       method: 'POST',
       body: JSON.stringify({
-       owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
+       owner : auth0.uid
     }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -46,6 +49,7 @@ const getbusiness= async () =>{
     }   
     );
      const body = await response.json();
+     console.log("is it done?")
      setData(body)
     }
 

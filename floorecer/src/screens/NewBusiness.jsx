@@ -38,7 +38,7 @@ const NewBusiness = () => {
       const formData = new FormData();
 
       // uid from the business owner
-      formData.append('owner', 'XiwTNPIGkAT2txAIRwUUMeBUVvH2')
+      formData.append('owner', auth0.uid)
       formData.append('name', shopName);
       formData.append('nif', nif);
       formData.append('address', address);

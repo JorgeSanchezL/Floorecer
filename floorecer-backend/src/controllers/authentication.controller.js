@@ -18,6 +18,7 @@ export const signIn = async (req,res) => {
         if (userSnap.exists()) {
             const user = userSnap.data();
             user.token = userCredential.user.stsTokenManager.accessToken
+            user.uid = auth.currentUser.uid
             res.json(user);
         }
           return userCredential

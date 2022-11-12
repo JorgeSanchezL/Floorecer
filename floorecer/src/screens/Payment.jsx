@@ -18,7 +18,7 @@ const Payment = ({ navigation, route }) => {
 
     const onSubmit = async (data) => {
         try {
-            const api_call = await fetch(`${BACKEND_URL}/payments`, {
+            const api_call = await fetch(`http://192.168.1.143/payments`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
