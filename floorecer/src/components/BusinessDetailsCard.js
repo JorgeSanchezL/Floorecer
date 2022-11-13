@@ -8,13 +8,13 @@ import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import * as Animatable from 'react-native-animatable';
 import { BACKEND_URL } from '@env';
 import { updateBusiness } from '../../utils/actions';
-
+import CustomInput from '../components/CustomInput';
 
 const diasDeLaSemana = ["Domingo","Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado"]
 const diasDeLaSemanaEuropa = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
 //De momento ir cambiando el UUID para probar hasta tener la sesión del user
-const uuid = '0gTMKcO39UcAraG4IVbXXTMXh8T2'
+const uuid = '5KF6bzTUJLak6MbrO4jcyRcHULu2'
 
 function getOpeningText(openingHours){
     const date = new Date()
@@ -175,7 +175,6 @@ const BusinessDetailsCard = (props) => {
                         <Text style={styles.subTitle}>Valorar y escribir una reseña</Text>
                         <Text style={styles.text}>Comparte tu experiencia para ayudar a otros usuarios</Text>
                         <View style={{flex:1,flexDirection:'row'}}>
-                          <Image style={styles.icon} source={{uri: profile===null ? 'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/q5genwzt9ru47slmnuzk' : profile.profileImage}} />
                           <CustomRatingBar reviews={reviews} profile={profile} businessId={props.business.docId} setReviews={setReviews}/>
                         </View>
                     </View>
@@ -191,6 +190,7 @@ const BusinessDetailsCard = (props) => {
                           <View style={{marginLeft:10}}>
                             <CurrentRating value={review.value}/>
                           </View>
+                          {review.comment && <Text style={styles.text}>{review.comment}</Text> } 
                           <Divider />
                         </View>
                       })
@@ -233,19 +233,22 @@ const BusinessDetailsCard = (props) => {
     }
     let review = userHasReview()
     const [defaultRating, setdefaultRating] = useState(review ? review.value : 0)
-    const [disableButton, setDisableButton] = useState(review ? true : false)
+    const [existsReview, setExistsReview] = useState(review ? true : false)
+    const [comment, setComment] = useState(review? review.comment : '')
+
     const maxRating=[1,2,3,4,5]
     const starImgFilled = `../../assets/star_filled.png`
     const starImgCorner = `../../assets/star_corner.png`
 
     const publishReview = async () => {
-      setDisableButton(true)
+      setExistsReview(true)
       console.log("publicando review")
       reviews.unshift({
         name: props.profile.username,
         profileImage: props.profile.profileImage,
         uuid: uuid,
-        value: defaultRating
+        value: defaultRating,
+        comment: comment
       })
       //Meter alerta se ha guardado correctamente
       if(updateBusiness(props.businessId,{reviews: reviews})) {
@@ -255,26 +258,43 @@ const BusinessDetailsCard = (props) => {
 
     }
     return (
-      <View style={{flexDirection:"row"}}>
-        {maxRating.map((item,key) => {return(
-          <TouchableOpacity
-            activeOpacity={0.7}
-            key={item}
-            onPress={()=>setdefaultRating(item)}
-            disabled={disableButton}
-          >
-            <Image 
-              style={styles.icon}
-              source={item<=defaultRating?require(starImgFilled):require(starImgCorner)}
-              ></Image>
-          </TouchableOpacity>
-        )})}
+      <View>
+        <View style={{flexDirection:"row"}}>
+          <Image style={styles.icon} source={{uri: props.profile===null ? 'https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/q5genwzt9ru47slmnuzk' : props.profile.profileImage}} />
+          {maxRating.map((item,key) => {return(
+            <TouchableOpacity
+              activeOpacity={0.7}
+              key={item}
+              onPress={()=>setdefaultRating(item)}
+              disabled={existsReview}
+            >
+              <Image 
+                style={styles.icon}
+                source={item<=defaultRating?require(starImgFilled):require(starImgCorner)}
+                ></Image>
+            </TouchableOpacity>
+          )})}
+        </View>
         {defaultRating!=0 && 
-          <TouchableOpacity style ={styles[`textButton${disableButton ? 'Disabled':''}`]} disabled={disableButton} onPress={publishReview}>
-            <Text style={styles[`buttonText${disableButton ? 'Disabled' : ''}`]}>
-              Publicar
-            </Text>
-        </TouchableOpacity>}
+          <View>
+            <CustomInput 
+              placeholder='Comparte detalles sobre tu experiencia en este lugar' 
+              multiline
+              editable={!existsReview}
+              value={comment}
+              setValue={setComment}
+            />
+            <TouchableOpacity 
+              style ={styles[`textButton${existsReview ? 'Disabled':''}`]} 
+              disabled={existsReview} 
+              onPress={publishReview}
+            >
+              <Text style={styles[`buttonText${existsReview ? 'Disabled' : ''}`]}>
+                Publicar
+              </Text>
+            </TouchableOpacity>
+
+          </View>}
       </View>
     )
   }
@@ -367,7 +387,8 @@ const BusinessDetailsCard = (props) => {
       marginLeft: 10,
       marginRight:10,
       borderRadius:5,
-      alignItems:"center"
+      alignItems:"center",
+      width:'100%'
     },
     textButtonDisabled:{
       backgroundColor:'#B4F4AC',
@@ -375,7 +396,8 @@ const BusinessDetailsCard = (props) => {
       marginLeft: 10,
       marginRight:10,
       borderRadius:5,
-      alignItems:"center"
+      alignItems:"center",
+      width:'100%'
     },
     buttonText:{
       fontSize:16,

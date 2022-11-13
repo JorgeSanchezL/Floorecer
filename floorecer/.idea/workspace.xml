@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8cdbc51-cbfa-487f-b27c-bf1cb11fbf0d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/star_corner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/star_filled.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Divider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../floorecer-backend/src/controllers/business.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../floorecer-backend/src/controllers/business.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../floorecer-backend/src/controllers/users.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/../floorecer-backend/src/controllers/users.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../floorecer-backend/src/routes/users.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../floorecer-backend/src/routes/users.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/BusinessDetailsCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BusinessDetailsCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/navigation/AppStack.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigation/AppStack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ConfigureBusiness.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ConfigureBusiness.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/actions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
