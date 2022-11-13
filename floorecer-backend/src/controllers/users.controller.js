@@ -1,5 +1,6 @@
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { database } from '../../firebase.js';
+import { ref, getDownloadURL } from 'firebase/storage';
+import { database, storage } from '../../firebase.js';
 
 export const getUser = async (req, res) => {
     const { uuid } = req.params;
@@ -7,8 +8,15 @@ export const getUser = async (req, res) => {
     const userRef = doc(database, 'users', uuid);
     const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) { res.json(userSnap.data()); }
-    else { res.status(404).json({}); }
+    if (userSnap.exists()) {
+        const user = userSnap.data();
+
+        const imageRef = ref(storage, "profiles/"+user.profileImage);
+        const imageURL = await getDownloadURL(imageRef);
+
+        user.profileImage = imageURL;
+        res.json(user);
+    } else { res.status(404).json({}); }
 }
 export const getAllUser = async (req, res) => {
 
@@ -36,4 +44,39 @@ export const searchUser = async (req, res) => {
     } else {
         res.status(404).json({})
     }
+}
+
+
+export const getActualPlan = async (req,res)=>{
+    const { uuid } = req.body;
+    console.log('aqui')
+    const userRef = doc(database, 'users', uuid);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) { res.json(userSnap.data().subscription); }
+    else { res.json(null); }
+}
+
+export const getUsersByIds = async (req, res) => {
+    try{
+        const { ids } = req.body;
+
+        const body = await getUsers(ids)
+        if(!body.length===0)res.json(JSON.stringify(body))
+    }catch(err){
+        console.log(err)
+    }
+}
+
+const getUsers = async(ids) => {
+    let body = []
+    ids.forEach(async (id)=>{
+        const userRef = doc(database, 'users', id);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.empty) {
+            body.push({owner:id,data:userSnap.data()})
+            console.log(body)
+        } 
+    })
+    return body
 }
