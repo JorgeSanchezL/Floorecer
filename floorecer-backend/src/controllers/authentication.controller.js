@@ -48,14 +48,15 @@ export const register = async (req,res) => {
         // Signed in
     setDoc(doc(database,"users",userCredential.user.uid) ,{
     username: username,
-    //usernameForSearch: usernameForSearch,
+    usernameForSearch: usernameForSearch,
     points : 0,
     followers : {},
     following : {},
     isBusinessOwner : isBusinessOwner,
     numero : numberphone,
     email:email,
-    password:password
+    password:password,
+    garden: [{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}]
     }
   )
 
