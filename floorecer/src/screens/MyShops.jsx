@@ -1,11 +1,10 @@
-import React, { useContext, useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity} from 'react-native';
-var datos = null;
+import React, { useEffect,useState } from 'react';
+import { SafeAreaView, View, FlatList,
+  StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { BACKEND_URL } from '@env';
-import AuthContext from '../context/AuthContext';
 
-const getActualPlan = async()=>{
+const getActualPlan = async() => {
   try {
     console.log("hh" + BACKEND_URL)
       const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {

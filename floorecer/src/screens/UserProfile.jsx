@@ -1,7 +1,9 @@
 import React ,{useEffect,useState} from 'react';
 import { StyleSheet, SafeAreaView, Dimensions,
-  ScrollView, View, Image, Text ,TouchableButton,Button,TouchableOpacity,Modal,Pressable } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+  ScrollView, View, Image, Text, TouchableOpacity,
+  Modal} from 'react-native';
+import { getItemAsync } from 'expo-secure-store';
+import { Ionicons } from '@expo/vector-icons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import SvgQRCode from 'react-native-qrcode-svg';
 
@@ -27,12 +29,22 @@ const UserProfile = () => {
   const [phone, setPhone] = useState('');
   const [mail, setMail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [uid, setUid] = useState(null);
 
   const getProfile = async () => {
-      const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
-      const response = await api_call.json();
-      setProfile(response);
-      console.log(response);
+      try {
+        const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
+        const response = await api_call.json();
+        setProfile(response);
+        console.log(response);
+      } catch(e) { console.error(e); }
+      
+  }
+  const getUid = async () => {
+    try {
+      auth0 = JSON.parse(await getItemAsync('auth0'));
+      setUid(auth0.uid);
+    } catch(e) { console.error(e); }
   }
   const getProfile2 = async () => {
         try {
@@ -58,10 +70,11 @@ const UserProfile = () => {
         }
       }
 
-
+    console.log('hola',uid);
 
   useEffect(() => {
       getProfile();
+      getUid();
   }, []);
 
   if (profile === null) return null;
@@ -126,9 +139,11 @@ const UserProfile = () => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <SvgQRCode style = {{width :'100%'}} 
-      value='gPASbD6K2bOwU3dK3SpqwlG8Rhl2'
-    />
+            { auth0 != null &&
+              <SvgQRCode
+                style = {{width: '100%'}} 
+                value={auth0.uid}
+              /> }
            <CustomButton
            text = 'Close'
            onPress ={() => setModalVisible(!modalVisible)}

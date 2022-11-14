@@ -22,11 +22,9 @@ const BusinessTabs = () => {
                         iconName = focused ? 'basket' : 'basket-outline';
                     } else if (route.name == 'newBusiness') {
                         iconName = focused ? 'add-circle' : 'add-circle-outline'
+                    } else if (route.name == 'ScanQr') {
+                        iconName = focused ? 'qr-code' : 'qr-code-outline'
                     }
-                 else if (route.name == 'ScanQr') {
-                    iconName = focused ? 'qr-code' : 'qr-code-outline'
-                }
-
 
                     return (
                         <Ionicons

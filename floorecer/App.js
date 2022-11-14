@@ -74,9 +74,7 @@ export default App = () => {
               if (now < expirationTime) {
                 session = {
                   token: auth0.token,
-                  isBusinessOwner: auth0.isBusinessOwner,
-                  uid : auth0.uid,
-
+                  isBusinessOwner: auth0.isBusinessOwner
                 }
               }
             }
@@ -108,13 +106,12 @@ export default App = () => {
                 isBusinessOwner: body.isBusinessOwner,
                 uid : body.uid,
               };
+              console.log(auth0);
+              await saveData('auth0', JSON.stringify(auth0));
               dispatch({ type: 'SIGN_IN', session: {
                 token: body.token,
                 isBusinessOwner: body.isBusinessOwner,
-                uid : body.uid,
-
               }});
-              saveData('auth0', JSON.stringify(auth0));
             } else { return {
               signInError: 'Email o contraseña no son correctos'
             }}
