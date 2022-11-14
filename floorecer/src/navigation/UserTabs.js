@@ -5,6 +5,7 @@ import { Ionicons } from 'react-native-vector-icons';
 import Map from '../screens/Map';
 import ProfileStack from '../navigation/ProfileStack';
 import UserSearch from '../screens/UserSearch';
+import Garden from '../screens/Garden';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ const UserTabs = () => {
                 tabBarInactiveTintColor: '#4b4b4b',
             })}
         >
-            <Tab.Screen name='home' component={Map} />
+            <Tab.Screen name='home' component={Garden} />
             <Tab.Screen name='profileStack' component={ProfileStack} />
             <Tab.Screen name='userSearch' component={UserSearch} />
         </Tab.Navigator>
