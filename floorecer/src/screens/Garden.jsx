@@ -21,6 +21,26 @@ import purpleFlower13 from '../../assets/garden/purpleFlower/1petals3health.png'
 import purpleFlower12 from '../../assets/garden/purpleFlower/1petals2health.png'
 import purpleFlower11 from '../../assets/garden/purpleFlower/1petals1health.png'
 
+import redFlower33 from '../../assets/garden/redFlower/3petals3health.png'
+import redFlower32 from '../../assets/garden/redFlower/3petals2health.png'
+import redFlower31 from '../../assets/garden/redFlower/3petals1health.png'
+import redFlower23 from '../../assets/garden/redFlower/2petals3health.png'
+import redFlower22 from '../../assets/garden/redFlower/2petals2health.png'
+import redFlower21 from '../../assets/garden/redFlower/2petals1health.png'
+import redFlower13 from '../../assets/garden/redFlower/1petals3health.png'
+import redFlower12 from '../../assets/garden/redFlower/1petals2health.png'
+import redFlower11 from '../../assets/garden/redFlower/1petals1health.png'
+
+import whiteFlower33 from '../../assets/garden/whiteFlower/3petals3health.png'
+import whiteFlower32 from '../../assets/garden/whiteFlower/3petals2health.png'
+import whiteFlower31 from '../../assets/garden/whiteFlower/3petals1health.png'
+import whiteFlower23 from '../../assets/garden/whiteFlower/2petals3health.png'
+import whiteFlower22 from '../../assets/garden/whiteFlower/2petals2health.png'
+import whiteFlower21 from '../../assets/garden/whiteFlower/2petals1health.png'
+import whiteFlower13 from '../../assets/garden/whiteFlower/1petals3health.png'
+import whiteFlower12 from '../../assets/garden/whiteFlower/1petals2health.png'
+import whiteFlower11 from '../../assets/garden/whiteFlower/1petals1health.png'
+
 export const width = Dimensions.get('window').width;
 export const height = Dimensions.get('window').height;
 
