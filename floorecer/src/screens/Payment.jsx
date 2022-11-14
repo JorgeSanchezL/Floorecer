@@ -27,7 +27,7 @@ const Payment = ({ navigation, route }) => {
                 body: JSON.stringify({
                     // the 'uid' will come from register screen
                     // put some uid from firestore to test it
-                    uid: '1JhCe6jIwlheYfXT1of8gJI8q693',
+                    uid: 'dvqROxnEKPT0ertXdNGWlIio9WB2',
                     subsType: plan != 0 ? 2 : 1
                 })
             });

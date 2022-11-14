@@ -56,15 +56,20 @@ const NewBusiness = () => {
       });
 
       try {
-        const api_request = await fetch(`http://${BACKEND_URL}:5000/business/newBusiness`, {
+        const api_request = await fetch(`${BACKEND_URL}/business/newBusiness`, {
           method: 'POST',
           headers: { 'Content-Type': 'multipart/form-data' },
           body: formData
         });
-        Alert.alert("¡Comercio Creado con éxito!", "",[{text: "OK",},])
+        if(api_request.status == 401){
+          Alert.alert("¡No se puede crear comercio!", "Comprueba tu subscripción.",[{text: "OK",},])
+        }else if(api_request.status == 200){
+          Alert.alert("¡Comercio Creado con éxito!", "",[{text: "OK",},])
+        }
       } catch (err) {
         console.log(err)
       }
+      
     }
   }
   function checkInputs () {
@@ -104,7 +109,6 @@ const NewBusiness = () => {
           )
       }else{
         SaveBusiness();
-        
       }
     }
     

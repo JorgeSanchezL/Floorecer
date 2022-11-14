@@ -1,40 +1,44 @@
-import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList,
-  StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React, { useContext, useEffect,useState } from 'react';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity,Alert} from 'react-native';
+var datos = null;
 import { useNavigation } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/core";
 import { BACKEND_URL } from '@env';
 
-const getActualPlan = async() => {
-  try {
-    console.log("hh" + BACKEND_URL)
-      const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {
-        method: 'POST',
-        body: JSON.stringify({
-         uuid : '1JhCe6jIwlheYfXT1of8gJI8q693'//change owner to check
-      }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          },     
-      }   
-      );
-       const body = await response.json();
-       //console.log(body)
-       return body;
-      }
-  
-   catch (err) {
-  
-    console.log(err)
-      return null;
-   }
 
-}
 
 const MyShops = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [actualPlan,setActualPlan] = useState(null);
   const navigation=useNavigation();
+  const isFocused = useIsFocused();
 
- 
+
+  const getActualPlan = async()=>{
+    try {
+        const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {
+          method: 'POST',
+          body: JSON.stringify({
+           uuid : auth0.uid//change owner to check
+        }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },     
+        }   
+        );
+         const body = await response.json();
+         //console.log(body)
+         setActualPlan(body);
+        }
+        
+     catch (err) {
+    
+      console.log(err)
+        return null;
+     }
+  
+  }
+
 const getbusiness= async () =>{ 
   try {
     const response = await fetch(`${BACKEND_URL}/business/getbusinesses`, {
@@ -51,18 +55,64 @@ const getbusiness= async () =>{
      console.log("is it done?")
      setData(body)
     }
+    
 
  catch (err) {
 
   console.log(err)
 
  }}
- useEffect(() => {getbusiness()}, [])
+
+useEffect(() => { if(isFocused){getbusiness(); getActualPlan()}}, [isFocused]) 
+
 function onPressButton (shop) {
 
   navigation.navigate("configureBusiness",shop)
 }
 
+async function onDeletePress(shop){
+  Alert.alert(
+    "¿Estás seguro?",
+    "¿Quieres borrar este comercio definitivamente?",
+    [
+      // The "Yes" button
+      {
+        text: "Si",
+        onPress: async() => {
+          
+          try {
+            const response = await fetch(`${BACKEND_URL}/business/deleteBusiness`, { 
+              method: 'POST',
+              body: JSON.stringify({
+               shopUid : shop.uid,
+               ownerUid: shop.owner
+            }),
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8"
+                },     
+            }   
+            );
+            
+             
+          }
+          
+          catch (err) {
+        
+          console.log(err)
+        
+         }
+
+          getbusiness();
+
+        },
+      },
+      // The "No" button
+      // Does nothing but dismiss the dialog when tapped
+      {
+        text: "No",
+      },]);
+  
+}
 async function onPressButtonPromotion (shop) {
 
   console.log(shop.uid)
@@ -111,7 +161,7 @@ const Item = ({ shop }) => (
             {shop.Address}
         </Text>
     </View>
-
+    
     <View >
     <TouchableOpacity onPress={()=>{onPressButton(shop)}} style={styles.appButtonContainer}>
         <Text style={styles.appButtonText}>Editar</Text>
@@ -124,6 +174,11 @@ const Item = ({ shop }) => (
         <Text style={styles.appButtonText}>Promocionar</Text>
                 </TouchableOpacity> : null}
     </View>
+    <View >
+    <TouchableOpacity onPress={()=>{onDeletePress(shop)}} style={styles.appButtonContainer3}>
+        <Text style={styles.appButtonText}>Eliminar</Text>
+                </TouchableOpacity>
+    </View>
 </View>
 );
 
@@ -135,6 +190,12 @@ const Item = ({ shop }) => (
   );
   return (
     <SafeAreaView style={styles.container}>
+      <View style ={{marginBottom:-1, marginTop:15}}>
+        <Text style = {{fontSize:20}}>{actualPlan == 1 ? `Comercios: ${data.length}/5` : `Comercios: ${data.length}`}</Text>
+      </View>
+      <View style ={{marginBottom:-85, marginTop:60, alignItems:'center'}}>
+        <Text style = {{fontSize:20, fontStyle:'italic'}}>{data.length == 0 ? `No tiene comercios` : ``}</Text>
+      </View>
       <View style={{flex:1}}>
         <FlatList
         data={data}
@@ -145,7 +206,8 @@ const Item = ({ shop }) => (
       
       <View style={{}}>
         <TouchableOpacity onPress={async()=>{navigation.navigate('businessPlans', {
-                        ActualPlan: await getActualPlan()
+                        ActualPlan: actualPlan,
+                        numberBusiness: data.length
                     })}} 
                     style={styles.appButtonContainer2}>
         <Text style={styles.appButtonText}>Gestionar mi suscripción</Text>
@@ -221,6 +283,16 @@ appButtonContainer1: {
   height : 30,
   width : 100,
   marginTop : '-20%',
+  marginLeft : '65%',
+},
+appButtonContainer3: {
+  backgroundColor: "#009688",
+  borderRadius: 10,
+  paddingVertical: 5,
+  paddingHorizontal: 5,
+  height : 30,
+  width : 100,
+  marginTop : '-30%',
   marginLeft : '65%',
   
 

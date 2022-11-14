@@ -5,7 +5,8 @@ import upload from '../middlewares/imgUpload.js';
 import { newBusiness, getBusinesses, getBusiness, updateBusiness,
     getCategories, getAllBusinesses, getAllBusinessesByCategory,
     promoteBusiness,
-    upgradePoints} from '../controllers/business.controller.js';
+    upgradePoints,
+    deleteBusiness} from '../controllers/business.controller.js';
 
 
 const router = Router();
@@ -19,4 +20,5 @@ router.get('/getCategories',getCategories);
 router.get('/getAllBusinesses',getAllBusinesses);
 router.post('/upgradePoints',upgradePoints);
 router.get('/getAllBusinessesByCategory/:category',getAllBusinessesByCategory);
+router.post('/deleteBusiness',deleteBusiness);
 export default router;
