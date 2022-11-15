@@ -40,6 +40,8 @@ export const newBusiness = async(req,res) => {
                 active: true,
                 category: category,
                 promoted: false,
+                reviews: [],
+                description:'',
                 imageURL: snapshot.ref._location.path_
             }); 
         });
