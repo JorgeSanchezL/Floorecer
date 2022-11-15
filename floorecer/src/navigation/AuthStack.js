@@ -5,7 +5,6 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import NotVerified from '../screens/NotVerified';
 import ScanQr from '../screens/ScanQr';
-import Garden from '../screens/Garden';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +18,7 @@ const AuthStack = () => {
         >
             <Stack.Screen
                 name='login'
-                component={Garden}
+                component={Login}
             />
             <Stack.Screen
                 name='register'
