@@ -53,6 +53,7 @@ const Garden = () => {
   const [myPlants, setMyPlants] = useState()
 
   useEffect(() => {
+    fetchUserData()
     fetchGardenData()
     fetchInventoryData()
   }, [myPlants])
