@@ -11,7 +11,7 @@ router.get('/gardenInfo/:user', getGarden)
 router.get('/mySeeds/:user', getSeeds)
 router.delete('/profileImage', deleteProfileImage);
 router.post('/getActualPlan',getActualPlan)
-router.post('/updateSeed', updateSeedAmount)
+router.post('/updateSeeds', updateSeedAmount)
 
 
 export default router;

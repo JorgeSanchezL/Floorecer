@@ -88,7 +88,7 @@ const Garden = () => {
 
   const setInventoryData = async (name) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {
+      const response = await fetch(`${BACKEND_URL}/users/updateSeeds`, {
         method: 'POST',
         body: JSON.stringify({
          uuid : uuid,
