@@ -195,7 +195,11 @@ const Item = ({ shop }) => (
   return (
     <SafeAreaView style={styles.container}>
       <View style ={{marginBottom:-1, marginTop:15}}>
-        <Text style = {{fontSize:20}}>{actualPlan == 1 ? `Comercios: ${data.length}/5` : `Comercios: ${data.length}`}</Text>
+        <Text style = {{fontSize:20, marginLeft:10, marginBottom:5 }}>{
+          actualPlan == 1 ? `Suscripción Básica: ${data.length}/5 comercios` :
+          actualPlan == 2 ? `Suscripción Premium: ${data.length} comercios` : 'No tiene ninguna Suscripción'
+          
+        }</Text>
       </View>
       <View style ={{marginBottom:-85, marginTop:60, alignItems:'center'}}>
         <Text style = {{fontSize:20, fontStyle:'italic'}}>{data.length == 0 ? `No tiene comercios` : ``}</Text>
