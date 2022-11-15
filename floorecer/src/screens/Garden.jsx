@@ -4,7 +4,6 @@ import BotonFlor from '../components/BotonFlor';
 import BotonImagen from '../components/BotonImagen'
 import CustomButton from '../components/CustomButton'
 import grass from '../../assets/garden/grass.jpg'
-import menu from '../../assets/menu.png'
 import close from '../../assets/close.png'
 
 import { BACKEND_URL } from '@env';
@@ -50,7 +49,7 @@ const Garden = () => {
 
   const [openSeedsMenu, setOpenSeedsMenu] = useState(false)
   const [inventory, setInventory] = useState()
-  const [myPlants, setMyPlants] = useState([{type: "purple", petals: 3, health: 3}, {type: "purple", petals: 2, health: 2}, {type: "purple", petals: 1, health: 1}, {type: "noflower", petals: 0, health: 0}])
+  const [myPlants, setMyPlants] = useState()
 
   useEffect(() => {
     fetchGardenData()

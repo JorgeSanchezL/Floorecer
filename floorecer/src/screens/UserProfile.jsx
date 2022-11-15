@@ -31,6 +31,11 @@ const UserProfile = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [uid, setUid] = useState(null);
 
+  const navigation=useNavigation();
+  const openGarden = () => {
+    navigation.navigate('garden')
+  }
+
   const getProfile = async () => {
       try {
         const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
@@ -117,13 +122,13 @@ const UserProfile = () => {
               barStyle='dark-content'
               backgroundColor={'#fff'}
           />
-          <View style={styles.garden}>
+          <TouchableOpacity style={styles.garden} onPress={openGarden}>
             <Ionicons
                   name='ios-arrow-back'
                   size={30}
                   color={'#085D0E'}
             />
-          </View>
+          </TouchableOpacity>
           <View style={styles.container}>
               <Image
                   source={user}
