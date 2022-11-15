@@ -57,7 +57,10 @@ export const register = async (req,res) => {
     numero : numberphone,
     email:email,
     password:password,
-    item: {}
+    item: {},
+    profileImage : 'testing.png',
+    historico : [],
+
     }
   )
 

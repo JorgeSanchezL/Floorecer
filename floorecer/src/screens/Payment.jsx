@@ -18,7 +18,9 @@ const Payment = ({ navigation, route }) => {
 
     const onSubmit = async (data) => {
         try {
-            const api_call = await fetch(`http://192.168.1.143/payments`, {
+           const auth0 = JSON.parse(await getItemAsync('auth0'));
+console.log(auth0.uid +"gg")
+            const api_call = await fetch(`${BACKEND_URL}/payments`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -27,7 +29,7 @@ const Payment = ({ navigation, route }) => {
                 body: JSON.stringify({
                     // the 'uid' will come from register screen
                     // put some uid from firestore to test it
-                    uid: 'dvqROxnEKPT0ertXdNGWlIio9WB2',
+                    uid: auth0.uid,
                     subsType: plan != 0 ? 2 : 1
                 })
             });

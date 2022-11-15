@@ -3,6 +3,7 @@ import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpa
 var datos = null;
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from "@react-navigation/core";
+import { getItemAsync } from 'expo-secure-store'; 
 import { BACKEND_URL } from '@env';
 
 
@@ -16,6 +17,7 @@ const MyShops = () => {
 
   const getActualPlan = async()=>{
     try {
+        const auth0 = JSON.parse(await getItemAsync('auth0'));
         const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {
           method: 'POST',
           body: JSON.stringify({
@@ -41,6 +43,8 @@ const MyShops = () => {
 
 const getbusiness= async () =>{ 
   try {
+   const auth0 = JSON.parse(await getItemAsync('auth0'));
+
     const response = await fetch(`${BACKEND_URL}/business/getbusinesses`, {
       method: 'POST',
       body: JSON.stringify({

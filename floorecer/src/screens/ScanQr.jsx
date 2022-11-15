@@ -25,9 +25,9 @@ const ScanQr =   () =>  {
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([]);
     const [importe, onChangeImporte] = useState(null);
- 
     const getbusiness= async () =>{ 
       try {
+        auth0 = JSON.parse(await getItemAsync('auth0'));
         const response = await fetch(`${BACKEND_URL}/business/getbusinesses`, {
           method: 'POST',
           body: JSON.stringify({

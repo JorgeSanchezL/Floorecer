@@ -30,7 +30,7 @@ export const newBusiness = async(req,res) => {
         uploadBytes(storageRef, file.buffer)
         .then(async (snapshot) => {
             console.log('ENTRA!')
-            /* await setDoc(doc(collection(database, "business")), {
+             await setDoc(doc(collection(database, "business")), {
                 owner: owner,
                 name: name,
                 Address: address,
@@ -41,9 +41,9 @@ export const newBusiness = async(req,res) => {
                 category: category,
                 promoted: false,
                 imageURL: snapshot.ref._location.path_
-            }); */
+            }); 
         });
-        await setDoc(doc(collection(database, "business")), {
+       /* await setDoc(doc(collection(database, "business")), {
             owner: owner,
             name: name,
             Address: address,
@@ -54,7 +54,7 @@ export const newBusiness = async(req,res) => {
             category: category,
             promoted: false,
             //imageURL: snapshot.ref._location.path_
-        });
+        });*/
         
         res.status(200);
         res.send('Creado con exito');
