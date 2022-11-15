@@ -5,7 +5,7 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import NotVerified from '../screens/NotVerified';
 import ScanQr from '../screens/ScanQr';
-import ItemShop from '../screens/ItemShop';
+
 const Stack = createStackNavigator();
 
 const AuthStack = () => {

@@ -12,7 +12,7 @@ const UserSearch = () => {
         fetchData();
     },[text]);
 
-    const fetchData = async ()=>{
+    const fetchData = async () =>{
         try{
             const response=await fetch(`http://13.39.87.231:5000/users/search/${text}`);
             let body=await response.json();
