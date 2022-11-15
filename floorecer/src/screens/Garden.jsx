@@ -1,5 +1,6 @@
 import React ,{ useEffect, useState } from 'react';
 import { StyleSheet, View, ImageBackground, Dimensions, Modal, Text, FlatList } from 'react-native';
+import { getItemAsync } from 'expo-secure-store';
 import BotonFlor from '../components/BotonFlor';
 import BotonImagen from '../components/BotonImagen'
 import CustomButton from '../components/CustomButton'
@@ -45,7 +46,7 @@ export const height = Dimensions.get('window').height;
 
 const Garden = () => {
 
-  const uuid = "L8Wyfo7DsSOCLYPujztzHKx0SKF3"
+  let uuid
 
   const [openSeedsMenu, setOpenSeedsMenu] = useState(false)
   const [inventory, setInventory] = useState()
@@ -55,6 +56,14 @@ const Garden = () => {
     fetchGardenData()
     fetchInventoryData()
   }, [myPlants])
+
+  const fetchUserData = async () => {
+    try {
+      uuid = JSON.parse(await getItemAsync('auth0')).uid;
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const fetchGardenData = async () => {
     try{

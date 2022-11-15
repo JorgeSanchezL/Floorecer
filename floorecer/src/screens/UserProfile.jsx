@@ -36,11 +36,6 @@ const UserProfile = () => {
     navigation.navigate('garden')
   }
 
-  const navigation=useNavigation();
-  const openGarden = () => {
-    navigation.navigate('garden')
-  }
-
   const getProfile = async () => {
       try {
         const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
