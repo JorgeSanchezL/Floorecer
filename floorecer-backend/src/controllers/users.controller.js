@@ -93,6 +93,14 @@ export const updateSeedAmount = async (req,res)=>{
     await updateDoc(userRef, newData)
 }
 
+export const updateGarden = async (req,res)=>{
+    const { uuid, garden } = req.body;
+    const userRef = doc(database, 'users', uuid);
+    newData = {}
+    newData['garden'] = garden
+    await updateDoc(userRef, newData)
+}
+
 
 export const getActualPlan = async (req,res)=>{
     const { uuid } = req.body;
