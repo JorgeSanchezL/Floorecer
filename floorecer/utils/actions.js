@@ -1,4 +1,4 @@
-const MyIP = '192.168.1.88' //Change by your IP address
+const MyIP = '192.168.43.205' //Change by your IP address
 import { BACKEND_URL } from '@env';
 
 export const getCategories = async () => { 
