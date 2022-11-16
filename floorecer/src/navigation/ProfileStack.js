@@ -13,7 +13,7 @@ const ProfileStack = () => {
             screenOptions={{
                 headerShown: false
             }}
-            initialRouteName='userProfile'
+            initialRouteName='publicProfile'
         >
             <Stack.Screen name='publicProfile' component={PublicProfile} />
             <Stack.Screen name='userProfile' component={UserProfile} />

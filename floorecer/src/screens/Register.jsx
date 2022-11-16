@@ -57,7 +57,7 @@ const Register = () => {
       
       try {
         console.log(`${BACKEND_URL}/user-authe/userRegister`)
-        const response = await fetch(`http://192.168.0.72:5000/user-authe/userRegister`, {
+        const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,
@@ -87,8 +87,8 @@ const Register = () => {
 
       }))
         if(response.status==200){
-          const res=await response.json()
-          await SecureStore.setItemAsync('userToken', JSON.stringify(res))
+          //const res=await response.json()
+          //await SecureStore.setItemAsync('userToken', JSON.stringify(res))
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
             { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
@@ -142,7 +142,7 @@ const Register = () => {
         console.log(Object.getOwnPropertyNames(response.status));
         
         if(response.status==200){
-          await SecureStore.setItemAsync('userToken', response)
+          //await SecureStore.setItemAsync('userToken', response)
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
             { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)

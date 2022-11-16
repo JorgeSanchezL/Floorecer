@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { FlatList, View, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { getCategories } from '../../utils/actions';
 import { getAllBusinesses } from '../../utils/actions';
+import { useIsFocused } from "@react-navigation/core";
 
 const categories =  [];
 
 const MapFilters = (props) => {
 
-
+  const isFocused = useIsFocused();
     const [choice, setChoice] = useState('');
     
     const [DATA, setData] = useState([]);
@@ -17,6 +18,7 @@ const MapFilters = (props) => {
       setData(await getCategories());
       
     }
+    useEffect(() => {if(isFocused){getMapMarkers(categories)}}, [isFocused]);
     useEffect(() => {changeData()}, []);
 
     const getMapMarkers = async (category) => { 

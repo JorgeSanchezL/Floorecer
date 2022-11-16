@@ -6,6 +6,7 @@ import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import { BACKEND_URL } from '@env';
 
 import mercatUPV from '../../assets/image/mercat_upv.png';
+import { getItemAsync } from 'expo-secure-store';
 
 export const width = Dimensions.get('window').width;
 
@@ -13,7 +14,8 @@ const PublicProfile = () => {
     const [profile, setProfile] = useState(null);
 
     const getProfile = async () => {
-        const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
+        const auth0 = JSON.parse(await getItemAsync('auth0'));
+        const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
         const response = await api_call.json();
         setProfile(response);
     }

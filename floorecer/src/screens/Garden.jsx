@@ -104,12 +104,30 @@ const Garden = () => {
     }
   }
 
+  const setGardenData = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/users/updateGarden`, {
+        method: 'POST',
+        body: JSON.stringify({
+         uuid : uuid,
+         garden: myPlants
+      }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        },     
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const plantSeed = (name, hole) => {
     var newInventory = inventory
     newInventory[seeds][name] -= 1
     setInventory(newInventory)
     setInventoryData(name)
     setMyPlants(updatePlants(name, hole))
+    setGardenData()
   }
 
   const updatePlants = (name, hole) => {
