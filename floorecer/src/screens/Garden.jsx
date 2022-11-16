@@ -46,21 +46,31 @@ export const height = Dimensions.get('window').height;
 
 const Garden = () => {
 
-  let uuid
-
+  const [UUID, setUUID] = useState()
   const [openSeedsMenu, setOpenSeedsMenu] = useState(false)
-  const [inventory, setInventory] = useState([])
-  const [myPlants, setMyPlants] = useState([{}, {}, {}, {}])
+  const [inventory, setInventory] = useState(null)
+  const [myPlants, setMyPlants] = useState([{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}])
+  const [holeClicked, setHoleClicked] = useState()
 
   useEffect(() => {
     fetchUserData()
-    fetchGardenData()
-    fetchInventoryData()
-  }, [myPlants])
+  }, [])
+
+  useEffect(() => {
+    if (UUID != null) {
+      fetchGardenData()
+    }
+  }, [UUID])
+
+  useEffect(() => {
+    if (UUID != null) {
+      fetchInventoryData()
+    }
+  }, [UUID])
 
   const fetchUserData = async () => {
     try {
-      uuid = JSON.parse(await getItemAsync('auth0')).uid;
+      setUUID(JSON.parse(await getItemAsync('auth0')).uid)
     } catch (err) {
       console.log(err)
     }
@@ -68,7 +78,7 @@ const Garden = () => {
 
   const fetchGardenData = async () => {
     try{
-      const response=await fetch(`${BACKEND_URL}/users/gardenInfo/${uuid}`);
+      const response=await fetch(`${BACKEND_URL}/garden/gardenInfo/${UUID}`);
       let body=await response.json();
       setMyPlants(body);
     } catch(error) {
@@ -78,22 +88,23 @@ const Garden = () => {
 
   const fetchInventoryData = async () => {
     try{
-      const response=await fetch(`${BACKEND_URL}/users/mySeeds/${uuid}`);
+      const response=await fetch(`${BACKEND_URL}/garden/mySeeds/${UUID}`);
       let body=await response.json();
       setInventory(body);
+      console.log(body)
     } catch(error) {
       console.log(error);
     }
   }
 
-  const setInventoryData = async (name) => {
+  const setInventoryData = async (index) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/users/updateSeeds`, {
+      const response = await fetch(`${BACKEND_URL}/garden/updateSeeds`, {
         method: 'POST',
         body: JSON.stringify({
-         uuid : uuid,
-         name: name,
-         newAmount: inventory[seeds][name]
+         uuid : UUID,
+         name: inventory.seeds[index].itemName,
+         newAmount: inventory.seeds[index].amount
       }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -106,10 +117,10 @@ const Garden = () => {
 
   const setGardenData = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/users/updateGarden`, {
+      const response = await fetch(`${BACKEND_URL}/garden/updateGarden`, {
         method: 'POST',
         body: JSON.stringify({
-         uuid : uuid,
+         uuid : UUID,
          garden: myPlants
       }),
         headers: {
@@ -121,28 +132,28 @@ const Garden = () => {
     }
   }
 
-  const plantSeed = (name, hole) => {
+  const plantSeed = (pos) => {
     var newInventory = inventory
-    newInventory[seeds][name] -= 1
+    newInventory.seeds[pos].amount -= 1
     setInventory(newInventory)
-    setInventoryData(name)
-    setMyPlants(updatePlants(name, hole))
+    setInventoryData(pos)
+    setMyPlants(updatePlants(pos))
     setGardenData()
   }
 
-  const updatePlants = (name, hole) => {
+  const updatePlants = (pos) => {
     var result = myPlants
-    result[hole].health = "1"
-    result[hole].petals = "1"
-    switch (name) {
+    result[holeClicked].health = "1"
+    result[holeClicked].petals = "1"
+    switch (inventory.seeds[pos].itemName) {
       case "Purple seeds":
-        result[hole].type = "purple"
+        result[holeClicked].type = "purple"
         break
       case "Red seeds":
-        result[hole].type = "red"
+        result[holeClicked].type = "red"
         break
       default:
-        result[hole].type = "white"
+        result[holeClicked].type = "white"
         break
     }
     return result
@@ -263,7 +274,7 @@ const Garden = () => {
         <View style={styles.flor0}>
           {
             {
-              "noflower": <BotonFlor id="0" image={getImage(0)} rounded={true} onClick={() => setOpenSeedsMenu(true)}/>
+              "noflower": <BotonFlor id="0" image={getImage(0)} rounded={true} onClick={() => {setOpenSeedsMenu(true); setHoleClicked(0)}}/>
             }[myPlants[0].type]
             || <BotonFlor id="0" image={getImage(0)} rounded={false} onClick={() => {}}/>
           }
@@ -271,7 +282,7 @@ const Garden = () => {
         <View style={styles.flor1}>
         {
             {
-              "noflower": <BotonFlor id="1" image={getImage(1)} rounded={true} onClick={() => setOpenSeedsMenu(true)}/>
+              "noflower": <BotonFlor id="1" image={getImage(1)} rounded={true} onClick={() => {setOpenSeedsMenu(true), setHoleClicked(1)}}/>
             }[myPlants[1].type]
             || <BotonFlor id="1" image={getImage(1)} rounded={false} onClick={() => {}}/>
           }
@@ -279,7 +290,7 @@ const Garden = () => {
         <View style={styles.flor2}>
         {
             {
-              "noflower": <BotonFlor id="2" image={getImage(2)} rounded={true} onClick={() => setOpenSeedsMenu(true)}/>
+              "noflower": <BotonFlor id="2" image={getImage(2)} rounded={true} onClick={() => {setOpenSeedsMenu(true), setHoleClicked(2)}}/>
             }[myPlants[2].type]
             || <BotonFlor id="2" image={getImage(2)} rounded={false} onClick={() => {}}/>
           }
@@ -287,7 +298,7 @@ const Garden = () => {
         <View style={styles.flor3}>
         {
             {
-              "noflower": <BotonFlor id="3" image={getImage(3)} rounded={true} onClick={() => setOpenSeedsMenu(true)}/>
+              "noflower": <BotonFlor id="3" image={getImage(3)} rounded={true} onClick={() => {setOpenSeedsMenu(true), setHoleClicked(3)}}/>
             }[myPlants[3].type]
             || <BotonFlor id="3" image={getImage(3)} rounded={false} onClick={() => {}}/>
           }
@@ -295,12 +306,12 @@ const Garden = () => {
         <Modal visible={openSeedsMenu}>
           <View style={styles.modal}>
             <Text style={styles.title} >Mis semillas</Text>
-            {inventory.map((element, index) => {
+            {inventory != null && inventory.seeds.map((element, index) => {
               return (
-                <View style={styles.container}>
+                <View style={styles.container} key={index}>
                   <Text style={{alignSelf: 'flex-start'}} >{element.itemName}</Text>
                   <Text style={{alignSelf: 'center'}} >{element.amount}</Text>
-                  <CustomButton onPress={() => plantSeed(itemName)} text='Plantar' type="cuaterciario" alignRight={true}/>
+                  <CustomButton onPress={() => {plantSeed(index); setOpenSeedsMenu(false)}} text='Plantar' type="cuaterciario" alignRight={true}/>
                 </View>
               )
             })}

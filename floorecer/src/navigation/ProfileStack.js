@@ -15,7 +15,7 @@ const ProfileStack = () => {
             }}
             initialRouteName='publicProfile'
         >
-            <Stack.Screen name='publicProfile' component={PublicProfile} />
+            <Stack.Screen name='publicProfile' component={UserProfile} />
             <Stack.Screen name='userProfile' component={UserProfile} />
             <Stack.Screen name='garden' component={Garden} />
         </Stack.Navigator>
