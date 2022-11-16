@@ -48,20 +48,20 @@ export const register = async (req,res) => {
     .then((userCredential) => {
         // Signed in
     setDoc(doc(database,"users",userCredential.user.uid) ,{
-    username: username,
-    usernameForSearch: usernameForSearch,
-    points : 0,
-    followers: [],
-    following: [],
-    isBusinessOwner : isBusinessOwner,
-    numero : numberphone,
-    email:email,
-    password:password,
-    item: {seeds: {}},
+      username: username,
+      usernameForSearch: usernameForSearch,
+      points : 0,
+      followers: [],
+      following: [],
+      isBusinessOwner : isBusinessOwner,
+      subscription: 0,
+      numero : numberphone,
+      email:email,
+      password:password,
+      item: {seeds: {}},
     garden: [{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}],
-    profileImage : 'testing.png',
-    historico : [],
-
+      profileImage : 'testing.png',
+      historico : [],
     }
   )
 
@@ -104,7 +104,7 @@ export const register = async (req,res) => {
     });
   };
 export const profileUser=async (req, res)=>{
- const {newEmail,newName,newPassword,newPhone,oldEmail,oldPassword}=req.body;
+ const {uid,newEmail,newName,newPassword,newPhone,oldEmail,oldPassword}=req.body;
  console.log(newEmail+''+ newPassword+''+newPhone);
  try{
   signInWithEmailAndPassword(auth, oldEmail,oldPassword)
@@ -117,8 +117,6 @@ export const profileUser=async (req, res)=>{
       })
 
    })
-  
-  const uid='gPASbD6K2bOwU3dK3SpqwlG8Rhl2';
   const userRef = doc(database, 'users', uid); 
   if(newEmail!=''){await updateDoc(userRef, { email: newEmail});}
   if(newPassword!=''){await updateDoc(userRef, { password:newPassword});}
