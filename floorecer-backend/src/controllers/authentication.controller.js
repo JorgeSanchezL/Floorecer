@@ -48,22 +48,6 @@ export const register = async (req,res) => {
     .then((userCredential) => {
         // Signed in
     setDoc(doc(database,"users",userCredential.user.uid) ,{
-<<<<<<< HEAD
-    username: username,
-    usernameForSearch: usernameForSearch,
-    points : 0,
-    followers: [],
-    following: [],
-    isBusinessOwner : isBusinessOwner,
-    numero : numberphone,
-    email:email,
-    password:password,
-    garden: [{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}],
-    profileImage : 'testing.png',
-    historico : [],
-    item:{}
-
-=======
       username: username,
       usernameForSearch: usernameForSearch,
       points : 0,
@@ -77,7 +61,6 @@ export const register = async (req,res) => {
       garden: [{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}],
       profileImage : 'testing.png',
       historico : [],
->>>>>>> 88788578dbdf37b8f00ac524144831e197e6520d
     }
   )
 
