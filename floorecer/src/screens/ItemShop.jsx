@@ -1,27 +1,53 @@
 import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Pressable,TouchableOpacity} from 'react-native';
-var datos = null;
-import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Pressable,TouchableOpacity,Image,Alert} from 'react-native';
+
 import {BACKEND_URL} from '@env';
+import { getItemAsync } from 'expo-secure-store';
 
 const ItemShop = () => {
   const [items, setItems] = useState(null);
   const [itemName, setItemName]=useState ('');
+  const [itemUid, setItemUid]=useState ();
   const [itemPrice, setItemPrice]=useState ();
   const [selectedItem2, setSelectedItem2]=useState (null);
+  const [uid, setUid] = useState(null);
+  const [imagen,setImagen]=useState('');
+
+  const getImage= async () => {
+    try{
+    const api_call = await fetch(`${BACKEND_URL}/garden/items/${itemUid}`);
+    const response = await api_call.json();
+    setImagen(response.imageURL);
+    }catch(error){
+      console.log(error)
+    }
+
+}
   const getAllItems = async () => {
     const api_call = await fetch(`${BACKEND_URL}/garden/items/all`);
     const response = await api_call.json();
     setItems(response);
 }
- useEffect(() => {getAllItems()}, [])
+ useEffect(() => {
+  getAllItems();
+  getUid();
+  }, [])
+  useEffect(() => {
+    getImage();
+    }, [itemUid])
 
-async function onPressBuy () {
+const getUid = async () => {
+  try {
+    auth0 = JSON.parse(await getItemAsync('auth0'));
+    setUid(auth0.uid);
+  } catch(e) { console.error(e); }
+}
+const  onPressBuy= async() =>{
     try {
       const response = await fetch(`${BACKEND_URL}/garden/buyItem`, { 
         method: 'POST',
         body: JSON.stringify({
-         uid : "gPASbD6K2bOwU3dK3SpqwlG8Rhl2",
+         uid : uid,
          name: itemName,
          points: itemPrice,
          
@@ -31,22 +57,32 @@ async function onPressBuy () {
           },     
       }   
       );
-       const body = await response.json();
-       
+      const res=await response.json()
+      Alert.alert('Aviso', res, [
+            
+        { text: 'OK' },
+      ]);
+      
       }
       
    catch (err) {
   
-    console.log(err)
+    console.log('errPress')
   
    }
-
+   console.log('hsdasdad')
 
 }
 
 
 const Item = ({ shopItem }) => (
-  <View style={styles.greenBox} onStartShouldSetResponder={() => {{setItemName(shopItem.name),setItemPrice(shopItem.price) ,setSelectedItem2(shopItem)}}}>  
+  <View style={styles.greenBox} onStartShouldSetResponder={() => {{
+    setItemName(shopItem.name),
+    setItemPrice(shopItem.price) ,
+    setSelectedItem2(shopItem),
+    setItemUid(shopItem.uid)
+
+    }}}>  
          <Text style = {styles.green}> {shopItem.price+" Tokens"} </Text>
     
     <Text style={styles.textData}>
@@ -68,10 +104,21 @@ const Item = ({ shopItem }) => (
        <Modal visible={selectedItem2 !== null} transparent={true}>
             <View style={[{borderWidth: 1},styles.centeredView]}>
             <View style={styles.modalView}>
+            <Image
+              style={styles.userCircle}
+              source={{
+                uri:`${imagen}`
+              }}
+            />
               <Text>{itemName}</Text>
-              <TouchableOpacity style={styles.button} onPress={() => setSelectedItem2(null)}><Text>Cancelar</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => {onPressBuy(),setSelectedItem2(null)}}><Text>Aceptar</Text></TouchableOpacity>
-            </View></View>
+              <View style={styles.sameLine}>
+              <TouchableOpacity style={styles.button} onPress={() => setSelectedItem2(null)}>
+                <Text>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => {onPressBuy(),setSelectedItem2(null)}}>
+                <Text>Aceptar</Text>
+              </TouchableOpacity>
+            </View></View></View>
           </Modal>
       <FlatList
         data={items}
@@ -118,6 +165,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22
   },
+  sameLine:{
+    flexDirection: "row",
+    justifyContent: "space-around",
+
+  },
   modalView: {
     margin: 20,
     backgroundColor: "white",
@@ -136,7 +188,9 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
     padding: 10,
-    elevation: 2
+    elevation: 2,
+    backgroundColor: "#5dc655",
+    marginLeft: 10
   },
   buttonClose: {
     backgroundColor: "#2196F3",
@@ -145,7 +199,11 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
-  }
+  },
+  userCircle: {
+    width: 130,
+    height: 130,
+}
 });
 
 
