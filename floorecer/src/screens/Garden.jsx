@@ -50,7 +50,7 @@ const Garden = () => {
 
   const [openSeedsMenu, setOpenSeedsMenu] = useState(false)
   const [inventory, setInventory] = useState()
-  const [myPlants, setMyPlants] = useState()
+  const [myPlants, setMyPlants] = useState([{}, {}, {}, {}])
 
   useEffect(() => {
     fetchUserData()
