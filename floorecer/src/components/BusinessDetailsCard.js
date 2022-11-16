@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect} from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
+import { StyleSheet, View, Text, Image, Pressable} from 'react-native';
 
 import ImageCarousel from '../components/ImageCarousel';
 
-import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import BottomSheet, {BottomSheetScrollView,NativeViewGestureHandler,TouchableOpacity } from '@gorhom/bottom-sheet';
 
 import * as Animatable from 'react-native-animatable';
 import { BACKEND_URL } from '@env';
@@ -89,6 +89,7 @@ const BusinessDetailsCard = (props) => {
     console.log(profile)
 
     return (
+      
         <BottomSheet 
           snapPoints={snapPoints}
           index={index}
@@ -198,6 +199,7 @@ const BusinessDetailsCard = (props) => {
                   </View>  }
                 </BottomSheetScrollView>
         </BottomSheet>
+        
     )
   }
 
