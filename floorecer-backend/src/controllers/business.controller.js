@@ -1,10 +1,11 @@
 import { database, storage } from '../../firebase.js';
 import { doc, setDoc, collection, getDocs,
-    getDoc, updateDoc, query, where } from 'firebase/firestore';
+    getDoc, updateDoc, query, where,deleteDoc } from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
 import randomatic from 'randomatic';
 import path from 'path';
 
+export const NUMBER_BUSINESS = 5; 
 
 export const newBusiness = async(req,res) => {
     const{
@@ -16,17 +17,35 @@ export const newBusiness = async(req,res) => {
         openingHours,
         category
     } = req.body
+    
+    if( await UpdateNumberBusiness(owner)){ 
+        
+        const file = req.file;
 
-    const file = req.file;
+        const fileName = randomatic('Aa0', 32)
+            + path.extname(file.originalname);
 
-    const fileName = randomatic('Aa0', 32)
-        + path.extname(file.originalname);
-
-    const storageRef = ref(storage, fileName);
-
-    uploadBytes(storageRef, file.buffer)
-      .then(async (snapshot) => {
-        await setDoc(doc(collection(database, "business")), {
+        const storageRef = ref(storage, fileName);
+        console.log('aqui')
+        uploadBytes(storageRef, file.buffer)
+        .then(async (snapshot) => {
+            console.log('ENTRA!')
+             await setDoc(doc(collection(database, "business")), {
+                owner: owner,
+                name: name,
+                Address: address,
+                NIF: nif,
+                location: JSON.parse(location),
+                openingHours: JSON.parse(openingHours),
+                active: true,
+                category: category,
+                promoted: false,
+                reviews: [],
+                description:'',
+                imageURL: snapshot.ref._location.path_
+            }); 
+        });
+       /* await setDoc(doc(collection(database, "business")), {
             owner: owner,
             name: name,
             Address: address,
@@ -36,9 +55,79 @@ export const newBusiness = async(req,res) => {
             active: true,
             category: category,
             promoted: false,
-            imageURL: snapshot.ref._location.path_
+            //imageURL: snapshot.ref._location.path_
+        });*/
+        
+        res.status(200);
+        res.send('Creado con exito');
+    }else{
+        res.status(401);
+        res.send('No se puede crear comercio, comprobar susbcripción');
+    }
+}
+
+async function  UpdateNumberBusiness (ownerUid){
+    
+    const userRef = doc(database, 'users', ownerUid);
+
+    const userSnap = await (await getDoc(userRef)).data();
+    console.log(userSnap.subscription)
+    if(userSnap.subscription == null){
+        return false; 
+    }
+
+    if(userSnap.numberBusiness == null ){
+        await updateDoc(userRef, {
+            numberBusiness: 1
         });
-    });
+        return true;
+    }
+
+    if(userSnap.subscription == 1 && userSnap.numberBusiness >= NUMBER_BUSINESS) 
+        return false;
+ 
+    if(userSnap.subscription == 2){
+        const userRef = doc(database, 'users', ownerUid);
+        await updateDoc(userRef, {
+            numberBusiness: userSnap.numberBusiness +1
+        });
+        return true;
+    }
+
+    if(userSnap.subscription == 1 && userSnap.numberBusiness < NUMBER_BUSINESS){
+        const userRef = doc(database, 'users', ownerUid);
+        await updateDoc(userRef, {
+            numberBusiness: userSnap.numberBusiness +1
+        });
+        return true;
+    }
+
+    return false;
+}
+export const deleteBusiness = async(req,res) => {
+    const{shopUid, ownerUid} = req.body;
+    console.log(ownerUid)
+    console.log(shopUid)
+    const userRef = doc(database, 'users', ownerUid);
+
+    const userSnap = await (await getDoc(userRef)).data();
+
+    await deleteDoc(doc(database,'business',shopUid)).then(async()=>{
+        if(userSnap.numberBusiness > 0){
+            await updateDoc(userRef, {
+                
+                numberBusiness: userSnap.numberBusiness -1
+            }); 
+    }});
+
+    /* if(userSnap.numberBusiness > 0){
+        await updateDoc(userRef, {
+            
+            numberBusiness: userSnap.numberBusiness -1
+        }); 
+    } */
+    res.status(200);
+    res.send('Borrado con exito'); 
 }
 
 export const getAllBusinesses = async (req, res) => {
@@ -157,6 +246,44 @@ export const getBusiness = async(req,res) => {
     }
     
 }
+
+export const upgradePoints = async (req,res) => {
+    const {uid , shopName,wonpoints }=req.body;
+    
+    try {
+        console.log("hola")
+        const docRef = doc(database, "users", uid);
+        const user = await getDoc(docRef);
+        const actualPoints = user.data().points;
+        const Historico = user.data().Historico;
+        let newUpdate = {
+           shopName : shopName,
+           points : wonpoints,
+
+        }
+         Historico.push (newUpdate);
+        console.log(Historico)
+      await updateDoc(docRef, { 
+        points: actualPoints+wonpoints,
+        Historico : Historico, 
+    
+    }
+        
+        );
+        res.status (200);
+        res.send();
+
+    } catch(error) {
+        console.log(error)
+    }
+
+
+
+
+
+}
+
+
 
 export const updateBusiness = async (req, res) => {
     const { uid, body } = req.body;

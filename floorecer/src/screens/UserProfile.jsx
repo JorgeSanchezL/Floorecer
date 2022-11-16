@@ -1,14 +1,18 @@
 import React ,{useEffect,useState} from 'react';
 import { StyleSheet, SafeAreaView, Dimensions,
-  ScrollView, View, Image, Text ,TouchableButton,Button,TouchableOpacity,Modal,Pressable } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+  ScrollView, View, Image, Text, TouchableOpacity,
+  Modal} from 'react-native';
+import { getItemAsync } from 'expo-secure-store';
+import { Ionicons } from '@expo/vector-icons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import SvgQRCode from 'react-native-qrcode-svg';
+import { useNavigation } from '@react-navigation/native';
 
 
 import user from '../../assets/image/user.png';
 import qrCode from '../../assets/image/qrCode.png';
 
+import { BACKEND_URL } from '@env';
 
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
@@ -26,16 +30,32 @@ const UserProfile = () => {
   const [phone, setPhone] = useState('');
   const [mail, setMail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [uid, setUid] = useState(null);
+
+  const navigation=useNavigation();
+  const openGarden = () => {
+    navigation.navigate('garden')
+  }
 
   const getProfile = async () => {
-      const api_call = await fetch('http://13.39.87.231:5000/users/gPASbD6K2bOwU3dK3SpqwlG8Rhl2');
-      const response = await api_call.json();
-      setProfile(response);
-      console.log(response);
+      try {
+        const auth0 = JSON.parse(await getItemAsync('auth0'));
+        const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
+        const response = await api_call.json();
+        setProfile(response);
+        console.log(response);
+      } catch(e) { console.error(e); }
+      
+  }
+  const getUid = async () => {
+    try {
+      auth0 = JSON.parse(await getItemAsync('auth0'));
+      setUid(auth0.uid);
+    } catch(e) { console.error(e); }
   }
   const getProfile2 = async () => {
         try {
-          const response = await fetch("http://13.39.87.231:5000/user-authe/userProfile", {
+          const response = await fetch(`${BACKEND_URL}/user-authe/userProfile`, {
             method: 'POST',
             body: JSON.stringify({
               newEmail: mail,
@@ -57,10 +77,11 @@ const UserProfile = () => {
         }
       }
 
-
+    console.log('hola',uid);
 
   useEffect(() => {
       getProfile();
+      getUid();
   }, []);
 
   if (profile === null) return null;
@@ -103,13 +124,13 @@ const UserProfile = () => {
               barStyle='dark-content'
               backgroundColor={'#fff'}
           />
-          <View style={styles.garden}>
+          <TouchableOpacity style={styles.garden} onPress={openGarden}>
             <Ionicons
                   name='ios-arrow-back'
                   size={30}
                   color={'#085D0E'}
             />
-          </View>
+          </TouchableOpacity>
           <View style={styles.container}>
               <Image
                   source={user}
@@ -125,9 +146,11 @@ const UserProfile = () => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <SvgQRCode style = {{width :'100%'}} 
-      value='gPASbD6K2bOwU3dK3SpqwlG8Rhl2'
-    />
+            { auth0 != null &&
+              <SvgQRCode
+                style = {{width: '100%'}} 
+                value={auth0.uid}
+              /> }
            <CustomButton
            text = 'Close'
            onPress ={() => setModalVisible(!modalVisible)}

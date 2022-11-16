@@ -1,9 +1,9 @@
-const MyIP = '192.168.43.205' //Change by your IP address
 import { BACKEND_URL } from '@env';
+
 
 export const getCategories = async () => { 
     try {
-      const response = await fetch(`http://${MyIP}:5000/business/getCategories`, {
+      const response = await fetch(`${BACKEND_URL}/business/getCategories`, {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json'
@@ -24,7 +24,8 @@ export const getAllBusinesses = async ( category) => {
   if(category != null && category.length > 0) type = `getAllBusinessesByCategory/${category}`
   console.log(category)
   try {
-    const response = await fetch(`http://${MyIP}:5000/business/${type}`, {
+    console.log(BACKEND_URL)
+    const response = await fetch(`${BACKEND_URL}/business/${type}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'

@@ -1,45 +1,31 @@
 import React ,{useState} from 'react';
 import { Alert,StyleSheet, View, Text, Image, useWindowDimensions } from 'react-native';
-import * as SecureStore from 'expo-secure-store'
 import Logo from '../../assets/logo.png';
 import CustomInput from '../components/CustomInput';
 import CustomButton from '../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+
+import {BACKEND_URL} from '@env';
+
+import AuthContext from '../context/AuthContext';
+
 const Login = () => {
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const {height}=useWindowDimensions();
 
-    const navigation=useNavigation();
-    const onInicioPressed=()=>{
-      log();
-       // 
-    };
+    const { signIn } = React.useContext(AuthContext);
+
+    const navigation = useNavigation();
+    const onInicioPressed=()=>{ log(); };
     const onOlvidadoPressed=()=>{
         console.warn('Recuperar');
     };
     const log = async () => { 
-      try {
-        const response = await fetch(`http://13.39.87.231:5000/user-authe/userSign/${email}&${password}`, {
-          method: 'GET',
-            headers: {
-            'Content-Type': 'application/json'
-          },
-            
-        });
-        
-        if(response.status==200){
-          const body = await response.json();
-          await SecureStore.setItemAsync('userToken', JSON.stringify(response))
-          //navigation.navigate('map')
-          navigation.navigate('navegacionProvisionalUsuario')
-        }
-      } catch (err) {
-        Alert.alert(':(', err, [
-            
-          { text: 'OK'},
-        ]);
-        console.log(err)
+      const response = await signIn(email, password);
+      if (response && response.signInError) {
+        Alert.alert('Alerta',
+          response.signInError);
       }
     }
     return (

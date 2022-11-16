@@ -1,9 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useRef,useEffect } from 'react'
 import { SafeAreaView, StyleSheet, View, Text,
-    FlatList, Dimensions, TouchableOpacity } from 'react-native';
+    FlatList, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
+
+
+
 
 const plans = [
     {
@@ -79,7 +82,9 @@ const Plan = ({ item: plan}) => {
     );
 }
 
-const BusinessPlans = ({ navigation }) => {
+const BusinessPlans = ({ navigation, route }) => {
+    const { ActualPlan } = route.params;
+    console.log(ActualPlan)
     const scrollRef = useRef(null);
     const scrollIndex = useRef(0);
 
@@ -96,6 +101,15 @@ const BusinessPlans = ({ navigation }) => {
                     Selecciona tu plan de empresa
                 </Text>
             </View>
+            
+            {
+                ActualPlan != null && 
+                <View style={{marginTop: -5}}>
+                    <Text style={styles.title2}>
+                        Tu plan actual es '{ActualPlan==1 ? 'Plan Basic': 'Plan Premium'}'
+                    </Text>
+                 </View>
+            }
             <View style={styles.slider}>
                 <TouchableOpacity
                     onPress={() => {
@@ -152,9 +166,17 @@ const BusinessPlans = ({ navigation }) => {
             </View>
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('payment', {
-                        plan: scrollIndex.current
-                    })
+                    if(ActualPlan-1 == scrollIndex.current){
+                        Alert.alert(
+                            `Actualmente ya tiene el plan ${ActualPlan==1 ? 'Plan Basic': 'Plan Premium'} `,
+                            "",[{ text: "Vale",},])
+                    }
+                    else{ 
+                        
+                        navigation.navigate('payment', {
+                            plan: scrollIndex.current
+                        })
+                    }
                 }}
                 activeOpacity={0.8}
                 style={styles.button}
@@ -176,6 +198,12 @@ const styles = StyleSheet.create({
         color: '#085D0E',
         fontWeight: 'bold',
         fontSize: 30,
+        textAlign: 'center'
+    },
+    title2: {
+        color: '#085D0E',
+        fontWeight: 'bold',
+        fontSize: 15,
         textAlign: 'center'
     },
     slider: {

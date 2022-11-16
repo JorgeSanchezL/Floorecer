@@ -1,18 +1,54 @@
-import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity} from 'react-native';
+import React, { useContext, useEffect,useState } from 'react';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity,Alert} from 'react-native';
 var datos = null;
 import { useNavigation } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/core";
+import { getItemAsync } from 'expo-secure-store'; 
+import { BACKEND_URL } from '@env';
+
+
 
 const MyShops = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [actualPlan,setActualPlan] = useState(null);
   const navigation=useNavigation();
+  const isFocused = useIsFocused();
+
+
+  const getActualPlan = async()=>{
+    try {
+        const auth0 = JSON.parse(await getItemAsync('auth0'));
+        const response = await fetch(`${BACKEND_URL}/users/getActualPlan`, {
+          method: 'POST',
+          body: JSON.stringify({
+           uuid : auth0.uid//change owner to check
+        }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            },     
+        }   
+        );
+         const body = await response.json();
+         //console.log(body)
+         setActualPlan(body);
+        }
+        
+     catch (err) {
+    
+      console.log(err)
+        return null;
+     }
+  
+  }
 
 const getbusiness= async () =>{ 
   try {
-    const response = await fetch("http://13.39.87.231:5000/business/getbusinesses", {
+   const auth0 = JSON.parse(await getItemAsync('auth0'));
+
+    const response = await fetch(`${BACKEND_URL}/business/getbusinesses`, {
       method: 'POST',
       body: JSON.stringify({
-       owner : 'XiwTNPIGkAT2txAIRwUUMeBUVvH2'
+       owner : auth0.uid
     }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -20,26 +56,73 @@ const getbusiness= async () =>{
     }   
     );
      const body = await response.json();
+     console.log("is it done?")
      setData(body)
     }
+    
 
  catch (err) {
 
   console.log(err)
 
  }}
- useEffect(() => {getbusiness()}, [])
+
+useEffect(() => { if(isFocused){getbusiness(); getActualPlan()}}, [isFocused]) 
+
 function onPressButton (shop) {
 
   navigation.navigate("configureBusiness",shop)
 }
 
+async function onDeletePress(shop){
+  Alert.alert(
+    "¿Estás seguro?",
+    "¿Quieres borrar este comercio definitivamente?",
+    [
+      // The "Yes" button
+      {
+        text: "Si",
+        onPress: async() => {
+          
+          try {
+            const response = await fetch(`${BACKEND_URL}/business/deleteBusiness`, { 
+              method: 'POST',
+              body: JSON.stringify({
+               shopUid : shop.uid,
+               ownerUid: shop.owner
+            }),
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8"
+                },     
+            }   
+            );
+            
+             
+          }
+          
+          catch (err) {
+        
+          console.log(err)
+        
+         }
+
+          getbusiness();
+
+        },
+      },
+      // The "No" button
+      // Does nothing but dismiss the dialog when tapped
+      {
+        text: "No",
+      },]);
+  
+}
 async function onPressButtonPromotion (shop) {
 
   console.log(shop.uid)
   
     try {
-      const response = await fetch("http://13.39.87.231:5000/business/promoteBusiness", { 
+      const response = await fetch(`${BACKEND_URL}/business/promoteBusiness`, { 
         method: 'POST',
         body: JSON.stringify({
          uid : shop.uid
@@ -58,17 +141,6 @@ async function onPressButtonPromotion (shop) {
     console.log(err)
   
    }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
@@ -93,7 +165,7 @@ const Item = ({ shop }) => (
             {shop.Address}
         </Text>
     </View>
-
+    
     <View >
     <TouchableOpacity onPress={()=>{onPressButton(shop)}} style={styles.appButtonContainer}>
         <Text style={styles.appButtonText}>Editar</Text>
@@ -106,6 +178,11 @@ const Item = ({ shop }) => (
         <Text style={styles.appButtonText}>Promocionar</Text>
                 </TouchableOpacity> : null}
     </View>
+    <View >
+    <TouchableOpacity onPress={()=>{onDeletePress(shop)}} style={styles.appButtonContainer3}>
+        <Text style={styles.appButtonText}>Eliminar</Text>
+                </TouchableOpacity>
+    </View>
 </View>
 );
 
@@ -117,11 +194,34 @@ const Item = ({ shop }) => (
   );
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
+      <View style ={{marginBottom:-1, marginTop:15}}>
+        <Text style = {{fontSize:20, marginLeft:10, marginBottom:5 }}>{
+          actualPlan == 1 ? `Suscripción Básica: ${data.length}/5 comercios` :
+          actualPlan == 2 ? `Suscripción Premium: ${data.length} comercios` : 'No tiene ninguna Suscripción'
+          
+        }</Text>
+      </View>
+      <View style ={{marginBottom:-85, marginTop:60, alignItems:'center'}}>
+        <Text style = {{fontSize:20, fontStyle:'italic'}}>{data.length == 0 ? `No tiene comercios` : ``}</Text>
+      </View>
+      <View style={{flex:1}}>
+        <FlatList
         data={data}
         renderItem={renderItem}
        // keyExtractor={item => item.name}
       />
+      </View>
+      
+      <View style={{}}>
+        <TouchableOpacity onPress={async()=>{navigation.navigate('businessPlans', {
+                        ActualPlan: actualPlan,
+                        numberBusiness: data.length
+                    })}} 
+                    style={styles.appButtonContainer2}>
+        <Text style={styles.appButtonText}>Gestionar mi suscripción</Text>
+                </TouchableOpacity>
+      </View>
+      
     </SafeAreaView>
   );
 }
@@ -130,7 +230,7 @@ const Item = ({ shop }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    //marginTop: StatusBar.currentHeight || 0,
   },
   greenBox: {
     backgroundColor: '#D7E8DE',
@@ -192,6 +292,29 @@ appButtonContainer1: {
   width : 100,
   marginTop : '-20%',
   marginLeft : '65%',
+},
+appButtonContainer3: {
+  backgroundColor: "#009688",
+  borderRadius: 10,
+  paddingVertical: 5,
+  paddingHorizontal: 5,
+  height : 30,
+  width : 100,
+  marginTop : '-30%',
+  marginLeft : '65%',
+  
+
+},
+appButtonContainer2: {
+  backgroundColor: "#009688",
+  borderRadius: 10,
+  paddingVertical: 5,
+  paddingHorizontal: 5,
+  height : 30,
+  width : 200,
+  marginTop : '3%',
+  marginLeft : '4%',
+  marginBottom: '4%'
   
 
 },

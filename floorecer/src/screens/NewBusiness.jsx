@@ -38,7 +38,7 @@ const NewBusiness = () => {
       const formData = new FormData();
 
       // uid from the business owner
-      formData.append('owner', 'XiwTNPIGkAT2txAIRwUUMeBUVvH2')
+      formData.append('owner', auth0.uid)
       formData.append('name', shopName);
       formData.append('nif', nif);
       formData.append('address', address);
@@ -56,33 +56,60 @@ const NewBusiness = () => {
       });
 
       try {
-        const api_request = await fetch(`http://${BACKEND_URL}:5000/business/newBusiness`, {
+        const api_request = await fetch(`${BACKEND_URL}/business/newBusiness`, {
           method: 'POST',
           headers: { 'Content-Type': 'multipart/form-data' },
           body: formData
         });
+        if(api_request.status == 401){
+          Alert.alert("¡No se puede crear comercio!", "Comprueba tu subscripción.",[{text: "OK",},])
+        }else if(api_request.status == 200){
+          Alert.alert("¡Comercio Creado con éxito!", "",[{text: "OK",},])
+        }
       } catch (err) {
         console.log(err)
       }
+      
     }
   }
+  function checkInputs () {
+    
+      if(shopName == '' || nif == '' || category == ''|| address == '') {
+        Alert.alert('', '¡Hay que rellenar todos los campos para continuar!', [
+            
+          { text: 'OK'},
+        ]);
+        return false;
+      }
+      /* var CIF_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$/
+      if(CIF_REGEX.test(nif)){
+        Alert.alert('', 'Formato erróneo para el NIF', [
+            
+          { text: 'OK'},
+        ]);
+        return false;
+      } */
+      return true;
 
+  }
   const onSavePressed = () =>{
-    if(location == null){
-      
-      Alert.alert(
-        "Tiene que seleccionar una ubicación en el mapa",
-        "",
-        [
-          {
-            text: "Seleccionar",
-            onPress: () => { setIsVisibleMap(true)}
-          },
-          
-        ]
-      )
-    }else{
-      SaveBusiness();
+    if(checkInputs())
+    {
+        if(location == null){
+          Alert.alert(
+            "Tiene que seleccionar una ubicación en el mapa",
+            "",
+            [
+              {
+                text: "Seleccionar",
+                onPress: () => { setIsVisibleMap(true)}
+              },
+              
+            ]
+          )
+      }else{
+        SaveBusiness();
+      }
     }
     
   };
@@ -120,7 +147,7 @@ const NewBusiness = () => {
       style={{width,height: height * 0.79, paddingHorizontal:10}}>
         
       <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
-      <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
+      <MyTextInput name = 'NIF' value={nif} setValue={setNif} info ={'Ejemplo: B–76365789'}/>
       <MyTextInput 
             name = 'Dirección' 
             value={address} 
@@ -194,13 +221,7 @@ const NewBusiness = () => {
         }
       </View>
 
-      <View style = {{flex:0, flexDirection:'row'}}>
-      
-        <CustomButton 
-          text="Cancel" 
-          type = 'cuaterciario'
-          onPress={onCancelPressed}
-          />
+      <View style = {{flex:0, alignItems:'center'}}>
         <CustomButton 
           text="Save" 
           type = 'cuaterciario'
