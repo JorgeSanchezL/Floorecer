@@ -58,6 +58,7 @@ const UserProfile = () => {
           const response = await fetch(`${BACKEND_URL}/user-authe/userProfile`, {
             method: 'POST',
             body: JSON.stringify({
+              uid:uid,
               newEmail: mail,
               newName: name,
               newPassword: password,
@@ -83,6 +84,9 @@ const UserProfile = () => {
       getProfile();
       getUid();
   }, []);
+  useEffect(() => {
+    getProfile();
+}, [editable]);
 
   if (profile === null) return null;
   
@@ -125,15 +129,11 @@ const UserProfile = () => {
               backgroundColor={'#fff'}
           />
           <TouchableOpacity style={styles.garden} onPress={openGarden}>
-            <Ionicons
-                  name='ios-arrow-back'
-                  size={30}
-                  color={'#085D0E'}
-            />
+            
           </TouchableOpacity>
           <View style={styles.container}>
               <Image
-                  source={user}
+                  source={{uri: profile.profileImage}}
                   style={styles.userCircle}
               />
         <Modal
@@ -226,18 +226,6 @@ const UserProfile = () => {
                             {boxPhone}
                         </View>
                     </View>
-                  </View>
-                  <Text style={styles.title}>
-                      Mis vehículos
-                  </Text>
-                  <View style={styles.containerVehicle}>
-
-                  <Ionicons
-                  name='add-circle-outline'
-                  size={30}
-                  color={'#085D0E'}
-                  />
-
                   </View>
                   
               </ScrollView>
