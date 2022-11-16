@@ -6,6 +6,7 @@ import { getItemAsync } from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import SvgQRCode from 'react-native-qrcode-svg';
+import { useNavigation } from '@react-navigation/native';
 
 
 import user from '../../assets/image/user.png';
@@ -38,7 +39,8 @@ const UserProfile = () => {
 
   const getProfile = async () => {
       try {
-        const api_call = await fetch(`${BACKEND_URL}/users/zAOreREzVPWuDLuloewkAhp5OrB3`);
+        const auth0 = JSON.parse(await getItemAsync('auth0'));
+        const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
         const response = await api_call.json();
         setProfile(response);
         console.log(response);
