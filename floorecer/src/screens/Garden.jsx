@@ -49,7 +49,7 @@ const Garden = () => {
   let uuid
 
   const [openSeedsMenu, setOpenSeedsMenu] = useState(false)
-  const [inventory, setInventory] = useState()
+  const [inventory, setInventory] = useState([])
   const [myPlants, setMyPlants] = useState([{}, {}, {}, {}])
 
   useEffect(() => {
