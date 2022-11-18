@@ -65,22 +65,22 @@ export const getSeeds = async (req, res) => {
     const userRef = doc(database, 'users', user);
     const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) { res.status(200).json(userSnap.data().item.seeds); }
+    if (userSnap.exists()) { res.status(200).json(userSnap.data().item); }
     else { res.status(404).json(null); }
 }
 
-export const updateSeedAmount = async (req,res)=>{
-    const { uuid, name, newAmount } = req.body;
+export const updateItems = async (req,res)=>{
+    const { uuid, inventory } = req.body;
     const userRef = doc(database, 'users', uuid);
-    newData = {}
-    newData[`item.seeds.${name}`] = newAmount
+    let newData = {}
+    newData['item'] = inventory
     await updateDoc(userRef, newData)
 }
 
 export const updateGarden = async (req,res)=>{
     const { uuid, garden } = req.body;
     const userRef = doc(database, 'users', uuid);
-    newData = {}
+    let newData = {}
     newData['garden'] = garden
     await updateDoc(userRef, newData)
 }

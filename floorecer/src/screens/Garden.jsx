@@ -99,12 +99,11 @@ const Garden = () => {
 
   const setInventoryData = async (index) => {
     try {
-      const response = await fetch(`${BACKEND_URL}/garden/updateSeeds`, {
+      const response = await fetch(`${BACKEND_URL}/garden/updateItems`, {
         method: 'POST',
         body: JSON.stringify({
          uuid : UUID,
-         name: inventory.seeds[index].itemName,
-         newAmount: inventory.seeds[index].amount
+         inventory: inventory
       }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -145,11 +144,12 @@ const Garden = () => {
     var result = myPlants
     result[holeClicked].health = "1"
     result[holeClicked].petals = "1"
+    console.log(inventory.seeds[pos].itemName)
     switch (inventory.seeds[pos].itemName) {
-      case "Purple seeds":
+      case "Purple flower":
         result[holeClicked].type = "purple"
         break
-      case "Red seeds":
+      case "Red flower":
         result[holeClicked].type = "red"
         break
       default:
@@ -306,6 +306,7 @@ const Garden = () => {
         <Modal visible={openSeedsMenu}>
           <View style={styles.modal}>
             <Text style={styles.title} >Mis semillas</Text>
+            {console.log(inventory)}
             {inventory != null && inventory.seeds.map((element, index) => {
               return (
                 <View style={styles.container} key={index}>
