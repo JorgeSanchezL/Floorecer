@@ -142,8 +142,8 @@ const Garden = () => {
 
   const updatePlants = (pos) => {
     var result = myPlants
-    result[holeClicked].health = "1"
-    result[holeClicked].petals = "1"
+    result[holeClicked].health = 1
+    result[holeClicked].petals = 1
     console.log(inventory.seeds[pos].itemName)
     switch (inventory.seeds[pos].itemName) {
       case "Purple flower":

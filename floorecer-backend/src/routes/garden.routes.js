@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { getAllItemShop, buyItem,getItem, getGarden, getSeeds, updateGarden, updateItems } from '../controllers/garden.controller.js';
+import { getAllItemShop, buyItem,getItem, getGarden, getSeeds, updateGarden, updateItems,useItem } from '../controllers/garden.controller.js';
 
 const router = Router();
 
@@ -11,5 +11,6 @@ router.get('/items/:uid', getItem);
 router.post('/buyItem', buyItem);
 router.post('/updateItems', updateItems)
 router.post('/updateGarden', updateGarden)
+router.post('/useItem', useItem);
 
 export default router;
