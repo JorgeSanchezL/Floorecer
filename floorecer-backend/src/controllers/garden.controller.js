@@ -73,7 +73,7 @@ export const updateItems = async (req,res)=>{
     const { uuid, inventory } = req.body;
     const userRef = doc(database, 'users', uuid);
     let newData = {}
-    newData['item'] = inventory
+    newData['items'] = inventory
     await updateDoc(userRef, newData)
 }
 
@@ -83,4 +83,10 @@ export const updateGarden = async (req,res)=>{
     let newData = {}
     newData['garden'] = garden
     await updateDoc(userRef, newData)
+}
+export const useItem = async (req,res)=>{
+    const { uuid, item } = req.body;
+    const userRef = doc(database, 'users', uuid);
+    
+    await updateDoc(userRef, {[`items.${item}`]: increment(-1)});
 }
