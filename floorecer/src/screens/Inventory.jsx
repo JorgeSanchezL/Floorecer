@@ -8,7 +8,6 @@ import redFlower33 from '../../assets/garden/redFlower/3petals3health.png'
 const Inventory = () => {
   const [uid, setUid] = useState(null);
   const [healthBar,sethealthBar]=useState(0);
-  const [user,setUser]=useState();
   const [abono,setAbono]=useState(0);
   const [agua,setAgua]=useState(0);
   const [petal,setPetal]=useState(0);
@@ -27,7 +26,7 @@ const getUser = async () => {
       const auth0 = JSON.parse(await getItemAsync('auth0'));
       const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
       const response = await api_call.json();
-      setUser(response);
+      setMyPlants(response.garden)
       setAbono(response.items.Abono || 0)
       setAgua(response.items.Agua || 0)
       sethealthBar(response.garden[0].health)
@@ -43,17 +42,19 @@ const getUid = async () => {
 }
 const progressBar =  () => {
     if(petal==1){
-        return healthBar/2 *100
+        return Math.trunc (healthBar/2 *100)
     }else if(petal==2){
-        return healthBar/3 *100
+        return Math.trunc(healthBar/3 *100)
     }else if(petal==3){
-        return healthBar/4 *100
+        return Math.trunc(healthBar/4 *100)
+    }else{
+      return Math.trunc(healthBar/5 *100)
     }
 
   }
   const updatePlantsNextHealth = () => {
     var result = myPlants
-    if(agua!=null){
+    if(agua!=0){
     if(result[pos].health==1 && result[pos].petals==1){
         result[pos].health=0
         result[pos].petals=2
@@ -64,13 +65,20 @@ const progressBar =  () => {
     else if(result[pos].health==3 && result[pos].petals==3){
         result[pos].health=0
         result[pos].petals=4
-    }
-    else{
+    }else if(result[pos].health==5 && result[pos].petals==4){
+      Alert.alert('Aviso', 'Completado', [
+            
+        { text: 'OK' },
+      ]);
+    }else{
         result[pos].health=result[pos].health +1
     }
     setMyPlants(result)
     setGardenData()
     useItem('Agua')
+    setAgua(agua-1)
+    sethealthBar(result[pos].health)
+    
     }else{
         Alert.alert('Aviso', 'No tienes ninguno.Compralo', [
             
@@ -82,11 +90,22 @@ const progressBar =  () => {
   }
   const updatePlantsNextPetal = () => {
     if(abono!=0){
+      console.log(abono)
         var result = myPlants
+        if(result[pos].petals!=5){
         result[pos].petals = (result[pos].petals) +1
         setMyPlants(result)
         setGardenData()
         useItem('Abono')
+        setAbono(abono-1)
+        setPetal(result[pos].petals)
+        }else{
+          Alert.alert('Aviso', 'Completado', [
+            
+            { text: 'OK' },
+          ]);
+        }
+        
 
     }else{
         Alert.alert('Aviso', 'No tienes ninguno.Compralo', [
@@ -154,7 +173,7 @@ const progressBar =  () => {
             ]}
             />
             <Animated.Text style={styles.label}>
-            Salud: {progressBar()}
+            {progressBar()}
             </Animated.Text>
         </View>
         </View>

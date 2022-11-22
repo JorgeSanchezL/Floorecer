@@ -58,7 +58,7 @@ export const register = async (req,res) => {
       numero : numberphone,
       email:email,
       password:password,
-      item: {seeds: {}},
+      items: {seeds: {}},
     garden: [{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}],
       profileImage : 'testing.png',
       historico : [],

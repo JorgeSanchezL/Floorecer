@@ -73,7 +73,7 @@ export const updateItems = async (req,res)=>{
     const { uuid, inventory } = req.body;
     const userRef = doc(database, 'users', uuid);
     let newData = {}
-    newData['item'] = inventory
+    newData['items'] = inventory
     await updateDoc(userRef, newData)
 }
 
