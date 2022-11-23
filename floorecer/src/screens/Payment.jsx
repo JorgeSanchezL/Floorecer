@@ -19,7 +19,6 @@ const Payment = ({ navigation, route }) => {
     const onSubmit = async (data) => {
         try {
            const auth0 = JSON.parse(await getItemAsync('auth0'));
-console.log(auth0.uid +"gg")
             const api_call = await fetch(`${BACKEND_URL}/payments`, {
                 method: 'POST',
                 headers: {

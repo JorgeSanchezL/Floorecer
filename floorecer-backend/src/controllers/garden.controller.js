@@ -29,7 +29,7 @@ export const buyItem = async (req, res) => {
             res.json('No tiene suficientes puntos')
         }
     } catch(error) {
-        console.log('error')
+        Alert.alert(error)
     }
 }
 export const getItem = async (req, res) => {
@@ -45,7 +45,7 @@ export const getItem = async (req, res) => {
         res.json(item)
         
     } catch(error) {
-        console.log(error)
+        Alert.alert(error)
     }
 }
     

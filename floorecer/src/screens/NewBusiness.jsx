@@ -67,7 +67,7 @@ const NewBusiness = () => {
           Alert.alert("¡Comercio Creado con éxito!", "",[{text: "OK",},])
         }
       } catch (err) {
-        console.log(err)
+        Alert.alert(err)
       }
       
     }
@@ -334,7 +334,7 @@ const getCurrentLocation = async () => {
   const response = {status:false, location:null}
   let { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== 'granted') {
-    console.log('Permission to access location was denied');
+    Alert.alert('Permission to access location was denied');
     return response
   }
   const position = await Location.getCurrentPositionAsync({})

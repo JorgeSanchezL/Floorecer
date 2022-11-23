@@ -26,7 +26,7 @@ export const signIn = async (req,res) => {
       .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode,errorMessage)
+          
           if(errorCode=='auth/wrong-password'){
               res.status(401);
               res.send('La contraseña es incorrecta');
@@ -42,7 +42,7 @@ export const signIn = async (req,res) => {
       });
   };
 export const register = async (req,res) => {
-  console.log(req.body)
+  
     const {email,username,usernameForSearch,password,numberphone,isBusinessOwner } = req.body
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
@@ -59,14 +59,14 @@ export const register = async (req,res) => {
       email:email,
       password:password,
       items: {seeds: {}},
-    garden: [{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}],
+    garden: [{type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}],
       profileImage : 'testing.png',
       historico : [],
     }
   )
 
 
-          console.log('re')
+          
         const user = userCredential.user;
         signInWithEmailAndPassword(auth, email,password)
           .then((loggedUser) => {
@@ -85,35 +85,28 @@ export const register = async (req,res) => {
         if(errorCode=='auth/email-already-in-use'){
           res.status(401);
           res.send('ya existe una cuenta con ese correo');
-
-          console.log(errorCode)
         } else if(errorCode=='auth/weak-password'){
           res.status(406);
           res.send('la contraseña es demasiado débil');
-
-          console.log(errorCode)
         }
       else{
           res.status(502);
           res.send('error de de conexion');
-
-          console.log(errorCode);
-
       }
         
     });
   };
 export const profileUser=async (req, res)=>{
  const {uid,newEmail,newName,newPassword,newPhone,oldEmail,oldPassword}=req.body;
- console.log(newEmail+''+ newPassword+''+newPhone);
+ 
  try{
   signInWithEmailAndPassword(auth, oldEmail,oldPassword)
     .then((loggedUser) => {
       updateEmail(loggedUser.user, newEmail).then(() => {
-        console.log('email act')
+        
       })
       updatePassword(loggedUser.user, newPassword).then(() => {
-        console.log('contra act')
+        
       })
 
    })
@@ -123,14 +116,14 @@ export const profileUser=async (req, res)=>{
   if(newName!=''){await updateDoc(userRef, { username: newName});}
   if(newPhone!=''){await updateDoc(userRef, { numero:newPhone});}
 }catch(err){
-  console.log(err)
+  Alert.alert(err)
 }
 
 }
 export const updateAuthMail = (user) => {
  
     updateEmail(user, newEmail).then(() => {
-      console.log('email act')
+      
     }).catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -142,7 +135,7 @@ export const updateAuthMail = (user) => {
 export const updateAuthPass = (user) => {
  
   updatePassword(user, newPassword).then(() => {
-    console.log('contra act')
+    
   }).catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;

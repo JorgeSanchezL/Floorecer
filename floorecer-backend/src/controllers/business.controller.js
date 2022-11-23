@@ -26,10 +26,10 @@ export const newBusiness = async(req,res) => {
             + path.extname(file.originalname);
 
         const storageRef = ref(storage, fileName);
-        console.log('aqui')
+        
         uploadBytes(storageRef, file.buffer)
         .then(async (snapshot) => {
-            console.log('ENTRA!')
+            
              await setDoc(doc(collection(database, "business")), {
                 owner: owner,
                 name: name,
@@ -71,7 +71,7 @@ async function  UpdateNumberBusiness (ownerUid){
     const userRef = doc(database, 'users', ownerUid);
 
     const userSnap = await (await getDoc(userRef)).data();
-    console.log(userSnap.subscription)
+    
     if(userSnap.subscription == null){
         return false; 
     }
@@ -106,8 +106,8 @@ async function  UpdateNumberBusiness (ownerUid){
 }
 export const deleteBusiness = async(req,res) => {
     const{shopUid, ownerUid} = req.body;
-    console.log(ownerUid)
-    console.log(shopUid)
+    
+    
     const userRef = doc(database, 'users', ownerUid);
 
     const userSnap = await (await getDoc(userRef)).data();
@@ -145,11 +145,10 @@ export const getAllBusinessesByCategory = async (req, res) => {
     try {
         const b = collection(database, "business");
         let businesslist = [];
-        //console.log(category.split(","))
         
         var promise = new Promise((resolve,reject)=>{
             category.split(',').forEach(async(cat, index, array) => {
-                console.log(cat)
+                
                 const q = query(b, where("category", "==", cat));
                 const businessquery = await getDocs(q);
             
@@ -165,7 +164,7 @@ export const getAllBusinessesByCategory = async (req, res) => {
             });
         })
         /* category.split(',').forEach(async(cat) => {
-            console.log(cat)
+            
             const q = query(b, where("category", "==", cat));
             const businessquery = await getDocs(q);
         
@@ -173,7 +172,7 @@ export const getAllBusinessesByCategory = async (req, res) => {
                 // doc.data() is never undefined for query doc snapshots
                 businesslist.push(doc.data());
             });   
-            console.log("hh " + businesslist)
+            
         }); */
         
     
@@ -182,7 +181,7 @@ export const getAllBusinessesByCategory = async (req, res) => {
         })
         }
         catch (error) {
-          console.log(error)
+            Alert.alert(error)
     
         }
 }
@@ -194,7 +193,7 @@ try {
 
     const q = query(b, where("owner", "==", owner));
     const businessquery = await getDocs(q);
-    console.log("holsa")
+    
 
 
     let businesslist = [];
@@ -204,12 +203,12 @@ try {
 
         businesslist.push(miarray );
       });   
-      console.log("hh " + businesslist)
+      
 
 res.json(businesslist);
     }
     catch (error) {
-      console.log(error)
+        Alert.alert(error)
 
     }
 }
@@ -220,28 +219,28 @@ export const promoteBusiness = async (req,res) => {
         const docRef = doc(database, "business", uid);
       await updateDoc(docRef, { promoted: true});
     } catch(error) {
-        console.log(error)
+        Alert.alert(error)
     }
     
 }
 
 export const getBusiness = async(req,res) => {
-    console.log("get business")
-    console.log(req.body)
+    
+    
     try {
         const docRef = doc(database, "business", "VWFVMwQ5Q2gxpRENlPbS");
-        console.log(JSON.stringify(docRef))
+        
         const docSnap = await getDoc(docRef);
-        console.log(docSnap.data());
+        
         if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
+            
             res.json(docSnap.data())
         } else {
-            console.log("No such document!");
+            
             res.json(null)
         }
     } catch(error) {
-        console.log(error)
+        Alert.alert(error)
     }
     
 }
@@ -250,7 +249,7 @@ export const upgradePoints = async (req,res) => {
     const {uid , shopName,wonpoints }=req.body;
     
     try {
-        console.log("hola")
+        
         const docRef = doc(database, "users", uid);
         const user = await getDoc(docRef);
         const actualPoints = user.data().points;
@@ -261,7 +260,7 @@ export const upgradePoints = async (req,res) => {
 
         }
          Historico.push (newUpdate);
-        console.log(Historico)
+        
       await updateDoc(docRef, { 
         points: actualPoints+wonpoints,
         Historico : Historico, 
@@ -273,7 +272,7 @@ export const upgradePoints = async (req,res) => {
         res.send();
 
     } catch(error) {
-        console.log(error)
+        Alert.alert(error)
     }
 
 

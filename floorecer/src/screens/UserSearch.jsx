@@ -21,9 +21,8 @@ const UserSearch = () => {
                 body=[];
             }
             setFilteredData(body);
-            console.log(body)
         }catch(error){
-            console.error(error);
+          Alert.alert(error)
 
         }
     }

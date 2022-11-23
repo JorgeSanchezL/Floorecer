@@ -31,14 +31,14 @@ const getUser = async () => {
       setAgua(response.items.Agua || 0)
       sethealthBar(response.garden[0].health)
       setPetal(response.garden[0].petals)
-    } catch(e) { console.error(e); }
+    } catch(e) { Alert.alert(e); }
     
 }
 const getUid = async () => {
   try {
     auth0 = JSON.parse(await getItemAsync('auth0'));
     setUid(auth0.uid);
-  } catch(e) { console.error(e); }
+  } catch(e) { Alert.alert(e); }
 }
 const progressBar =  () => {
     if(petal==1){
@@ -90,7 +90,6 @@ const progressBar =  () => {
   }
   const updatePlantsNextPetal = () => {
     if(abono!=0){
-      console.log(abono)
         var result = myPlants
         if(result[pos].petals!=5){
         result[pos].petals = (result[pos].petals) +1
@@ -120,9 +119,8 @@ const progressBar =  () => {
       const response=await fetch(`${BACKEND_URL}/garden/gardenInfo/${uid}`);
       let body=await response.json();
       setMyPlants(body);
-      console.log(body)
     } catch(error) {
-      console.error(error);
+      Alert.alert(error)
     }
   }
   const setGardenData = async () => {
@@ -138,7 +136,7 @@ const progressBar =  () => {
         },     
       });
     } catch (err) {
-      console.log(err)
+      Alert.alert(err)
     }
   }
   const useItem = async (itemm) => {
@@ -154,7 +152,7 @@ const progressBar =  () => {
         },     
       });
     } catch (err) {
-      console.log(err)
+      Alert.alert(err)
     }
   }
 

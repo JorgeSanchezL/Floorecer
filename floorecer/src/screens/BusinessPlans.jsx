@@ -84,7 +84,6 @@ const Plan = ({ item: plan}) => {
 
 const BusinessPlans = ({ navigation, route }) => {
     const { ActualPlan } = route.params;
-    console.log(ActualPlan)
     const scrollRef = useRef(null);
     const scrollIndex = useRef(0);
 

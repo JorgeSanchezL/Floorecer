@@ -68,11 +68,19 @@ const Garden = () => {
     }
   }, [UUID])
 
+  useEffect(() => {
+    setGardenData()
+  }, [myPlants])
+
+  useEffect(() => {
+    setInventoryData()
+  }, [inventory])
+
   const fetchUserData = async () => {
     try {
       setUUID(JSON.parse(await getItemAsync('auth0')).uid)
     } catch (err) {
-      console.log(err)
+      Alert.alert(err)
     }
   }
 
@@ -82,7 +90,7 @@ const Garden = () => {
       let body=await response.json();
       setMyPlants(body);
     } catch(error) {
-      console.error(error);
+      Alert.alert(error)
     }
   }
 
@@ -91,9 +99,8 @@ const Garden = () => {
       const response=await fetch(`${BACKEND_URL}/garden/mySeeds/${UUID}`);
       let body=await response.json();
       setInventory(body);
-      console.log(body)
     } catch(error) {
-      console.log(error);
+      Alert.alert(error)
     }
   }
 
@@ -110,7 +117,7 @@ const Garden = () => {
         },     
       });
     } catch (err) {
-      console.log(err)
+      Alert.alert(err)
     }
   }
 
@@ -127,7 +134,7 @@ const Garden = () => {
         },     
       });
     } catch (err) {
-      console.log(err)
+      Alert.alert(err)
     }
   }
 
@@ -136,15 +143,14 @@ const Garden = () => {
     newInventory.seeds[pos].amount -= 1
     setInventory(newInventory)
     setInventoryData(pos)
-    setMyPlants(updatePlants(pos))
+    setMyPlants(getUpdatedGarden(pos))
     setGardenData()
   }
 
-  const updatePlants = (pos) => {
+  const getUpdatedGarden = (pos, health, petals) => {
     var result = myPlants
-    result[holeClicked].health = 1
-    result[holeClicked].petals = 1
-    console.log(inventory.seeds[pos].itemName)
+    result[holeClicked].health = health
+    result[holeClicked].petals = petals
     switch (inventory.seeds[pos].itemName) {
       case "Purple seeds":
         result[holeClicked].type = "purple"
@@ -306,13 +312,12 @@ const Garden = () => {
         <Modal visible={openSeedsMenu}>
           <View style={styles.modal}>
             <Text style={styles.title} >Mis semillas</Text>
-            {console.log(inventory)}
             {inventory != null && inventory.seeds.map((element, index) => {
               return (
                 <View style={styles.container} key={index}>
                   <Text style={{alignSelf: 'flex-start'}} >{element.itemName}</Text>
                   <Text style={{alignSelf: 'center'}} >{element.amount}</Text>
-                  <CustomButton onPress={() => {plantSeed(index); setOpenSeedsMenu(false)}} text='Plantar' type="cuaterciario" alignRight={true}/>
+                  <CustomButton onPress={() => {plantSeed(index, 1, 1); setOpenSeedsMenu(false)}} text='Plantar' type="cuaterciario" alignRight={true}/>
                 </View>
               )
             })}

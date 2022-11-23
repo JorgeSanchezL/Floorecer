@@ -25,8 +25,6 @@ const ConfigureBusiness = ({ route }) => {
   const [location, setLocation] = useState(route.params.location)
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
-
-   // console.log(category)
   
   const images =[]
 
@@ -55,7 +53,7 @@ const ConfigureBusiness = ({ route }) => {
                 navigation.navigate('myshops');
             } else { throw -1; }
     } catch (error) {
-      console.log(err)
+      Alert.alert(error)
     }
   }
   const onSavePressed = () =>{
@@ -204,7 +202,6 @@ export const DayTimeSlots = (props) => {
         ...currValue,
         [day]:slots
       }))
-      //console.log(JSON.stringify(props.openingHours))
     },[slots])
     
     return (

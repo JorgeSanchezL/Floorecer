@@ -43,15 +43,14 @@ const UserProfile = () => {
         const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
         const response = await api_call.json();
         setProfile(response);
-        console.log(response);
-      } catch(e) { console.error(e); }
+      } catch(e) { Alert.alert(e); }
       
   }
   const getUid = async () => {
     try {
       auth0 = JSON.parse(await getItemAsync('auth0'));
       setUid(auth0.uid);
-    } catch(e) { console.error(e); }
+    } catch(e) { Alert.alert(e); }
   }
   const getProfile2 = async () => {
         try {
@@ -74,11 +73,9 @@ const UserProfile = () => {
           });
             
         } catch (err) {
-          console.log(err)
+          Alert.alert(err)
         }
       }
-
-    console.log('hola',uid);
 
   useEffect(() => {
       getProfile();

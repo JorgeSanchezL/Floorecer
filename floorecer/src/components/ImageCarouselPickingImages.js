@@ -25,8 +25,6 @@ export default class ImageCarouselPickingPictures extends React.Component{
         quality: 1,
       });
   
-      console.log(result);
-  
       if (!result.cancelled) {
         this.props.images.push(result.uri);
         this.forceUpdate();

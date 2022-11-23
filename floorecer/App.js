@@ -88,7 +88,6 @@ export default App = () => {
     const authContext = React.useMemo(() => ({
         signIn: async (email, password) => {
           try {
-            console.log(BACKEND_URL)
             const response = await fetch(`${BACKEND_URL}/user-authe/userSign/${email}&${password}`, {
               method: 'GET',
                 headers: {
@@ -99,14 +98,12 @@ export default App = () => {
             if (response.status == 200) {
 
               const body = await response.json();
-              console.log(Object.getOwnPropertyNames(body))
               const auth0 = {
                 token: body.token,
                 expirationTime: new Date().getTime()+4.32e+8,
                 isBusinessOwner: body.isBusinessOwner,
                 uid : body.uid,
               };
-              console.log(auth0);
               await saveData('auth0', JSON.stringify(auth0));
               dispatch({ type: 'SIGN_IN', session: {
                 token: body.token,

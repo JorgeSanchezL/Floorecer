@@ -11,7 +11,7 @@ export const sendEmail = async (req, res) => {
     } catch (err) {
         res.status(502)
         res.send("Error")
-        console.log(err)
+        Alert.alert(err)
     }
 }
 
@@ -22,7 +22,7 @@ export const sendEmailFromBackend = (user) => {
             return 200
         });
     } catch (err) {
-        console.log(err)
+        Alert.alert(err)
         return 502
     }
 }

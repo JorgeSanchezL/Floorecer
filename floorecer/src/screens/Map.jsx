@@ -29,7 +29,6 @@ export const Map = () => {
   useEffect(() => {getMapMarkers(null)}, [])
 
   const [business,setBusiness] = useState(null)
-  console.log(business)
   return (
     <SafeAreaView
           style={{flex: 1}}
@@ -87,7 +86,7 @@ export const Map = () => {
 const askLocationPermissions = async () => {
   let { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== 'granted') {
-    console.log('Permission to access location was denied');
+    Alert.alert('Permission to access location was denied');
   }
 }
 
