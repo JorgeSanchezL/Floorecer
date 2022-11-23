@@ -14,7 +14,6 @@ function getOpeningText(openingHours){
     const date = new Date()
     let today = 3
     let currentTime = date.toLocaleTimeString()
-    console.log(currentTime)
 
     if(openingHours[diasDeLaSemana[today]].length!=0){
         for(let i=0;i<openingHours[diasDeLaSemana[today]].length;i++){
@@ -31,12 +30,10 @@ function getOpeningText(openingHours){
     let nextOpenedDay = today
     let fromHour = undefined
     while(!fromHour){
-        console.log("entramos bucle")
         nextOpenedDay++
         if(nextOpenedDay===7) {
           nextOpenedDay=0;
         }
-        console.log(nextOpenedDay)
 
         if (openingHours[diasDeLaSemana[nextOpenedDay]].length!=0) {
           fromHour=openingHours[diasDeLaSemana[nextOpenedDay]][0]["from"]
@@ -59,7 +56,6 @@ const BusinessDetailsCard = (props) => {
       'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg'
     ]  
     const onChange = (index ) => {
-      console.log(`index: ${index}`)
       if(index===-1)props.setBusiness(undefined)
       setIndex(index)
     }

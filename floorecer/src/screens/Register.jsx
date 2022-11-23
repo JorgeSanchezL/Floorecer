@@ -31,7 +31,6 @@ const Register = () => {
     
     const onRegisterPressedCliente=()=>{
       if(numerodetelefono!='' && password!='' && checkPassword() && checkPhoneNumber()) {
-      console.log(checkInputs());
       if(checkInputs()) {
         if(isValidEmail(email))
                 SignUpNowCliente();
@@ -56,7 +55,6 @@ const Register = () => {
     const SignUpNowCliente = async () => { 
       
       try {
-        console.log(`${BACKEND_URL}/user-authe/userRegister`)
         const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
@@ -76,16 +74,6 @@ const Register = () => {
         
         
         );
-        //console.log(Object.getOwnPropertyNames(response));
-        console.log(JSON.stringify({
-          email: email,
-          username: username,
-          usernameForSearch: getUsernameForSearch(),
-          password: password,
-          numberphone : numerodetelefono,
-          isBusinessOwner : false,
-
-      }))
         if(response.status==200){
           //const res=await response.json()
           //await SecureStore.setItemAsync('userToken', JSON.stringify(res))
@@ -115,11 +103,10 @@ const Register = () => {
 
           
       } catch (err) {
-        console.log(err)
+        Alert.alert(err)
       }
     }
-    const SignUpComercio = async () => { 
-      console.log("woow")
+    const SignUpComercio = async () => {
       try {
         const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
@@ -139,7 +126,6 @@ const Register = () => {
         
         
         );
-        console.log(Object.getOwnPropertyNames(response.status));
         
         if(response.status==200){
           //await SecureStore.setItemAsync('userToken', response)
@@ -163,7 +149,7 @@ const Register = () => {
 
           
       } catch (err) {
-        console.log(err)
+        Alert.alert(err)
       }
     }
  function isValidEmail(email) {
@@ -179,7 +165,6 @@ const Register = () => {
   }
 
   function checkInputs () {
-    console.log(email)
       if(email == '' || password == '' || numerodetelefono == '') {
         Alert.alert(':(', '¡ Hay que rellenar todos los campos para continuar !', [
             

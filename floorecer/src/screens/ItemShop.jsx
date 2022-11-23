@@ -19,7 +19,7 @@ const ItemShop = () => {
     const response = await api_call.json();
     setImagen(response.imageURL);
     }catch(error){
-      console.log(error)
+      Alert.alert(error)
     }
 
 }
@@ -40,7 +40,7 @@ const getUid = async () => {
   try {
     auth0 = JSON.parse(await getItemAsync('auth0'));
     setUid(auth0.uid);
-  } catch(e) { console.error(e); }
+  } catch(e) { Alert.alert(e); }
 }
 const  onPressBuy= async() =>{
     try {
@@ -66,11 +66,8 @@ const  onPressBuy= async() =>{
       }
       
    catch (err) {
-  
-    console.log('errPress')
-  
+    Alert.alert(err)
    }
-   console.log('hsdasdad')
 
 }
 

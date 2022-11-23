@@ -29,14 +29,12 @@ const MyShops = () => {
         }   
         );
          const body = await response.json();
-         //console.log(body)
          setActualPlan(body);
         }
         
      catch (err) {
-    
-      console.log(err)
-        return null;
+      Alert.alert(err)
+      return null;
      }
   
   }
@@ -56,14 +54,13 @@ const getbusiness= async () =>{
     }   
     );
      const body = await response.json();
-     console.log("is it done?")
      setData(body)
     }
     
 
  catch (err) {
 
-  console.log(err)
+  Alert.alert(err)
 
  }}
 
@@ -102,7 +99,7 @@ async function onDeletePress(shop){
           
           catch (err) {
         
-          console.log(err)
+            Alert.alert(err)
         
          }
 
@@ -118,8 +115,6 @@ async function onDeletePress(shop){
   
 }
 async function onPressButtonPromotion (shop) {
-
-  console.log(shop.uid)
   
     try {
       const response = await fetch(`${BACKEND_URL}/business/promoteBusiness`, { 
@@ -138,7 +133,7 @@ async function onPressButtonPromotion (shop) {
   
    catch (err) {
   
-    console.log(err)
+    Alert.alert(err)
   
    }
 

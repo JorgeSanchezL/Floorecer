@@ -39,22 +39,18 @@ const ScanQr =   () =>  {
         }   
         );
          const body = await response.json();
-         console.log("is it donee?")
          let dropDownData = [];
          var count = Object.keys(body).length;
-         console.log(count)
       for (var i = 0; i < count; i++) {
-        console.log(body[i].name)
         dropDownData.push({ value: body[i].name, label: body[i].name }); 
     }
 
     setItems(dropDownData);
-    console.log("haha")
         }
     
      catch (err) {
     
-      console.log(err)
+      Alert.alert(err)
     
      }}
      useEffect(() => {getbusiness()}, [])
@@ -91,7 +87,6 @@ const ScanQr =   () =>  {
      }
       
       try {
-        console.log(`${BACKEND_URL}/business/upgradePoints`)
         var response = await fetch(`${BACKEND_URL}/business/upgradePoints`, {
           method: 'POST',
           body: JSON.stringify({
@@ -109,17 +104,15 @@ const ScanQr =   () =>  {
     }
     
         catch(error) {
-            console.log(error)
+          Alert.alert(error)
         }
         if(response.status = 200 ) {
-          console.log("fuckof")
           Alert.alert('Alerta',
-          "se ha guardado la compra de forma correcta !")
+          "!Se ha guardado la compra correctamente!")
           setModalVisible(false)
          
 
         }
-      console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
     };
   
     if (hasPermission === null) {
@@ -159,7 +152,6 @@ const ScanQr =   () =>  {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
-      onChangeValue = {() => console.log(value)}
     />
  <Text  style = {styles.textData}> Importe  </Text>
  <TextInput

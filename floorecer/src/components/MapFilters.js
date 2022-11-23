@@ -23,7 +23,6 @@ const MapFilters = (props) => {
 
     const getMapMarkers = async (category) => { 
       props.setData(await getAllBusinesses(category))
-      //console.log(category)
     }
 
     const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -52,7 +51,6 @@ const MapFilters = (props) => {
                 if(selected == 0) setSelected(1);
                 else setSelected(0);
                 getMapMarkers(categories)
-                console.log(categories)
 
               }else{
                 categories.push(item.value)
@@ -60,7 +58,6 @@ const MapFilters = (props) => {
                 if(selected == 0) setSelected(1);
                 else setSelected(0);
                 getMapMarkers(categories)
-                console.log(categories)
               }
               
               /* if(selected == item.value){ 
@@ -68,14 +65,12 @@ const MapFilters = (props) => {
                 if (index > -1) { // only splice array when item is found
                   categories.splice(index, 1); // 2nd parameter means remove one item only
                 }
-                console.log(categories)
                 setSelected(null)
 
                 getMapMarkers(null)
               }
               else{
                 if(!categories.includes(item.value))categories.push(item.value)
-                console.log(categories)
                 setSelected(item.value);
 
                 getMapMarkers(item.value);

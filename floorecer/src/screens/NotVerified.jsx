@@ -11,7 +11,6 @@ const Home = () => {
 
   const sendEmail = async () => {
     try {
-      console.log(`${BACKEND_URL}/user-authe/userRegister2`)
       var userToken = await SecureStore.getItemAsync('userToken')
       const response = await fetch(`http://192.168.0.72:5000/user-verification/mail`, {
         method: 'POST',
@@ -24,16 +23,6 @@ const Home = () => {
       
       
       );
-      //console.log(Object.getOwnPropertyNames(response));
-      console.log(JSON.stringify({
-        email: email,
-        username: username,
-        usernameForSearch: getUsernameForSearch(),
-        password: password,
-        numberphone : numerodetelefono,
-        isBusinessOwner : false,
-
-    }))
       if(response.status==200){
         const res=await response.json()
         await SecureStore.setItemAsync('userToken', JSON.stringify(res))
@@ -63,7 +52,7 @@ const Home = () => {
 
         
     } catch (err) {
-      console.log(err)
+      Alert.alert(err)
     }
   }
 

@@ -43,7 +43,7 @@ export const getAllUser = async (req, res) => {
     let body = []
     querySnapshot.forEach((doc) => {
         body.push(doc.data())
-        console.log(doc.data())
+        
     });
     res.json(body)
 }
@@ -67,7 +67,7 @@ export const searchUser = async (req, res) => {
 
 export const getActualPlan = async (req,res)=>{
     const { uuid } = req.body;
-    console.log('aqui')
+    
     const userRef = doc(database, 'users', uuid);
     const userSnap = await getDoc(userRef);
 
