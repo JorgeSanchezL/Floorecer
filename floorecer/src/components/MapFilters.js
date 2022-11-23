@@ -36,7 +36,8 @@ const MapFilters = (props) => {
         const [selected, setSelected] = useState(null);
        
         const renderItem = ({ item }) => {
-          const backgroundColor = categories.includes(item.value) ? "#88c484" : "#white";
+          const backgroundColor = categories.includes(item.value)
+            ? "#88c484" : 'white';
           const color = categories.includes(item.value) ? 'white' : 'black';
       
           return (
@@ -104,30 +105,22 @@ const MapFilters = (props) => {
       };
       const Size = 14;
       const styles = StyleSheet.create({
-        container2: {
-          flex: 1,
-          marginTop: StatusBar.currentHeight || 0,
-        },
         container: {
-            marginTop: 34,
-            backgroundColor: 'transparent',
             alignItems: 'flex-start',
             justifyContent: 'center',
             height: Size*2.5,
+            zIndex: 2,
+            position: 'absolute',
+            marginVertical: 15
           },
         title: {
           fontSize: Size,
         },
         appButtonContainer: {
-            elevation: 1 ,
-            //borderWidth:0.5,
-           // backgroundColor: "#009688",
             borderRadius: 100,
-            marginHorizontal:10,
-            marginVertical:1,
+            marginHorizontal: 10,
             justifyContent: 'center',
-            //paddingVertical: '10%',
-            paddingHorizontal: 12 
+            paddingHorizontal: 12,
           },
       });
 
