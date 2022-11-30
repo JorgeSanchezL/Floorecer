@@ -1,0 +1,20 @@
+<svg width="306" height="345" viewBox="0 0 306 345" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M197 45V271.5" stroke="#0C4D53" stroke-width="2"/>
+<path d="M196 96.5H249.5V76" stroke="#0C4D53" stroke-width="2"/>
+<path d="M196 123H117.5V37" stroke="#0C4D53" stroke-width="2"/>
+<path d="M118.5 63.5H144V46.5" stroke="#0C4D53" stroke-width="2"/>
+<path d="M59 130.5V209H197.5" stroke="#0C4D53" stroke-width="2"/>
+<g style="mix-blend-mode:multiply">
+<rect x="72" width="234" height="158" rx="25" fill="#A3A2D9"/>
+<rect x="72" width="234" height="158" rx="25" fill="#A1A2D8"/>
+</g>
+<g style="mix-blend-mode:multiply">
+<rect y="79" width="144" height="97" rx="15" fill="#A1A2D8"/>
+</g>
+<rect x="45" y="109" width="28" height="28" rx="14" fill="#DCEEF5"/>
+<rect width="12" height="12" rx="6" transform="matrix(-1 0 0 1 45 97)" fill="#DCEEF5"/>
+<rect x="100" y="18" width="28" height="28" rx="14" fill="#DCEEF5"/>
+<rect x="234" y="55" width="31" height="31" rx="15.5" fill="#DCEEF5"/>
+<path d="M140 277H252V320C252 333.807 240.807 345 227 345H165C151.193 345 140 333.807 140 320V277Z" fill="#6967BA"/>
+<path d="M132 256H261V277H132V256Z" fill="#A1A2D8"/>
+</svg>

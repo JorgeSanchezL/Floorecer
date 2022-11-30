@@ -1,0 +1,39 @@
+<svg width="570" height="573" viewBox="0 0 570 573" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M349 158L349 348" stroke="#0C4D53" stroke-width="2"/>
+<path d="M348 186H472V138" stroke="#0C4D53" stroke-width="2"/>
+<path d="M348 199H270V59" stroke="#0C4D53" stroke-width="2"/>
+<path d="M182 170.5V194H211.5" stroke="#A5A2DA"/>
+<path d="M271 140H381V71" stroke="#0C4D53" stroke-width="2"/>
+<path d="M211 146V285H349M-285 749H-147" stroke="#0C4D53" stroke-width="2"/>
+<path d="M381.5 114.5H430.5V98.5H420" stroke="#A5A2DA" stroke-width="2"/>
+<path d="M388 59.5H503V22.5" stroke="#A5A2DA" stroke-width="2"/>
+<path d="M503 39.5H535" stroke="#A5A2DA" stroke-width="2"/>
+<g style="mix-blend-mode:multiply">
+<rect x="224" y="25" width="309" height="209" rx="25" fill="#A5A2DA"/>
+<rect x="224" y="25" width="309" height="209" rx="25" fill="#A5A2DA"/>
+</g>
+<g style="mix-blend-mode:multiply">
+<rect x="141" y="106" width="168" height="113" rx="15" fill="#A5A2DA"/>
+</g>
+<g style="mix-blend-mode:multiply">
+<rect x="447" width="123" height="83" rx="20" fill="#A5A2DA"/>
+</g>
+<rect x="194" y="122" width="35" height="35" rx="17.5" fill="#DCEEF5"/>
+<rect x="229" y="114" width="18" height="18" rx="9" fill="#DCEEF5"/>
+<rect x="284" y="172" width="14" height="14" rx="7" fill="#DCEEF5"/>
+<rect width="25" height="25" rx="12.5" transform="matrix(-1 0 0 1 194 156)" fill="#DCEEF5"/>
+<rect x="260" y="39" width="40" height="40" rx="20" fill="#DCEEF5"/>
+<rect x="454" y="105" width="37" height="37" rx="18.5" fill="#DCEEF5"/>
+<rect x="404" y="177" width="19" height="19" rx="9.5" fill="#DCEEF5"/>
+<rect x="419" y="196" width="11" height="11" rx="5.5" fill="#DCEEF5"/>
+<rect x="342" y="152" width="13" height="13" rx="6.5" fill="#DCEEF5"/>
+<rect x="410" y="88" width="18" height="18" rx="9" fill="#DCEEF5"/>
+<rect x="493" y="104" width="10" height="10" rx="5" fill="#DCEEF5"/>
+<rect x="362" y="43" width="33" height="33" rx="16.5" fill="#DCEEF5"/>
+<rect x="484" y="4" width="30" height="30" rx="15" fill="#DCEEF5"/>
+<rect x="527" y="33" width="16" height="16" rx="8" fill="#DCEEF5"/>
+<rect x="301" y="65" width="6" height="6" rx="3" fill="#DCEEF5"/>
+<rect x="293" y="74" width="13" height="13" rx="6.5" fill="#DCEEF5"/>
+<path d="M292 332H404V396C404 409.807 392.807 421 379 421H317C303.193 421 292 409.807 292 396V332Z" fill="#6967BA"/>
+<path d="M284 332H413V353H284V332Z" fill="#A5A2DA"/>
+</svg>
