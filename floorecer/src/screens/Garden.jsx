@@ -151,7 +151,6 @@ const Garden = () => {
       <View style={styles.container}>
         <Text>Mi jardín</Text>
         <View style={styles.garden}>
-          <ImageBackground source={grass} resizeMode="cover" style={styles.image} />
           <View style={styles.flor0}>
             <BotonFlor id="1" plant={myPlants[0]} onClick={() => {}}/>
           </View>

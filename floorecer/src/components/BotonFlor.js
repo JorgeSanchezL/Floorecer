@@ -1,114 +1,86 @@
-import React from 'react'
-import { TouchableOpacity, Alert, Image, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 
-import addIcon from '../../assets/garden/addIcon.svg'
+import addIcon from './flowers/addIcon'
 
-import heart0 from '../../assets/garden/heart0.png'
-import heart1 from '../../assets/garden/heart1.png'
-import heart2 from '../../assets/garden/heart2.png'
-import heart3 from '../../assets/garden/heart3.png'
-
-import deadCactus from '../../assets/garden/deadCactus.svg'
-import cactus0 from '../../assets/garden/cactus0.svg'
-import cactus1 from '../../assets/garden/cactus1.svg'
-import cactus2 from '../../assets/garden/cactus2.svg'
-import cactus3 from '../../assets/garden/cactus3.svg'
-import cactus4 from '../../assets/garden/cactus4.svg'
-
-import deadSunflower from '../../assets/garden/deadSunflower.svg'
-import sunflower0 from '../../assets/garden/sunflower0.svg'
-import sunflower1 from '../../assets/garden/sunflower1.svg'
-import sunflower2 from '../../assets/garden/sunflower2.svg'
-import sunflower3 from '../../assets/garden/sunflower3.svg'
-import sunflower4 from '../../assets/garden/sunflower4.svg'
-
-import deadBlueOrchid from '../../assets/garden/deadBlueOrchid.svg'
-import blueOrchid0 from '../../assets/garden/blueOrchid0.svg'
-import blueOrchid1 from '../../assets/garden/blueOrchid1.svg'
-import blueOrchid2 from '../../assets/garden/blueOrchid2.svg'
-import blueOrchid3 from '../../assets/garden/blueOrchid3.svg'
-import blueOrchid4 from '../../assets/garden/blueOrchid4.svg'
-
-import deadRedRose from '../../assets/garden/deadRedRose.svg'
-import redRose0 from '../../assets/garden/redRose0.svg'
-import redRose1 from '../../assets/garden/redRose1.svg'
-import redRose2 from '../../assets/garden/redRose2.svg'
-import redRose3 from '../../assets/garden/redRose3.svg'
-import redRose4 from '../../assets/garden/redRose4.svg'
+import { Bonsai0, Bonsai1, Bonsai2, Bonsai3, Bonsai4, DeadBonsai } from './flowers/bonsais'
+import { Cactus0, Cactus1, Cactus2, Cactus3, Cactus4, DeadCactus } from './flowers/cactus'
+import { Heart0, Heart1, Heart2, Heart3 } from './flowers/hearts'
+import { RedRose0, RedRose1, RedRose2, RedRose3, RedRose4, DeadRedRose } from './flowers/redRoses'
+import { Sunflower0, Sunflower1, Sunflower2, Sunflower3, Sunflower4, DeadSunflower } from './flowers/sunflowers'
 
 const getImage = (gardenPlant) => {
-  let plant
   switch (gardenPlant.type) {
     case "cactus":
-      if (gardenPlant.health == 0) plant = deadCactus
-      else if (gardenPlant.petals == 1) plant = cactus0
-      else if (gardenPlant.petals == 2) plant = cactus1
-      else if (gardenPlant.petals == 3) plant = cactus2
-      else if (gardenPlant.petals == 4) plant = cactus3
-      else if (gardenPlant.petals == 5) plant = cactus4
+      if (gardenPlant.health == 0) return <DeadCactus />
+      else if (gardenPlant.petals == 1) return <Cactus0 />
+      else if (gardenPlant.petals == 2) return <Cactus1 />
+      else if (gardenPlant.petals == 3) return <Cactus2 />
+      else if (gardenPlant.petals == 4) return <Cactus3 />
+      else if (gardenPlant.petals == 5) return <Cactus4 />
       break
     case "sunflower":
-      if (gardenPlant.health == 0) plant = deadSunflower
-      else if (gardenPlant.petals == 1) plant = sunflower0
-      else if (gardenPlant.petals == 2) plant = sunflower1
-      else if (gardenPlant.petals == 3) plant = sunflower2
-      else if (gardenPlant.petals == 4) plant = sunflower3
-      else if (gardenPlant.petals == 5) plant = sunflower4
+      if (gardenPlant.health == 0) return <DeadSunflower />
+      else if (gardenPlant.petals == 1) return <Sunflower0 />
+      else if (gardenPlant.petals == 2) return <Sunflower1 />
+      else if (gardenPlant.petals == 3) return <Sunflower2 />
+      else if (gardenPlant.petals == 4) return <Sunflower3 />
+      else if (gardenPlant.petals == 5) return <Sunflower4 />
       break
-    case "blueOrchid":
-      if (gardenPlant.health == 0) plant = deadBlueOrchid
-      else if (gardenPlant.petals == 1) plant = blueOrchid0
-      else if (gardenPlant.petals == 2) plant = blueOrchid1
-      else if (gardenPlant.petals == 3) plant = blueOrchid2
-      else if (gardenPlant.petals == 4) plant = blueOrchid3
-      else if (gardenPlant.petals == 5) plant = blueOrchid4
+    case "bonsai":
+      if (gardenPlant.health == 0) return <DeadBonsai />
+      else if (gardenPlant.petals == 1) return <Bonsai0 />
+      else if (gardenPlant.petals == 2) return <Bonsai1 />
+      else if (gardenPlant.petals == 3) return <Bonsai2 />
+      else if (gardenPlant.petals == 4) return <Bonsai3 />
+      else if (gardenPlant.petals == 5) return <Bonsai4 />
       break;
     case "redRose":
-      if (gardenPlant.health == 0) plant = deadRedRose
-      else if (gardenPlant.petals == 1) plant = redRose0
-      else if (gardenPlant.petals == 2) plant = redRose1
-      else if (gardenPlant.petals == 3) plant = redRose2
-      else if (gardenPlant.petals == 4) plant = redRose3
-      else if (gardenPlant.petals == 5) plant = redRose4
+      if (gardenPlant.health == 0) <return DeadRedRose />
+      else if (gardenPlant.petals == 1) return <RedRose0 />
+      else if (gardenPlant.petals == 2) return <RedRose1 />
+      else if (gardenPlant.petals == 3) return <RedRose2 />
+      else if (gardenPlant.petals == 4) return <RedRose3 />
+      else if (gardenPlant.petals == 5) return <RedRose4 />
       break
     default:
-      return { image: addIcon, health: gardenPlant.health, rounded: false }
+      return addIcon
   }
-  return { image: plant, health: gardenPlant.health, rounded: true }
+}
+
+const noFlower = (gardenPlant) => {
+  return !(gardenPlant.type == "cactus"
+  || gardenPlant == "sunflower"
+  || gardenPlant.type == "bonsai"
+  || gardenPlant.type == "redRose")
 }
 
 export default class BotonFlor extends React.Component {
-  data = getData(this.props.plant)
   render() {
     return (
       <TouchableOpacity style={styles.touchable} onPress={this.props.onClick}>
-        {
+      <View>
+        {getImage(this.props.plant)}
+        {noFlower(this.props.plant) ? 
           {
-            true: {
-              0: 
-                <div>
-                  <Image source={data.image} style={styles.roundedImage} />
-                  <Image source={heart0} style={styles.image} />
-                </div>,
-              1: 
-                <div>
-                  <Image source={data.image} style={styles.roundedImage} />
-                  <Image source={heart1} style={styles.image} />
-                </div>,
-              2: 
-                <div>
-                  <Image source={data.image} style={styles.roundedImage} />
-                  <Image source={heart2} style={styles.image} />
-                </div>,
-              3: 
-                <div>
-                  <Image source={data.image} style={styles.roundedImage} />
-                  <Image source={heart3} style={styles.image} />
-                </div>
-            }[data.health],
-            false: <Image resizeMode='contain' source={data.image} style={styles.image} />
-          }[data.rounded]
+            0:  <View style={styles.image}>
+                  <Heart0 />
+                </View>,
+            1:  <View style={styles.image}>
+                  <Heart1 />
+                </View>,
+            2:  <View style={styles.image}>
+                  <Heart2 />
+                </View>,
+            3:  <View style={styles.image}>
+                  <Heart3 />
+                </View>
+          }[this.props.plant.health]
+          :
+          null
         }
+      </View>
       </TouchableOpacity>
     )
   }
