@@ -1,13 +1,13 @@
 import React ,{useEffect,useState} from 'react';
 import { StyleSheet, SafeAreaView, Dimensions,
   ScrollView, View, Image, Text, TouchableOpacity,
-  Modal} from 'react-native';
+  Modal,FlatList} from 'react-native';
 import { getItemAsync } from 'expo-secure-store';
 import { Ionicons } from '@expo/vector-icons';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import SvgQRCode from 'react-native-qrcode-svg';
 import { useNavigation } from '@react-navigation/native';
-
+import { useIsFocused } from "@react-navigation/core";
 
 import user from '../../assets/image/user.png';
 import qrCode from '../../assets/image/qrCode.png';
@@ -31,6 +31,8 @@ const UserProfile = () => {
   const [mail, setMail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [uid, setUid] = useState(null);
+
+  const isFocused = useIsFocused();
 
   const navigation=useNavigation();
   const openGarden = () => {
@@ -77,10 +79,10 @@ const UserProfile = () => {
         }
       }
 
-  useEffect(() => {
+  useEffect(() => {if(isFocused){
       getProfile();
-      getUid();
-  }, []);
+      getUid();}
+  }, [isFocused]);
   useEffect(() => {
     getProfile();
 }, [editable]);
@@ -117,6 +119,9 @@ const UserProfile = () => {
       getProfile();
     }
   };
+
+  
+
   return (
       <SafeAreaView
           style={{flex: 1}}
@@ -125,6 +130,9 @@ const UserProfile = () => {
               barStyle='dark-content'
               backgroundColor={'#fff'}
           />
+          <ScrollView
+                  showsVerticalScrollIndicator={false}
+              >
           <TouchableOpacity style={styles.garden} onPress={openGarden}>
             
           </TouchableOpacity>
@@ -149,7 +157,7 @@ const UserProfile = () => {
                 value={auth0.uid}
               /> }
            <CustomButton
-           text = 'Close'
+           text = 'Cerrar'
            onPress ={() => setModalVisible(!modalVisible)}
 
 
@@ -160,15 +168,17 @@ const UserProfile = () => {
               <TouchableOpacity  onPress={() =>setModalVisible(true)}>
                 <Image style={styles.qrCode} source={qrCode} />
               </TouchableOpacity >
-                   
+              <View stylestyle={styles.cont}>
+                  <Text style={{fontSize:15,fontWeight:'500'}}>
+                    {profile.points} Puntos
+                  </Text>   
+              </View>     
               <View stylestyle={styles.cont}>
                   <Text style={styles.userName}>
                     {profile.username}
                   </Text>   
               </View>
-              <ScrollView
-                  showsVerticalScrollIndicator={false}
-              >
+              
                   
                   <View>
                       <Text style={styles.title}>
@@ -224,9 +234,27 @@ const UserProfile = () => {
                         </View>
                     </View>
                   </View>
-                  
-              </ScrollView>
+                  <Text style ={styles.title}>Últimas compras</Text>
+                  { profile.historico.map((purchase)=>{
+                              return(
+                              <View style={{flex:1, flexDirection:'row',
+                              backgroundColor: '#FFFFFF',
+                              height:55,
+                              borderRadius: 25,
+                              elevation:3,
+                              alignItems:'center',
+                              marginBottom:'3.5%',
+                              marginTop:10}}>
+                                <Text style ={{flex:2,fontSize:15,fontWeight: 'bold', marginLeft:30}}>{purchase.shopName} </Text>
+                                <Text style ={{ flex:1,fontWeight: '400',}}>+{purchase.points}  Puntos</Text>
+                              </View>)
+                              }) 
+                            } 
+              
+            
+             
           </View>
+          </ScrollView>
       </SafeAreaView>
   );
 }
@@ -353,7 +381,10 @@ centeredView: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center"
+  },
+  qrCode:{
+    height:53,
+    width:53,
   }
-
 });
 export default UserProfile;

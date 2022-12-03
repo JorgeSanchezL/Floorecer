@@ -60,22 +60,6 @@ const MapFilters = (props) => {
                 else setSelected(0);
                 getMapMarkers(categories)
               }
-              
-              /* if(selected == item.value){ 
-                const index = categories.indexOf(item.value);
-                if (index > -1) { // only splice array when item is found
-                  categories.splice(index, 1); // 2nd parameter means remove one item only
-                }
-                setSelected(null)
-
-                getMapMarkers(null)
-              }
-              else{
-                if(!categories.includes(item.value))categories.push(item.value)
-                setSelected(item.value);
-
-                getMapMarkers(item.value);
-              } */
             }}
               backgroundColor={{ backgroundColor }}
               textColor={{ color }}
