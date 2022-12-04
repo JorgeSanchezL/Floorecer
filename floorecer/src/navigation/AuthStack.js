@@ -5,6 +5,7 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import NotVerified from '../screens/NotVerified';
 import ScanQr from '../screens/ScanQr';
+import Prueba from '../screens/Prueba'
 
 const Stack = createStackNavigator();
 
