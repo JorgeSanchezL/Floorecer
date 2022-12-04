@@ -10,12 +10,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from "@react-navigation/core";
 
 import user from '../../assets/image/user.png';
-import qrCode from '../../assets/image/qrCode.png';
+import IconQR from '../../assets/image/IconQR.png';
 
 import { BACKEND_URL } from '@env';
 
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
+import ProfileButton from '../components/ProfileButton';
 
 export const width = Dimensions.get('window').width;
 
@@ -155,18 +156,18 @@ const UserProfile = () => {
               <SvgQRCode
                 style = {{width: '100%'}} 
                 value={auth0.uid}
-              /> }
-           <CustomButton
+              /> 
+            }
+            <View style={{marginTop:20, marginBottom:-25}}><ProfileButton
            text = 'Cerrar'
-           onPress ={() => setModalVisible(!modalVisible)}
+           onPress ={() => setModalVisible(!modalVisible)} /></View>
+           
 
-
-           />
           </View>
         </View>
       </Modal>
               <TouchableOpacity  onPress={() =>setModalVisible(true)}>
-                <Image style={styles.qrCode} source={qrCode} />
+                <Image style={styles.qrCode} source={IconQR} />
               </TouchableOpacity >
               <View stylestyle={styles.cont}>
                   <Text style={{fontSize:15,fontWeight:'500'}}>
@@ -383,8 +384,8 @@ centeredView: {
     textAlign: "center"
   },
   qrCode:{
-    height:53,
-    width:53,
+    height:73,
+    width:73,
   }
 });
 export default UserProfile;
