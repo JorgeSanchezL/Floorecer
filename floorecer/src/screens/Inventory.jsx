@@ -182,20 +182,20 @@ const progressBar =  () => {
                     <Image
                         style={styles.itemImage}
                         source={{
-                        uri:'https://firebasestorage.googleapis.com/v0/b/floorecer.appspot.com/o/item%2Fabono.png?alt=media&token=12a33b8b-ce22-4947-812b-8d560770ba12'
+                        uri:'https://firebasestorage.googleapis.com/v0/b/floorecer.appspot.com/o/item%2Fsuplemento.png?alt=media&token=38d7294e-dfa3-4194-9b0c-2dd6198bbd4e'
                         }}
                     />
-                    <Text style={styles.textItem}>Abono  x {abono}</Text>
+                    <Text style={styles.textItem}>Suplemento  x {abono}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity  onPress={updatePlantsNextHealth}>
                     
                     <Image
                         style={styles.itemImage}
                         source={{
-                        uri:'https://firebasestorage.googleapis.com/v0/b/floorecer.appspot.com/o/item%2Fregadera.png?alt=media&token=0fdcf629-72b8-4eed-97e0-dcf5f375c6dd'
+                        uri:'https://firebasestorage.googleapis.com/v0/b/floorecer.appspot.com/o/item%2Felixir.png?alt=media&token=c56b0143-7482-476a-a48c-fb4439a466b0'
                         }}
                     />
-                    <Text style={styles.textItem}>Agua  x  {agua}</Text>
+                    <Text style={styles.textItem}>Elixir  x  {agua}</Text>
                 </TouchableOpacity>
             </View>
         </View>

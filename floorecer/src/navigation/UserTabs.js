@@ -5,6 +5,7 @@ import { Ionicons } from 'react-native-vector-icons';
 import Map from '../screens/Map';
 import ProfileStack from '../navigation/ProfileStack';
 import UserSearch from '../screens/UserSearch';
+import ItemShop from '../screens/ItemShop';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,9 @@ const UserTabs = () => {
                     } else if (route.name === 'profileStack') {
                         iconName = focused ? 'person' : 'person-outline';
                     } else if (route.name == 'userSearch') {
-                        iconName = focused ? 'search' : 'search-outline'
+                        iconName = focused ? 'search' : 'search-outline';
+                    }else if (route.name == 'itemShop') {
+                        iconName = focused ? 'basket' : 'basket-outline';
                     }
 
                     return (
@@ -40,6 +43,7 @@ const UserTabs = () => {
             <Tab.Screen name='home' component={Map} />
             <Tab.Screen name='profileStack' component={ProfileStack} />
             <Tab.Screen name='userSearch' component={UserSearch} />
+            <Tab.Screen name='itemShop' component={ItemShop} />
         </Tab.Navigator>
     );
 }
