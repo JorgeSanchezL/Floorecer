@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
 import CustomButton from '../components/CustomButton';
 import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
-import CustomDropDownPiker from '../components/DropDownPiker';
+import FinalustomDropDownPicker from '../components/FinalCustomDropDownPiker';
 import DropDownTimePicker from "../components/DropDownTimePicker";
+import SelectionButton from "../components/SelectionButton";
 import { ScrollView, Switch } from "react-native-gesture-handler";
 import { Image, TouchableOpacity, Modal, Icon} from "react-native";
 import MapView from 'react-native-maps'
@@ -105,7 +106,7 @@ const ConfigureBusiness = ({ route }) => {
         setLocation={setLocation}
       />}
       <Text style={styles.header2}>Categoría</Text>
-      <CustomDropDownPiker value={category} setValue={setCategory} ></CustomDropDownPiker>
+      <FinalCustomDropDownPicker value={category} setValue={setCategory} ></FinalCustomDropDownPicker>
 
       <Text style={styles.header2}>Horario de apertura</Text>
       {
@@ -210,26 +211,31 @@ export const DayTimeSlots = (props) => {
       >
         
         <View style = {{flex:0, flexDirection:'row', alignItems: "center"}}>
-            <Text style={styles.header3}>
+            {/* <Text style={styles.header3}>
                 {props.day}
             </Text>
             <Switch
                 onValueChange={toggleSwitch}
                 value={isEnabled}
                 style={{marginRight:10}}
+            /> */}
+            <SelectionButton 
+              label = {props.day}
+              onPress = {toggleSwitch}
+              value={isEnabled}
             />
-            <Text style={styles.header3}>{isEnabled?"Abierto":"Cerrado"}</Text>
+            
         </View>
-        <View >
+        <View style={{flexDirection:'column',marginLeft:'12%'}}>
             {isEnabled && slots.map((slot,index)=>
                 {
                     return(
                         <View style = {{flex:0, flexDirection:'row', alignItems: "center", marginBottom:10}}>
-                            <DropDownTimePicker fromTime time={slot.from} setTime={setValueFrom} index={index}></DropDownTimePicker>
-                            <Text style={{marginLeft:10, marginRight:10}}>to</Text>
+                            <DropDownTimePicker fromTime time={slot.from} setTime={setValueFrom} index={index} ></DropDownTimePicker>
+                            <Text style={{marginLeft:0, marginRight:6, fontSize:30, marginBottom:25, color:'#7D7ACD'}}>-</Text>
                             <DropDownTimePicker time={slot.to} setTime={setValueTo} index={index}></DropDownTimePicker>
                             {slots.length>1 && <TouchableOpacity style={styles.closeButtonParent} onPress={()=>deleteSlot(slot)}>
-                                <Image style={styles.closeButton} source={require("../../assets/Delete-Red-X-Button.png")} />
+                                <Image style={styles.closeButton} source={require("../../assets/image/Delete-X-Button.png")} />
                             </TouchableOpacity>}
                            
                         </View>
@@ -240,7 +246,10 @@ export const DayTimeSlots = (props) => {
                 isEnabled && slots.length==0 && addSlot()
             }
             {isEnabled && slots.length!=0 && slots[slots.length-1].from!=null && slots[slots.length-1].to!=null &&
-            <CustomButton text="Añadir horario" type="secundario" onPress={addSlot}></CustomButton>}
+            <TouchableOpacity style={styles.closeButtonParent} onPress={addSlot}>
+                <Image style={styles.addButton} source={require("../../assets/image/AddButton.png")} />
+            </TouchableOpacity>
+            }
         </View>
       </View>
     );
@@ -310,7 +319,8 @@ function Mapa ({isVisibleMap, setIsVisibleMap, location,setLocation}){
 const styles = StyleSheet.create({
     mainContainer:{
       alignItems:'center',
-      height:'100%'
+      height:'100%',
+      backgroundColor:'white'
     },
     title: {
       fontSize: 30,
@@ -338,7 +348,8 @@ const styles = StyleSheet.create({
     header2:{
       marginTop:10, 
       fontSize:20, 
-      fontWeight:"bold" 
+      fontWeight:"bold",
+      margin:16
     },
     header3:{
       fontSize:15, 
@@ -374,6 +385,7 @@ const styles = StyleSheet.create({
     closeButton: {
         height: 30,
         width: 30,
+        marginBottom:23,
      },
     closeButtonParent: {
         justifyContent: "center",
@@ -382,6 +394,17 @@ const styles = StyleSheet.create({
     },
     closeButtonView:{
         flexDirection:'column', position:'absolute', top: 35, alignSelf:'flex-end'
+    },
+    dropDown:{
+      marginLeft:36,
+
+    },
+    addButton:{
+        height: 40,
+        width: 40,
+        marginBottom:23,
+        marginTop:-10,
+        alignSelf:'flex-start'
     }
   });
 

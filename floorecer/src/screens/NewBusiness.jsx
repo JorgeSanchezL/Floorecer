@@ -3,7 +3,8 @@ import { View, Text, TextInput, StyleSheet, Alert,
   useWindowDimensions, Dimensions, Image, TouchableOpacity,
   Modal } from "react-native";
 import CustomButton from '../components/CustomButton';
-import CustomDropDowPiker from '../components/DropDownPiker';
+import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
+import FinalTextInput from '../components/FinalTextInput';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 import { ScrollView } from "react-native-gesture-handler";
@@ -81,14 +82,6 @@ const NewBusiness = () => {
         ]);
         return false;
       }
-      /* var CIF_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,}$/
-      if(CIF_REGEX.test(nif)){
-        Alert.alert('', 'Formato erróneo para el NIF', [
-            
-          { text: 'OK'},
-        ]);
-        return false;
-      } */
       return true;
 
   }
@@ -140,12 +133,15 @@ const NewBusiness = () => {
   return(
   <View style={[styles.mainContainer]}>
 
-    <Text style={[styles.title,{marginTop:height * 0.05}]}>New Business</Text>
+    
 
     <ScrollView 
       nestedScrollEnabled={true}
-      style={{width,height: height * 0.79, paddingHorizontal:10}}>
-        
+      style={{width,height: height * 0.79, paddingHorizontal:10}}
+      showsVerticalScrollIndicator={false}>
+      
+      <Text style={[styles.title,{marginTop:height * 0.05}]}>Nuevo Comercio</Text>  
+
       <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
       <MyTextInput name = 'NIF' value={nif} setValue={setNif} info ={'Ejemplo: B–76365789'}/>
       <MyTextInput 
@@ -163,13 +159,12 @@ const NewBusiness = () => {
       />
       
       <Text
-        style={styles.header2}
+        style={styles.header1}
       >Categoria</Text>
-      <CustomDropDowPiker 
+      <FinalCustomDropDowPicker 
         value={category}
         setValue={setCategory}
-        
-        ></CustomDropDowPiker>
+      ></FinalCustomDropDowPicker>
 
       
       <Text style={styles.header2}>Horario de apertura</Text>
@@ -240,15 +235,20 @@ export const MyTextInput = (props) => {
     <View
       style={{width:'100%',}}
     >
-      <Text style={styles.header2}>
+      <Text style={styles.header1}>
         {props.name}
       </Text>
       <View style={styles.sectionStyle}>
-        <TextInput
+        {/* <TextInput
             style = {{flex:1, padding:10}}
             placeholder={props.info}
             value={props.value}
             onChangeText={props.setValue}
+        /> */}
+        <FinalTextInput
+          info ={props.info}
+          value = {props.value}
+          setValue = {props.setValue}
         />
         { props.isLocation && 
             <TouchableOpacity onPress={()=>props.setIsVisibleMap(true)}>
@@ -352,7 +352,8 @@ const getCurrentLocation = async () => {
 const styles = StyleSheet.create({
     mainContainer:{
       alignItems:'center',
-      height:'100%'
+      height:'100%',
+      backgroundColor:'white'
     },
     InputContainer:{
       backgroundColor:'white',
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
         //marginVertical:5,
     },
     title: {
-      fontSize: 16,
+      fontSize: 22,
       lineHeight: 21,
       fontWeight: 'bold',
       letterSpacing: 0.25,
@@ -373,8 +374,7 @@ const styles = StyleSheet.create({
       //width:'70%',
       maxWidth: 300,
       maxHeight: 200,
-      
-      //justifyContent:'center',
+      alignSelf:'center',
       //margin: 10,
       textAlign:'center'
     },
@@ -384,7 +384,6 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       height: 40,
       borderRadius: 5,
-      marginTop:10
     },
     imageStyle: {
       padding: 15,
@@ -422,10 +421,17 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
+    header1:{
+      marginTop:10, 
+      fontSize:20,
+      marginBottom:6,
+      marginLeft:20,
+    },
     header2:{
       marginTop:10, 
-      fontSize:20, 
-      fontWeight:"bold" 
+      fontSize:20,
+      marginBottom:16,
+      marginLeft:20,
     },
     container: {
       backgroundColor: '#fff',

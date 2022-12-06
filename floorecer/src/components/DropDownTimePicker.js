@@ -66,9 +66,10 @@ const DropDownTimePicker= (props) => {
             listMode="SCROLLVIEW"
             placeholder={props.fromTime?"Abre a las" : "Cierra a las"}
             placeholderStyle={{
-                color: "grey",
-                
+                color: "#959494",
+                fontSize:13,
               }}
+            dropDownContainerStyle = {styles.dropDownContainer}
             open={open}
             value={value}
             items={items}
@@ -76,6 +77,10 @@ const DropDownTimePicker= (props) => {
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
+            selectedItemLabelStyle={{
+              fontWeight: "bold"
+            }}
+            listItemLabelStyle={{color:'grey'}}
         />
     
     
@@ -87,16 +92,33 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     dropdown:{
-        borderColor: 'white',
-        backgroundColor: '#fff',
-        borderWidth: 1,
+        backgroundColor: '#7D7ACD33',
+        borderWidth: 0,
         paddingHorizontal: 12,
         paddingVertical: Platform.OS === 'ios' ? 12 : 6,
         fontSize: 16,
-        borderRadius: 5,
+        borderRadius: 10,
         marginTop: 0,
-        marginBottom: 0,
-        zIndex:100
+        marginBottom: 22,
+        zIndex:100,
+        height:37,
+        width:123,
+    },
+   /*  dropDown:{
+      backgroundColor: 'rgb(229,226,243)',
+      borderRadius:10,
+      borderWidth:0,
+      marginTop:10,
+      width:'80%',
+      alignSelf:'center',
+    }, */
+    dropDownContainer:{
+      backgroundColor:'rgb(229,226,243)',
+      borderWidth:0, 
+      width:123,
+      zIndex:200,
+      elevation:2,
+      direction:'ltr',
     }
 });
 
