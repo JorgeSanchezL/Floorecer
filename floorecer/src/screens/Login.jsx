@@ -22,6 +22,7 @@ const Login = () => {
         console.warn('Recuperar');
     };
     const log = async () => { 
+      console.log("hola")
       const response = await signIn(email, password);
       if (response && response.signInError) {
         Alert.alert('Alerta',
