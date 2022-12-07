@@ -65,7 +65,7 @@ export const getSeeds = async (req, res) => {
     const userRef = doc(database, 'users', user);
     const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) { res.status(200).json(userSnap.data().item); }
+    if (userSnap.exists()) { res.status(200).json(userSnap.data().items); }
     else { res.status(404).json(null); }
 }
 
@@ -79,6 +79,7 @@ export const updateItems = async (req,res)=>{
 
 export const updateGarden = async (req,res)=>{
     const { uuid, garden } = req.body;
+    console.log(uuid)
     const userRef = doc(database, 'users', uuid);
     let newData = {}
     newData['garden'] = garden

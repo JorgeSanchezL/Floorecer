@@ -4,17 +4,14 @@ import Svg, { Path, Rect, G } from "react-native-svg"
 export function Bonsai0() {
   return (
     <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="125"
-      height="125"
-      fill="none"
-      viewBox="0 0 125 125"
+    width={260}
+    height={142}
+    viewBox="0 0 60 142"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     >
-      <Path
-        fill="#6967BA"
-        d="M8 21h112v43c0 13.807-11.193 25-25 25H33C19.193 89 8 77.807 8 64V21z"
-      ></Path>
-      <Path fill="#A3A2D9" d="M0 0h129v21H0V0z"></Path>
+      <Rect width={60} height={36} rx={2} fill="#A3A2D9" />
+      <Path d="M30 18L30 142" stroke="#0C4D53" strokeWidth={2} />
     </Svg>
   );
 }
@@ -22,20 +19,16 @@ export function Bonsai0() {
 export function Bonsai1() {
   return (
     <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="125"
-      height="125"
-      fill="none"
-      viewBox="0 0 125 125"
+    width={260}
+    height={142}
+    viewBox="0 0 80 142"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     >
-      <Rect width="32" height="19" x="15" y="49" fill="#A3A2D9" rx="2"></Rect>
-      <Rect width="60" height="36" x="35" fill="#A3A2D9" rx="2"></Rect>
-      <Path stroke="#0C4D53" strokeWidth="2" d="M65 18v124M30 57v23h35"></Path>
-      <Path
-        fill="#6967BA"
-        d="M8 148h112v43c0 13.807-11.193 25-25 25H33c-13.807 0-25-11.193-25-25v-43z"
-      ></Path>
-      <Path fill="#A3A2D9" d="M0 127h129v21H0v-21z"></Path>
+      <Rect y={49} width={32} height={19} rx={2} fill="#A3A2D9" />
+      <Rect x={20} width={60} height={36} rx={2} fill="#A3A2D9" />
+      <Path d="M50 18L50 142" stroke="#0C4D53" strokeWidth={2} />
+      <Path d="M15 57V80H50" stroke="#0C4D53" strokeWidth={2} />
     </Svg>
   );
 }
@@ -43,242 +36,172 @@ export function Bonsai1() {
 export function Bonsai2() {
   return (
     <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="125"
-      height="125"
-      fill="none"
-      viewBox="0 0 125 125"
+    width={260}
+    height={150}
+    viewBox="0 0 306 272"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path d="M197 45V271.5" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M196 123H117.5V37" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M59 130.5V209H197.5" stroke="#0C4D53" strokeWidth={2} />
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
     >
-      <Path
-        stroke="#0C4D53"
-        strokeWidth="2"
-        d="M197 45v226.5M196 123h-78.5V37M59 130.5V209h138.5"
-      ></Path>
-      <G style={{ mixBlendMode: "multiply" }} fill="#A3A2D9">
-        <Rect width="234" height="158" x="72" rx="25"></Rect>
-        <Rect width="234" height="158" x="72" rx="25"></Rect>
-      </G>
-      <Rect width="144" height="97" y="79" fill="#A3A2D9" rx="15"></Rect>
-      <Path
-        fill="#6967BA"
-        d="M140 277h112v43c0 13.807-11.193 25-25 25h-62c-13.807 0-25-11.193-25-25v-43z"
-      ></Path>
-      <Path fill="#A3A2D9" d="M132 256h129v21H132v-21z"></Path>
-    </Svg>
+      <Rect x={72} width={234} height={158} rx={25} fill="#A3A2D9" />
+      <Rect x={72} width={234} height={158} rx={25} fill="#A3A2D9" />
+    </G>
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Rect y={79} width={144} height={97} rx={15} fill="#A3A2D9" />
+    </G>
+  </Svg>
   );
 }
 
 export function Bonsai3() {
   return (
     <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="125"
-      height="125"
-      fill="none"
-      viewBox="0 0 125 125"
+    width={260}
+    height={190}
+    viewBox="0 0 306 272"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path d="M197 45V271.5" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M196 96.5H249.5V76" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M196 123H117.5V37" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M118.5 63.5H144V46.5" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M59 130.5V209H197.5" stroke="#0C4D53" strokeWidth={2} />
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
     >
-      <Path
-        stroke="#0C4D53"
-        strokeWidth="2"
-        d="M197 45v226.5M196 96.5h53.5V76M196 123h-78.5V37"
-      ></Path>
-      <Path
-        stroke="#0C4D53"
-        strokeWidth="2"
-        d="M118.5 63.5H144v-17M59 130.5V209h138.5"
-      ></Path>
-      <G style={{ mixBlendMode: "multiply" }}>
-        <Rect width="234" height="158" x="72" fill="#A3A2D9" rx="25"></Rect>
-        <Rect width="234" height="158" x="72" fill="#A1A2D8" rx="25"></Rect>
-      </G>
-      <Rect width="144" height="97" y="79" fill="#A1A2D8" rx="15"></Rect>
-      <Rect width="28" height="28" x="45" y="109" fill="#DCEEF5" rx="14"></Rect>
-      <Rect
-        width="12"
-        height="12"
-        fill="#DCEEF5"
-        rx="6"
-        transform="matrix(-1 0 0 1 45 97)"
-      ></Rect>
-      <Rect width="28" height="28" x="100" y="18" fill="#DCEEF5" rx="14"></Rect>
-      <Rect
-        width="31"
-        height="31"
-        x="234"
-        y="55"
-        fill="#DCEEF5"
-        rx="15.5"
-      ></Rect>
-      <Path
-        fill="#6967BA"
-        d="M140 277h112v43c0 13.807-11.193 25-25 25h-62c-13.807 0-25-11.193-25-25v-43z"
-      ></Path>
-      <Path fill="#A1A2D8" d="M132 256h129v21H132v-21z"></Path>
-    </Svg>
+      <Rect x={72} width={234} height={158} rx={25} fill="#A3A2D9" />
+      <Rect x={72} width={234} height={158} rx={25} fill="#A1A2D8" />
+    </G>
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Rect y={79} width={144} height={97} rx={15} fill="#A1A2D8" />
+    </G>
+    <Rect x={45} y={109} width={28} height={28} rx={14} fill="#DCEEF5" />
+    <Rect
+      width={12}
+      height={12}
+      rx={6}
+      transform="matrix(-1 0 0 1 45 97)"
+      fill="#DCEEF5"
+    />
+    <Rect x={100} y={18} width={28} height={28} rx={14} fill="#DCEEF5" />
+    <Rect x={234} y={55} width={31} height={31} rx={15.5} fill="#DCEEF5" />
+  </Svg>
   );
 }
 
 export function Bonsai4() {
   return (
     <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="125"
-      height="125"
-      fill="none"
-      viewBox="0 0 125 125"
+    width={260}
+    height={230}
+    viewBox="0 0 429 348"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Path d="M208 158L208 348" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M207 186H331V138" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M207 199H129V59" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M41 170.5V194H70.5" stroke="#A5A2DA" />
+    <Path d="M130 140H240V71" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M240.5 114.5H289.5V98.5H279" stroke="#A5A2DA" strokeWidth={2} />
+    <Path d="M247 59.5H362V22.5" stroke="#A5A2DA" strokeWidth={2} />
+    <Path d="M362 39.5H394" stroke="#A5A2DA" strokeWidth={2} />
+    <Path d="M71.5 193.5V262H207.5" stroke="#0C4D53" strokeWidth={2} />
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
     >
-      <Path
-        stroke="#0C4D53"
-        strokeWidth="2"
-        d="M349 158v190M348 186h124v-48M348 199h-78V59"
-      ></Path>
-      <Path stroke="#A5A2DA" d="M182 170.5V194h29.5"></Path>
-      <Path
-        stroke="#0C4D53"
-        strokeWidth="2"
-        d="M271 140h110V71M211 146v139h138m-634 464h138"
-      ></Path>
-      <Path
-        stroke="#A5A2DA"
-        strokeWidth="2"
-        d="M381.5 114.5h49v-16H420M388 59.5h115v-37M503 39.5h32"
-      ></Path>
-      <G style={{ mixBlendMode: "multiply" }} fill="#A5A2DA">
-        <Rect width="309" height="209" x="224" y="25" rx="25"></Rect>
-        <Rect width="309" height="209" x="224" y="25" rx="25"></Rect>
-      </G>
-      <Rect
-        width="168"
-        height="113"
-        x="141"
-        y="106"
-        fill="#A5A2DA"
-        rx="15"
-      ></Rect>
-      <Rect width="123" height="83" x="447" fill="#A5A2DA" rx="20"></Rect>
-      <Rect
-        width="35"
-        height="35"
-        x="194"
-        y="122"
-        fill="#DCEEF5"
-        rx="17.5"
-      ></Rect>
-      <Rect width="18" height="18" x="229" y="114" fill="#DCEEF5" rx="9"></Rect>
-      <Rect width="14" height="14" x="284" y="172" fill="#DCEEF5" rx="7"></Rect>
-      <Rect
-        width="25"
-        height="25"
-        fill="#DCEEF5"
-        rx="12.5"
-        transform="matrix(-1 0 0 1 194 156)"
-      ></Rect>
-      <Rect width="40" height="40" x="260" y="39" fill="#DCEEF5" rx="20"></Rect>
-      <Rect
-        width="37"
-        height="37"
-        x="454"
-        y="105"
-        fill="#DCEEF5"
-        rx="18.5"
-      ></Rect>
-      <Rect
-        width="19"
-        height="19"
-        x="404"
-        y="177"
-        fill="#DCEEF5"
-        rx="9.5"
-      ></Rect>
-      <Rect
-        width="11"
-        height="11"
-        x="419"
-        y="196"
-        fill="#DCEEF5"
-        rx="5.5"
-      ></Rect>
-      <Rect
-        width="13"
-        height="13"
-        x="342"
-        y="152"
-        fill="#DCEEF5"
-        rx="6.5"
-      ></Rect>
-      <Rect width="18" height="18" x="410" y="88" fill="#DCEEF5" rx="9"></Rect>
-      <Rect width="10" height="10" x="493" y="104" fill="#DCEEF5" rx="5"></Rect>
-      <Rect
-        width="33"
-        height="33"
-        x="362"
-        y="43"
-        fill="#DCEEF5"
-        rx="16.5"
-      ></Rect>
-      <Rect width="30" height="30" x="484" y="4" fill="#DCEEF5" rx="15"></Rect>
-      <Rect width="16" height="16" x="527" y="33" fill="#DCEEF5" rx="8"></Rect>
-      <Rect width="6" height="6" x="301" y="65" fill="#DCEEF5" rx="3"></Rect>
-      <Rect
-        width="13"
-        height="13"
-        x="293"
-        y="74"
-        fill="#DCEEF5"
-        rx="6.5"
-      ></Rect>
-      <Path
-        fill="#6967BA"
-        d="M292 332h112v64c0 13.807-11.193 25-25 25h-62c-13.807 0-25-11.193-25-25v-64z"
-      ></Path>
-      <Path fill="#A5A2DA" d="M284 332h129v21H284v-21z"></Path>
-    </Svg>
+      <Rect x={83} y={25} width={309} height={209} rx={25} fill="#A5A2DA" />
+      <Rect x={83} y={25} width={309} height={209} rx={25} fill="#A5A2DA" />
+    </G>
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Rect y={106} width={168} height={113} rx={15} fill="#A5A2DA" />
+    </G>
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Rect x={306} width={123} height={83} rx={20} fill="#A5A2DA" />
+    </G>
+    <Rect x={53} y={122} width={35} height={35} rx={17.5} fill="#DCEEF5" />
+    <Rect x={88} y={114} width={18} height={18} rx={9} fill="#DCEEF5" />
+    <Rect x={143} y={172} width={14} height={14} rx={7} fill="#DCEEF5" />
+    <Rect
+      width={25}
+      height={25}
+      rx={12.5}
+      transform="matrix(-1 0 0 1 53 156)"
+      fill="#DCEEF5"
+    />
+    <Rect x={119} y={39} width={40} height={40} rx={20} fill="#DCEEF5" />
+    <Rect x={313} y={105} width={37} height={37} rx={18.5} fill="#DCEEF5" />
+    <Rect x={263} y={177} width={19} height={19} rx={9.5} fill="#DCEEF5" />
+    <Rect x={278} y={196} width={11} height={11} rx={5.5} fill="#DCEEF5" />
+    <Rect x={201} y={152} width={13} height={13} rx={6.5} fill="#DCEEF5" />
+    <Rect x={269} y={88} width={18} height={18} rx={9} fill="#DCEEF5" />
+    <Rect x={352} y={104} width={10} height={10} rx={5} fill="#DCEEF5" />
+    <Rect x={221} y={43} width={33} height={33} rx={16.5} fill="#DCEEF5" />
+    <Rect x={343} y={4} width={30} height={30} rx={15} fill="#DCEEF5" />
+    <Rect x={386} y={33} width={16} height={16} rx={8} fill="#DCEEF5" />
+    <Rect x={160} y={65} width={6} height={6} rx={3} fill="#DCEEF5" />
+    <Rect x={152} y={74} width={13} height={13} rx={6.5} fill="#DCEEF5" />
+  </Svg>
   );
 }
 
-export function DeadBonsai() {
+export function DeadCactus() {
   return (
     <Svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="125"
-      height="125"
-      fill="none"
-      viewBox="0 0 125 125"
-    >
-      <Path
-        stroke="#0B567C"
-        strokeWidth="2"
-        d="M172.5 20.5H214a6 6 0 016 6v4a4 4 0 01-4 4h-9.5M61.5 108.5h17c8.837 0 16 7.163 16 16v33"
-      ></Path>
-      <G style={{ mixBlendMode: "multiply" }}>
-        <Rect
-          width="164"
-          height="111"
-          x="108"
-          y="64"
-          fill="#A3A2D9"
-          rx="25"
-        ></Rect>
-        <Rect
-          width="164"
-          height="111"
-          x="108"
-          y="64"
-          fill="#0C4D53"
-          rx="25"
-        ></Rect>
-      </G>
-      <Rect width="79" height="53" x="69" y="136" fill="#0C4D53" rx="15"></Rect>
-      <Path
-        stroke="#A3A2D9"
-        strokeWidth="2"
-        d="M62 217V28.5c0-14.912 12.088-27 27-27h56.5c14.912 0 27 12.088 27 27V82"
-      ></Path>
-      <Path
-        fill="#6967BA"
-        d="M8 226h112v43c0 13.807-11.193 25-25 25H33c-13.807 0-25-11.193-25-25v-43z"
-      ></Path>
-      <Path fill="#A3A2D9" d="M0 205h129v21H0v-21z"></Path>
-    </Svg>
-  );
+  width={230}
+  height={190}
+  viewBox="0 0 211 217"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <G
+    style={{
+      mixBlendMode: "multiply",
+    }}
+  >
+    <Rect x={47} y={64} width={164} height={111} rx={25} fill="#A3A2D9" />
+    <Rect x={47} y={64} width={164} height={111} rx={25} fill="#0C4D53" />
+  </G>
+  <G
+    style={{
+      mixBlendMode: "multiply",
+    }}
+  >
+    <Rect x={8} y={136} width={79} height={53} rx={15} fill="#0C4D53" />
+  </G>
+  <Path
+    d="M1 217V28.5C1 13.5883 13.0883 1.5 28 1.5H84.5C99.4117 1.5 111.5 13.5883 111.5 28.5V82"
+    stroke="#A3A2D9"
+    strokeWidth={2}
+  />
+</Svg>
+  )
 }

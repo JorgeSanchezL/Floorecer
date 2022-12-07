@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 
-import addIcon from './flowers/addIcon'
+import { AddIcon } from './flowers/AddIcon'
 
 import { Bonsai0, Bonsai1, Bonsai2, Bonsai3, Bonsai4, DeadBonsai } from './flowers/bonsais'
 import { Cactus0, Cactus1, Cactus2, Cactus3, Cactus4, DeadCactus } from './flowers/cactus'
@@ -37,7 +37,7 @@ const getImage = (gardenPlant) => {
       else if (gardenPlant.petals == 5) return <Bonsai4 />
       break;
     case "redRose":
-      if (gardenPlant.health == 0) <return DeadRedRose />
+      if (gardenPlant.health == 0) return <DeadRedRose />
       else if (gardenPlant.petals == 1) return <RedRose0 />
       else if (gardenPlant.petals == 2) return <RedRose1 />
       else if (gardenPlant.petals == 3) return <RedRose2 />
@@ -45,7 +45,7 @@ const getImage = (gardenPlant) => {
       else if (gardenPlant.petals == 5) return <RedRose4 />
       break
     default:
-      return addIcon
+      return <AddIcon />
   }
 }
 
@@ -61,7 +61,11 @@ export default class BotonFlor extends React.Component {
     return (
       <TouchableOpacity style={styles.touchable} onPress={this.props.onClick}>
       <View>
-        {getImage(this.props.plant)}
+        <View style={styles.image}>
+          <View style={{ aspectRatio: 1 }}>
+            {getImage(this.props.plant)}
+          </View>
+        </View>
         {noFlower(this.props.plant) ? 
           {
             0:  <View style={styles.image}>
@@ -78,7 +82,7 @@ export default class BotonFlor extends React.Component {
                 </View>
           }[this.props.plant.health]
           :
-          null
+          <View></View>
         }
       </View>
       </TouchableOpacity>
@@ -87,16 +91,8 @@ export default class BotonFlor extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  image: {
-    height: 125,
-    width: 125
-  },
-  roundedImage: {
-    borderRadius: 62.5,
-    height: 125,
-    width: 125
-  },
   touchable: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   }
