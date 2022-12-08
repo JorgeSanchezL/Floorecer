@@ -160,7 +160,14 @@ const Register = () => {
         Alert.alert(err)
       }
     }
-
+    function checkPhoneNumber()  {
+      return numerodetelefono.length == 9 ;
+          }
+    function checkPassword()
+    {
+        var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        return re.test(password)  ;
+    }
     return (
       <View style={styles.container}>
         <Image source={Logo} style={[styles.logo,{height:height *0.3}]} 
