@@ -7,7 +7,7 @@
       numberphone: "987654321",
       isBusinessOwner: false,
       expectedStatus: 200,
-      message: "User - Using correct data",
+      message: "Register business owner - Using correct data",
       eliminar: true
     },
     {
@@ -18,7 +18,7 @@
       numberphone: "987654321",
       isBusinessOwner: false,
       expectedStatus: 400,
-      message: "User - Using weak password",
+      message: "Register business owner - Using weak password",
       eliminar: false
     },
     {
@@ -29,7 +29,7 @@
       numberphone: "",
       isBusinessOwner: false,
       expectedStatus: 400,
-      message: "User - Using empty data",
+      message: "Register business owner - Using empty data",
       eliminar: false
     },
     {
@@ -40,7 +40,7 @@
       numberphone: "987654321",
       isBusinessOwner: false,
       expectedStatus: 400,
-      message: "User - Using invalid email",
+      message: "Register business owner - Using invalid email",
       eliminar: false
     },
     {
@@ -51,7 +51,7 @@
       numberphone: "9876543210",
       isBusinessOwner: false,
       expectedStatus: 400,
-      message: "User - Using invalid phone",
+      message: "Register business owner - Using invalid phone",
       eliminar: false
     },
   ].forEach((value) => {
