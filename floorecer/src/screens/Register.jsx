@@ -30,12 +30,9 @@ const Register = () => {
 
     
     const onRegisterPressedCliente=()=>{
-      if(numerodetelefono!='' && password!='' && checkPassword() && checkPhoneNumber()) {
-      if(checkInputs()) {
-        if(isValidEmail(email))
-                SignUpNowCliente();
+      if(numerodetelefono!='' && password!='') {
+        SignUpNowCliente();
       }
-    }
     };
     const onRegisterPressedComercio = () => {
       if(numerodetelefono!='' && password!='' && checkPassword() && checkPhoneNumber()) {
@@ -87,6 +84,8 @@ const Register = () => {
             
             { text: 'OK' },
           ]);
+        } else if(response.status == 400) {
+          Alert.alert(':(', (await response.json()).message)
         }
         else if(response.status == 406 ) {
           Alert.alert(':(', '¡ La contraseña es demasiado débil !', [
@@ -128,7 +127,8 @@ const Register = () => {
         );
         
         if(response.status==200){
-          //await SecureStore.setItemAsync('userToken', response)
+          //const res=await response.json()
+          //await SecureStore.setItemAsync('userToken', JSON.stringify(res))
           Alert.alert('Bravo', '¡ se ha creado la cuenta con exito !', [
             
             { text: 'OK', onPress: () => { navigation.navigate("notVerified") } }, //Cambiado para la UT de verificar usuario :)
@@ -136,6 +136,14 @@ const Register = () => {
         }
         else if(response.status == 401 ) {
           Alert.alert(':(', '¡ Ya existe una cuenta con ese correo !', [
+            
+            { text: 'OK' },
+          ]);
+        } else if(response.status == 400) {
+          Alert.alert(':(', (await response.json()).message)
+        }
+        else if(response.status == 406 ) {
+          Alert.alert(':(', '¡ La contraseña es demasiado débil !', [
             
             { text: 'OK' },
           ]);
@@ -152,39 +160,14 @@ const Register = () => {
         Alert.alert(err)
       }
     }
- function isValidEmail(email) {
-  if( !(/\S+@\S+\.\S+/.test(email))) {
-
-    Alert.alert(':(', '¡email no valido !', [
-            
-      { text: 'OK'},
-    ]);
-
-  }
-    return /\S+@\S+\.\S+/.test(email);
-  }
-
-  function checkInputs () {
-      if(email == '' || password == '' || numerodetelefono == '') {
-        Alert.alert(':(', '¡ Hay que rellenar todos los campos para continuar !', [
-            
-          { text: 'OK'},
-        ]);
-return false;;
-      }
-
-return true;
-
-  }
-  function checkPhoneNumber()  {
-        return numerodetelefono.length == 9 ;
-            }
- function checkPassword()
-{
-    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return re.test(password)  ;
-}
-
+    function checkPhoneNumber()  {
+      return numerodetelefono.length == 9 ;
+          }
+    function checkPassword()
+    {
+        var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        return re.test(password)  ;
+    }
     return (
       <View style={styles.container}>
         <Image source={Logo} style={[styles.logo,{height:height *0.3}]} 

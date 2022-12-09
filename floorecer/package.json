@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jasmine"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
@@ -42,7 +43,10 @@
     "react-native-svg": "^12.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "jasmine": "^4.5.0",
+    "jasmine-browser-runner": "^1.2.0",
+    "jasmine-core": "^4.5.0"
   },
   "private": true
 }
