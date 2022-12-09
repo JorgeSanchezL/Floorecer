@@ -17,7 +17,7 @@ const BusinessTabs = () => {
                     let iconName;
 
                     if (route.name === 'home') {
-                        iconName = focused ? 'map' : 'map-outline';
+                        iconName = focused ? 'location' : 'location-outline';
                     } else if (route.name === 'businesStack') {
                         iconName = focused ? 'basket' : 'basket-outline';
                     } else if (route.name == 'newBusiness') {
@@ -36,8 +36,8 @@ const BusinessTabs = () => {
                 },
                 headerShown: false,
                 tabBarShowLabel: false,
-                tabBarActiveTintColor: '#367c1e',
-                tabBarInactiveTintColor: '#4b4b4b',
+                tabBarActiveTintColor: '#494693',
+                tabBarInactiveTintColor: '#7d7acd',
             })}
         >
             <Tab.Screen name='home' component={Map} />

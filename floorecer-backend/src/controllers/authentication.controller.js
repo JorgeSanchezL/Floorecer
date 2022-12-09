@@ -4,12 +4,16 @@ import {
   createUserWithEmailAndPassword,
   updateEmail,
   updatePassword } from 'firebase/auth';
-import { doc, getDoc, setDoc, updateDoc} from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, getDocs, query, collection, where, deleteDoc } from 'firebase/firestore';
 import { sendEmailFromBackend } from './userVerification.controller.js'
 
 export const signIn = async (req,res) => {
-    const {email, password } = req.params
-
+    const { email, password } = req.params
+    if (!isValidEmail(email)) {
+      res.status(401)
+      res.send("El email no es válido")
+      return
+    }
     signInWithEmailAndPassword(auth, email,password)
       .then(async (userCredential) => {
         const userRef = doc(database, 'users', auth.currentUser.uid);
@@ -44,6 +48,26 @@ export const signIn = async (req,res) => {
 export const register = async (req,res) => {
   
     const {email,username,usernameForSearch,password,numberphone,isBusinessOwner } = req.body
+    if(!checkInputs(email, password, numberphone)) {
+      res.status(400)
+      res.send({ message: "Todos los campos deben tener contenido"})
+      return
+    }
+    if(!checkPassword(password)) {
+      res.status(400)
+      res.send({ message: "Contraseña no válida"})
+      return
+    }
+    if(!checkPhoneNumber(numberphone)) {
+      res.status(400)
+      res.send({ message: "Teléfono no válido"})
+      return
+    }
+    if(!isValidEmail(email)) {
+      res.status(400)
+      res.send({ message: "El email no es válido"})
+      return
+    }
     createUserWithEmailAndPassword(auth,email,password)
     .then((userCredential) => {
         // Signed in
@@ -144,4 +168,41 @@ export const updateAuthPass = (user) => {
     }
 
   });
+}
+
+function isValidEmail(email) {
+  return (/\S+@\S+\.\S+/.test(email))
+}
+
+function checkInputs (email, password, numerodetelefono) {
+    if(email == '' || password == '' || numerodetelefono == '') {
+      return false;;
+    }
+    return true;
+}
+
+function checkPhoneNumber(numerodetelefono)  {
+  
+      return numerodetelefono.length == 9 ;
+}
+
+function checkPassword(password) {
+    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return re.test(password);
+}
+
+export const deleteUser = async (req, res) => {
+  const {username, email, password} = req.body
+  const q = query(collection(database, "users"), where("username", "==", username))
+    const querySnapshot = await getDocs(q)
+    if (!querySnapshot.empty) {
+        querySnapshot.forEach((document) => {
+            deleteDoc(doc(database, "users", document.id))
+            signInWithEmailAndPassword(auth, email,password)
+              .then(async (userCredential) => {
+                console.log('ccc')
+                  deleteUser(auth.currentUser)
+              })
+        })
+    }
 }

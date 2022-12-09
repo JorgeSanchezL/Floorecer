@@ -6,15 +6,19 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jasmine"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.2",
+    "@expo-google-fonts/poppins": "^0.2.2",
     "@gorhom/bottom-sheet": "4",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/stack": "^6.3.2",
     "expo": "~46.0.9",
     "expo-barcode-scanner": "^11.4.0",
+    "expo-font": "~10.2.0",
     "expo-image-picker": "~13.3.1",
     "expo-location": "~14.3.0",
     "expo-secure-store": "~11.3.0",
@@ -39,7 +43,10 @@
     "react-native-svg": "12.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "jasmine": "^4.5.0",
+    "jasmine-browser-runner": "^1.2.0",
+    "jasmine-core": "^4.5.0"
   },
   "private": true
 }

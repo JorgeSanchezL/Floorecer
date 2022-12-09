@@ -141,8 +141,9 @@ async function onPressButtonPromotion (shop) {
 }
 const Item = ({ shop }) => (
     <View style={styles.greenBox}>  
+    
          {shop.active == true? <Text style = {styles.green}> Activo </Text>: <Text style = {styles.red}> Inactivo </Text> }
-      <View >
+    <View >
     <Text style={styles.textData}>
        {shop.name} {"\n"}
   

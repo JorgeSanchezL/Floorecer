@@ -92,22 +92,14 @@ const askLocationPermissions = async () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#D7FFE7',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  infoContainer: {
-    zIndex:1000,
-    flex: 1,
-    backgroundColor: '#111',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex:1
   },
   map: {
     width: '100%',
     height: '100%',
-    zIndex: 0
+    zIndex: 0,
+    elevation: 0,
+    position: 'absolute'
   },
   appButtonContainer: {
     backgroundColor: "#009688",

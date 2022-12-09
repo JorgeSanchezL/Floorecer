@@ -1,5 +1,5 @@
 import React, { useContext, useEffect,useState } from 'react';
-import { SafeAreaView, View, Alert, StyleSheet, Text, StatusBar ,TouchableOpacity,Button,Modal} from 'react-native';
+import { SafeAreaView, View, Alert, StyleSheet, Text, StatusBar ,TouchableOpacity,Image,Modal} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
@@ -10,13 +10,18 @@ import {BACKEND_URL} from '@env';
 import AuthContext from '../context/AuthContext';
 import { setItemAsync, getItemAsync,
   deleteItemAsync } from 'expo-secure-store';
+import IconCamera from '../../assets/image/IconCamera.png';
+import * as Font from 'expo-font';
+
 
 var datos = null;
 
 
 
-const ScanQr =   () =>  {
-
+const ScanQr = ()=> {
+    
+    
+    
 
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
@@ -124,7 +129,7 @@ const ScanQr =   () =>  {
 
     return (
         <SafeAreaView
-        style={{flex: 1}}
+        style={{flex: 1,backgroundColor:'white'}}
     >
          <Modal
         animationType="slide"
@@ -144,7 +149,7 @@ const ScanQr =   () =>  {
           </View>
         </View>
       </Modal>
-<View style = {styles.greenBox} >
+<View style = {styles.box} >
 <DropDownPicker
       open={open}
       value={value}
@@ -152,27 +157,38 @@ const ScanQr =   () =>  {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
+      style = {styles.dropDown}
+      placeholder = 'Selecciona un comercio'
+      placeholderStyle ={{fontFamily:'Poppins_300Light'}}
+      listItemLabelStyle  ={{fontFamily:'Poppins_300Light'}}
+      dropDownContainerStyle = {styles.dropDownContainer}
     />
  <Text  style = {styles.textData}> Importe  </Text>
  <TextInput
         style={styles.input}
         placeholder="Importe"
+        placeholderTextColor='#959494'
         keyboardType="numeric"
         onChangeText=  {onChangeImporte}
         value ={importe}
-        
+        placeholderStyle = {{fontFamily:'Poppins_300Light'}}
         
       />
        <Text  style = {styles.Currency}> €</Text>  
 
-    <CustomButton text = 'Escanear' onPress={ ()=> {
-    setModalVisible(true)
-    setScanned(false)
-    }
-
-}
+    <View style={{marginTop:100, alignItems:'center'}}>
+      <TouchableOpacity  onPress={()=> {
+          setModalVisible(true)
+          setScanned(false)
+          } }>
+          
+      <Image style={styles} source={IconCamera} />
+    </TouchableOpacity >
+    </View>
     
-    /> 
+
+    
+   
       
 </View>
 </SafeAreaView>
@@ -186,34 +202,38 @@ const ScanQr =   () =>  {
           flex: 1,
           marginTop: StatusBar.currentHeight || 0,
         },
-        greenBox: {
-          backgroundColor: '#D7E8DE',
+        box: {
+          backgroundColor: 'white',
                   height: 200,
                   marginTop : '60%',
                   marginLeft : '5%',
                   marginRight : '5%',
-                  borderRadius: 20
+                  borderRadius: 20,
+                  elevation:3,
         },
         textData: {
-            fontWeight: 'bold',
+            //fontWeight: 'bold',
+            fontSize:23,
             color: '#353535',
             textAlign : 'center',
             marginTop : '5%',
-            marginLeft : '5%'
+            marginBottom:-15,
+            "fontFamily": "Poppins_300Light",
         },
         Currency: {
-            fontWeight: 'bold',
+            //fontWeight: 'bold',
             fontSize : 40,
             color: '#353535',
             marginLeft : '80%',
-            marginTop : '-26%'
+            marginTop : '-24%',
+            fontFamily:'Poppins_300Light'
         },
         input: {
-            backgroundColor : 'white',
+            backgroundColor : 'rgb(229,226,243)',
             height: 40,
             width : 200,
             margin: 40,
-            borderWidth: 1,
+            borderRadius:10,
             padding: 1,
             alignSelf : 'center',
             textAlign : 'center'
@@ -252,6 +272,23 @@ const ScanQr =   () =>  {
             color: "white",
             fontWeight: "bold",
             textAlign: "center"
+          },
+          dropDown:{
+            backgroundColor: 'rgb(229,226,243)',
+            borderRadius:10,
+            borderWidth:0,
+            marginTop:10,
+            width:'80%',
+            alignSelf:'center',
+           
+          },
+          dropDownContainer:{
+            backgroundColor:'rgb(229,226,243)',
+            borderWidth:0, 
+            width:'80%',
+            alignSelf:'center', 
+            zIndex:25,
+            elevation:2
           }
           
     });

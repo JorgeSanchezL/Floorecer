@@ -29,7 +29,7 @@ export const buyItem = async (req, res) => {
             res.json('No tiene suficientes puntos')
         }
     } catch(error) {
-        Alert.alert(error)
+        //Alert.alert(error)
     }
 }
 export const getItem = async (req, res) => {
@@ -42,10 +42,11 @@ export const getItem = async (req, res) => {
         var refi = ref(storage,docSnap.data().imageURL)
         const u = await getDownloadURL(refi)
         item.imageURL=u
+        console.log(u)
         res.json(item)
         
     } catch(error) {
-        Alert.alert(error)
+        //Alert.alert(error)
     }
 }
     
