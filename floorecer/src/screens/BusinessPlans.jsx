@@ -1,12 +1,12 @@
-import React, { useRef,useEffect } from 'react'
-import { SafeAreaView, StyleSheet, View, Text,
+import React, { useRef, useState } from 'react'
+import { SafeAreaView, StyleSheet, View, Text, ImageBackground, Image,
     FlatList, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 
+import PinkFlower from '../../assets/image/PinkFlower.png';
+import GreenBall from '../../assets/image/greenBall.png';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
-
-
-
 
 const plans = [
     {
@@ -47,14 +47,11 @@ const Plan = ({ item: plan}) => {
                 </Text>
             </View>
             <View style={{
-                paddingVertical: 15,
+                paddingBottom: 15,
                 paddingHorizontal: 20
             }}>
                 <Text style={styles.bolder}>
                     {plan.amount}
-                </Text>
-                <Text style={styles.pricing}>
-                    {plan.price} / trimestre
                 </Text>
                 <View style={styles.list}>
                     {plan.benefits.map((benefit, index) => {
@@ -72,11 +69,16 @@ const Plan = ({ item: plan}) => {
                                     size={5}
                                     style={{marginRight: 15}}
                                 />
-                                <Text>{benefit}</Text>
+                                <Text style={{
+                                    fontFamily: 'MuseoModernoRegular'
+                                }}>{benefit}</Text>
                             </View>
                         );
                     })}
                 </View>
+                <Text style={styles.pricing}>
+                    {plan.price} / trimestre
+                </Text>
             </View>
         </View>
     );
@@ -84,8 +86,16 @@ const Plan = ({ item: plan}) => {
 
 const BusinessPlans = ({ navigation, route }) => {
     const { ActualPlan } = route.params;
+
+    const [fontLoaded] = useFonts({
+        MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
+        MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+    })
+
     const scrollRef = useRef(null);
     const scrollIndex = useRef(0);
+
+    if(!fontLoaded) { return null; }
 
     return (
         <SafeAreaView
@@ -95,41 +105,40 @@ const BusinessPlans = ({ navigation, route }) => {
                 barStyle='dark-content'
                 backgroundColor={'#fff'}
             />
-            <View style={{padding: 25}}>
+            <ImageBackground
+                source={PinkFlower}
+                resizeMode='cover'
+                style={{
+                    width: width,
+                    height: height
+                }}
+            >
+            <View style={{
+                paddingTop: 25,
+                paddingBottom: 15,
+                paddingHorizontal: 25
+            }}>
                 <Text style={styles.title}>
                     Selecciona tu plan de empresa
                 </Text>
             </View>
-            
-            {
-                ActualPlan != null && 
-                <View style={{marginTop: -5}}>
-                    <Text style={styles.title2}>
-                        Tu plan actual es '{ActualPlan==1 ? 'Plan Basic': 'Plan Premium'}'
-                    </Text>
-                 </View>
-            }
+            <View style={{
+                flexDirection: 'row',
+                marginHorizontal: (width - 26) / 2
+            }}>
+                <View style={[
+                    styles.ball,
+                    {
+                        marginRight: 10,
+                        backgroundColor: '#ff5959'
+                    }
+                ]}></View>
+                <View style={[
+                    styles.ball,
+                    {backgroundColor: '#d9d9d9'}
+                ]}></View>
+            </View>
             <View style={styles.slider}>
-                <TouchableOpacity
-                    onPress={() => {
-                        scrollRef.current
-                            .scrollToIndex({
-                                animated: true,
-                                index: 0
-                            });
-                    }}
-                    activeOpacity={0.8}
-                    style={{
-                        width: 40,
-                        alignItems: 'center'
-                    }}
-                >
-                    <Ionicons
-                        name='arrow-back-outline'
-                        size={32}
-                        color='#276D1F'
-                    />
-                </TouchableOpacity>
                 <FlatList
                     renderItem={Plan}
                     data={plans}
@@ -142,26 +151,6 @@ const BusinessPlans = ({ navigation, route }) => {
                         scrollIndex.current = viewableItems[0].index;
                     }}
                 />
-                <TouchableOpacity
-                    onPress={() => {
-                        scrollRef.current
-                            .scrollToIndex({
-                                animated: true,
-                                index: 1
-                            });
-                    }}
-                    activeOpacity={0.8}
-                    style={{
-                        width:40,
-                        alignItems: 'center'
-                    }}
-                >
-                    <Ionicons
-                        name='arrow-forward-outline'
-                        size={32}
-                        color='#276D1F'
-                    />
-                </TouchableOpacity>
             </View>
             <TouchableOpacity
                 onPress={() => {
@@ -171,7 +160,6 @@ const BusinessPlans = ({ navigation, route }) => {
                             "",[{ text: "Vale",},])
                     }
                     else{ 
-                        
                         navigation.navigate('payment', {
                             plan: scrollIndex.current
                         })
@@ -180,29 +168,32 @@ const BusinessPlans = ({ navigation, route }) => {
                 activeOpacity={0.8}
                 style={styles.button}
             >
-                <Text style={styles.textBtn}>
-                    Continuar
-                </Text>
+                    <Image
+                        source={GreenBall}
+                        width={80}
+                        height={50}
+                        style={{
+                            marginRight: 10
+                        }}
+                    />
+                    <Text style={styles.textBtn}>
+                        Continuar
+                    </Text>
             </TouchableOpacity>
+        </ImageBackground>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: '#D7FFE7',
+        backgroundColor: '#fff',
         flex: 1
     },
     title: {
-        color: '#085D0E',
-        fontWeight: 'bold',
-        fontSize: 30,
-        textAlign: 'center'
-    },
-    title2: {
-        color: '#085D0E',
-        fontWeight: 'bold',
-        fontSize: 15,
+        color: '#000',
+        fontFamily: 'MuseoModernoBold',
+        fontSize: 25,
         textAlign: 'center'
     },
     slider: {
@@ -214,50 +205,58 @@ const styles = StyleSheet.create({
         width: width - 100,
         backgroundColor: '#fff',
         borderRadius: 10,
-        marginHorizontal: 10
+        marginHorizontal: 50
     },
     header: {
-        backgroundColor: '#589351',
+        backgroundColor: '#fff',
         padding: 15,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10
     },
     textHeader: {
-        color: '#fff',
-        fontWeight: 'bold',
+        color: '#000',
+        fontFamily: 'MuseoModernoBold',
         fontSize: 25,
         textAlign: 'center'
     },
     bolder: {
-        fontWeight: 'bold',
+        fontFamily: 'MuseoModernoBold',
         fontSize: 18,
         textAlign: 'center'
     },
     pricing: {
-        color: '#085D0E',
-        fontWeight: 'bold',
+        color: '#000',
+        fontFamily: 'MuseoModernoBold',
         fontSize: 16,
         textAlign: 'center',
         marginTop: 10,
         marginBottom: 20
     },
     list: {
+        marginTop: 20,
         marginRight: 20
     },
     button: {
-        backgroundColor: '#29AB7E',
-        padding: 15,
+        backgroundColor: '#fff',
+        paddingHorizontal: 15,
         borderRadius: 8,
-        marginHorizontal: 50,
+        marginHorizontal: (width - 200) / 2,
         marginTop: 25,
-        flexDirection: 'row',
+        flex: 0,
         alignItems: 'center',
-        justifyContent: 'center'
+        height: 50,
+        width: 200
     },
     textBtn: {
-        color: '#fff',
+        color: '#000',
+        fontFamily: 'MuseoModernoBold',
         fontSize: 18,
-        
+        marginTop: -45
+    },
+    ball: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
     }
 });
 
