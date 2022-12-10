@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { StyleSheet, View, SafeAreaView, Image} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
@@ -10,11 +10,14 @@ import { getAllBusinesses } from '../../utils/actions';
 import { useNavigation } from '@react-navigation/native';
 
 import BusinessDetailsCard from '../components/BusinessDetailsCard';
-
+import List from "../components/List";
+import SearchBar from "../components/SearchBar";
 
 
 export const Map = () => {
-
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [fakeData, setFakeData] = useState();
   const [data, setData] = useState(null);
   const navigation=useNavigation();
   const navigate = (screen) => {
@@ -27,12 +30,14 @@ export const Map = () => {
   }
 
   useEffect(() => {getMapMarkers(null)}, [])
+  console.log(data)
 
   const [business,setBusiness] = useState(null)
   return (
     <SafeAreaView
           style={{flex: 1}}
       >
+      
         <FocusAwareStatusBar
               barStyle='dark-content'
               backgroundColor={'#fff'}
@@ -72,11 +77,20 @@ export const Map = () => {
               </Marker>
             </View>
         })}
-        
+    
+      
       </MapView>
       {business && <BusinessDetailsCard  business={business} setBusiness={setBusiness}/>}
 
     </View>
+   <SearchBar
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
+    
+      
     </SafeAreaView>
   );
 }
@@ -110,6 +124,10 @@ const styles = StyleSheet.create({
     width : 100,
     marginTop : '-5%',
     marginLeft : '65%',
+  },
+  search : {
+    backgroundColor: 'rgba(52, 52, 52, 0.8)'
+    
   }
 });
 

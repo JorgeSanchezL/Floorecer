@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Login from '../screens/LoginNew';
+import Login from '../screens/Map';
 import Register from '../screens/RegisterNew';
 import NotVerified from '../screens/NotVerified';
 import ScanQr from '../screens/ScanQr';

@@ -24,7 +24,7 @@ export const getAllBusinesses = async ( category) => {
   
   try {
     
-    const response = await fetch(`${BACKEND_URL}/business/${type}`, {
+    const response = await fetch(`http://192.168.1.143:5000/business/${type}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
