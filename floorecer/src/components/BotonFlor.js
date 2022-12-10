@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 
@@ -49,9 +49,9 @@ const getImage = (gardenPlant) => {
   }
 }
 
-const noFlower = (gardenPlant) => {
-  return !(gardenPlant.type == "cactus"
-  || gardenPlant == "sunflower"
+const plantedFlower = (gardenPlant) => {
+  return (gardenPlant.type == "cactus"
+  || gardenPlant.plant == "sunflower"
   || gardenPlant.type == "bonsai"
   || gardenPlant.type == "redRose")
 }
@@ -61,12 +61,9 @@ export default class BotonFlor extends React.Component {
     return (
       <TouchableOpacity style={styles.touchable} onPress={this.props.onClick}>
       <View>
-        <View style={styles.image}>
-          <View style={{ aspectRatio: 1 }}>
-            {getImage(this.props.plant)}
-          </View>
-        </View>
-        {noFlower(this.props.plant) ? 
+        {getImage(this.props.plant)}
+        {/*
+        {plantedFlower(this.props.plant) ? 
           {
             0:  <View style={styles.image}>
                   <Heart0 />
@@ -84,6 +81,7 @@ export default class BotonFlor extends React.Component {
           :
           <View></View>
         }
+        */}
       </View>
       </TouchableOpacity>
     )

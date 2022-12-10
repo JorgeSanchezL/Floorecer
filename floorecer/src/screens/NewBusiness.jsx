@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, Alert,
   useWindowDimensions, Dimensions, Image, TouchableOpacity,
   Modal } from "react-native";
-import CustomButton from '../components/CustomButton';
+import FinalButton from '../components/FinalButton';
 import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
 import FinalTextInput from '../components/FinalTextInput';
 import MapView from 'react-native-maps';
@@ -11,12 +11,20 @@ import { ScrollView } from "react-native-gesture-handler";
 import { DayTimeSlots } from "./ConfigureBusiness";
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import { useFonts } from 'expo-font';
 import { BACKEND_URL } from '@env';
+import dots from '../../assets/dotsNewBusiness.png';
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
 const NewBusiness = () => {
+  const [fontLoaded] = useFonts({
+    PoppinsMedium: require("../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf"),
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+  })
+  
+
   const [shopName, setShopName] = useState("");
   const [nif, setNif] = useState("");
   const [address, setAddress] = useState("");
@@ -129,7 +137,8 @@ const NewBusiness = () => {
         setImage(result.uri);
     }
   };
-
+  
+  if(!fontLoaded) { return null; }
   return(
   <View style={[styles.mainContainer]}>
 
@@ -137,11 +146,11 @@ const NewBusiness = () => {
 
     <ScrollView 
       nestedScrollEnabled={true}
-      style={{width,height: height * 0.79, paddingHorizontal:10}}
+      style={{width,height: height * 0.79, paddingHorizontal:0}}
       showsVerticalScrollIndicator={false}>
       
       <Text style={[styles.title,{marginTop:height * 0.05}]}>Nuevo Comercio</Text>  
-
+      <Image source = {dots} style={{alignSelf:'center'}}/>
       <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
       <MyTextInput name = 'NIF' value={nif} setValue={setNif} info ={'Ejemplo: B–76365789'}/>
       <MyTextInput 
@@ -198,7 +207,7 @@ const NewBusiness = () => {
             : <TouchableOpacity
                 onPress={pickImage}
                 activeOpacity={0.8}
-                style={{alignItems: 'center'}}
+                style={{alignItems: 'center' ,backgroundColor:'rgb(229,226,243)', borderRadius:10, width:350,alignSelf:'center'}}
             >
                 <MaterialIcons
                     name='image-search'
@@ -217,8 +226,8 @@ const NewBusiness = () => {
       </View>
 
       <View style = {{flex:0, alignItems:'center'}}>
-        <CustomButton 
-          text="Save" 
+        <FinalButton 
+          text="Publicar comercio" 
           type = 'cuaterciario'
           onPress={onSavePressed}
           />
@@ -310,16 +319,16 @@ function Mapa ({isVisibleMap, setIsVisibleMap, setLocation}){
                               }   
                           </MapView>
                           <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
-                              <CustomButton 
+                              <FinalButton 
                                   text="Cancelar" 
-                                  type = 'cuaterciario'
+                                  type = 'Mapa2'
                                   onPress={() => {
                                       setIsVisibleMap(false);
                                     }}
                                   />
-                              <CustomButton 
+                              <FinalButton 
                                   text="Guardar ubicación" 
-                                  type = 'cuaterciario'
+                                  type = 'Mapa'
                                   onPress={confirmLocation}
                                   />
                           </View>
@@ -353,7 +362,7 @@ const styles = StyleSheet.create({
     mainContainer:{
       alignItems:'center',
       height:'100%',
-      backgroundColor:'white'
+      backgroundColor:'white',
     },
     InputContainer:{
       backgroundColor:'white',
@@ -365,18 +374,11 @@ const styles = StyleSheet.create({
         paddingHorizontal:10,
         //marginVertical:5,
     },
-    title: {
-      fontSize: 22,
-      lineHeight: 21,
-      fontWeight: 'bold',
-      letterSpacing: 0.25,
-      color: 'black',
-      //width:'70%',
-      maxWidth: 300,
-      maxHeight: 200,
-      alignSelf:'center',
-      //margin: 10,
-      textAlign:'center'
+    title:{
+      textAlign:'center',
+      fontFamily:'MuseoModernoBold',
+      fontSize:22,
+      marginBottom:10,
     },
     sectionStyle:{
       flexDirection: 'row',
@@ -424,14 +426,18 @@ const styles = StyleSheet.create({
     header1:{
       marginTop:10, 
       fontSize:20,
-      marginBottom:6,
+      marginBottom:3,
       marginLeft:20,
+      fontFamily:'PoppinsRegular',
+      fontSize:12,
     },
     header2:{
-      marginTop:10, 
+      marginTop:25, 
       fontSize:20,
-      marginBottom:16,
+      marginBottom:10,
       marginLeft:20,
+      fontFamily:'PoppinsRegular',
+      fontSize:12,
     },
     container: {
       backgroundColor: '#fff',

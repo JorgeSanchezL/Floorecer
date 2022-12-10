@@ -67,7 +67,8 @@ const DropDownTimePicker= (props) => {
             placeholder={props.fromTime?"Abre a las" : "Cierra a las"}
             placeholderStyle={{
                 color: "#959494",
-                fontSize:13,
+                fontSize:12,
+                fontFamily:'PoppinsRegular',
               }}
             dropDownContainerStyle = {styles.dropDownContainer}
             open={open}
@@ -80,7 +81,7 @@ const DropDownTimePicker= (props) => {
             selectedItemLabelStyle={{
               fontWeight: "bold"
             }}
-            listItemLabelStyle={{color:'grey'}}
+            listItemLabelStyle={{color:'grey',fontFamily:'PoppinsRegular', fontSize:12}}
         />
     
     

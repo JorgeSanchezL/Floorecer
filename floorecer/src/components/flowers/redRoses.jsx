@@ -4,8 +4,8 @@ import Svg, { G, Line, Path, Circle, Defs, ClipPath, Rect } from "react-native-s
 export function RedRose0() {
   return (
     <Svg
-    width={100}
-    height={100}
+    width={29}
+    height={90}
     viewBox="0 0 46 141"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export function RedRose0() {
 export function RedRose1() {
     return (
       <Svg
-    width={100}
+    width={49}
     height={100}
     viewBox="0 0 69 141"
     fill="none"
@@ -94,8 +94,8 @@ export function RedRose1() {
 export function RedRose2() {
     return (
       <Svg
-    width={150}
-    height={150}
+    width={89}
+    height={125}
     viewBox="0 0 196 276"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -175,90 +175,83 @@ export function RedRose2() {
 export function RedRose3() {
   return (
     <Svg
-    width={175}
-    height={175}
-    viewBox="0 0 254 381"
+    width={127}
+    height={150}
+    viewBox="0 0 254 299"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <G clipPath="url(#clip0_250_6734)">
-      <Line
-        x1={91.7545}
-        y1={30.584}
-        x2={92.9699}
-        y2={47.5984}
-        stroke="#454545"
-        strokeWidth={1.21531}
-      />
-      <Line
-        x1={165.74}
-        y1={32.0112}
-        x2={161.005}
-        y2={48.3985}
-        stroke="#454545"
-        strokeWidth={1.21531}
-      />
-      <G
-        style={{
-          mixBlendMode: "multiply",
-        }}
-      >
-        <Path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M118.991 171.604C121.68 179.129 132.323 179.129 135.012 171.604L170.826 71.3997C171.273 70.1496 171.41 68.8847 171.286 67.6754C171.497 65.8871 171.139 63.9942 170.068 62.2548L134.247 4.04844C130.925 -1.34945 123.079 -1.34946 119.757 4.04843L83.9356 62.2548C82.8658 63.9931 82.5077 65.8847 82.7173 67.672C82.5931 68.8824 82.7299 70.1484 83.1771 71.3997L118.991 171.604Z"
-          fill="#F4A3B2"
-        />
-      </G>
-      <G
-        style={{
-          mixBlendMode: "multiply",
-        }}
-      >
-        <Path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M117.265 175.034C123.357 180.206 132.574 174.885 131.141 167.023L112.054 62.337C111.816 61.0315 111.303 59.8681 110.592 58.8829C109.88 57.2285 108.623 55.7677 106.826 54.7964L46.7007 22.2988C41.1249 19.2851 34.3298 23.2082 34.1519 29.5439L32.2329 97.8627C32.1757 99.9024 32.8109 101.719 33.8855 103.162C34.3832 104.273 35.1348 105.301 36.148 106.161L117.265 175.034Z"
-          fill="#F4A3B2"
-        />
-      </G>
-      <G
-        style={{
-          mixBlendMode: "multiply",
-        }}
-      >
-        <Path
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M123.003 167.023C121.569 174.885 130.786 180.206 136.878 175.034L217.995 106.162C219.008 105.302 219.759 104.274 220.257 103.165C221.333 101.721 221.969 99.9036 221.911 97.8627L219.992 29.5439C219.814 23.2082 213.019 19.285 207.444 22.2988L147.318 54.7963C145.522 55.7672 144.266 57.2269 143.554 58.8803C142.842 59.8661 142.327 61.0305 142.089 62.3371L123.003 167.023Z"
-          fill="#F4A3B2"
-        />
-      </G>
-      <Circle cx={165.282} cy={31.8425} r={3.64593} fill="#FF7A00" />
-      <Circle cx={91.1479} cy={30.6271} r={3.64593} fill="#FF7A00" />
-      <Circle cx={170} cy={254} r={14} fill="#5CD09F" fillOpacity={0.75} />
-      <Line
-        x1={127.608}
-        y1={177}
-        x2={127.608}
-        y2={317}
-        stroke="#454545"
-        strokeWidth={1.21531}
-      />
-      <Line
-        x1={170.721}
-        y1={253.795}
-        x2={126.969}
-        y2={286.15}
-        stroke="#454545"
-        strokeWidth={1.21531}
+    <Line
+      x1={91.7545}
+      y1={30.584}
+      x2={92.9699}
+      y2={47.5984}
+      stroke="#454545"
+      strokeWidth={1.21531}
+    />
+    <Line
+      x1={165.74}
+      y1={32.0112}
+      x2={161.005}
+      y2={48.3985}
+      stroke="#454545"
+      strokeWidth={1.21531}
+    />
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M118.991 171.604C121.68 179.129 132.323 179.129 135.012 171.604L170.826 71.3997C171.273 70.1496 171.41 68.8847 171.286 67.6754C171.497 65.8871 171.139 63.9942 170.068 62.2548L134.247 4.04844C130.925 -1.34945 123.079 -1.34946 119.757 4.04843L83.9356 62.2548C82.8658 63.9931 82.5077 65.8847 82.7173 67.672C82.5931 68.8824 82.7299 70.1484 83.1771 71.3997L118.991 171.604Z"
+        fill="#F4A3B2"
       />
     </G>
-    <Defs>
-      <ClipPath id="clip0_250_6734">
-        <Rect width={254} height={380.392} fill="white" />
-      </ClipPath>
-    </Defs>
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M117.265 175.034C123.357 180.206 132.574 174.885 131.141 167.023L112.054 62.337C111.816 61.0315 111.303 59.8681 110.592 58.8829C109.88 57.2285 108.623 55.7677 106.826 54.7964L46.7007 22.2988C41.1249 19.2851 34.3298 23.2082 34.1519 29.5439L32.2329 97.8627C32.1757 99.9024 32.8109 101.719 33.8855 103.162C34.3832 104.273 35.1348 105.301 36.148 106.161L117.265 175.034Z"
+        fill="#F4A3B2"
+      />
+    </G>
+    <G
+      style={{
+        mixBlendMode: "multiply",
+      }}
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M123.003 167.023C121.569 174.885 130.786 180.206 136.878 175.034L217.995 106.162C219.008 105.302 219.759 104.274 220.257 103.165C221.333 101.721 221.969 99.9036 221.911 97.8627L219.992 29.5439C219.814 23.2082 213.019 19.285 207.444 22.2988L147.318 54.7963C145.522 55.7672 144.266 57.2269 143.554 58.8803C142.842 59.8661 142.327 61.0305 142.089 62.3371L123.003 167.023Z"
+        fill="#F4A3B2"
+      />
+    </G>
+    <Circle cx={165.282} cy={31.8425} r={3.64593} fill="#FF7A00" />
+    <Circle cx={91.1479} cy={30.6271} r={3.64593} fill="#FF7A00" />
+    <Circle cx={170} cy={254} r={14} fill="#5CD09F" fillOpacity={0.75} />
+    <Line
+      x1={127.608}
+      y1={177}
+      x2={127.608}
+      y2={299}
+      stroke="#454545"
+      strokeWidth={1.21531}
+    />
+    <Line
+      x1={170.721}
+      y1={253.795}
+      x2={126.969}
+      y2={286.15}
+      stroke="#454545"
+      strokeWidth={1.21531}
+    />
   </Svg>
   )
 }
@@ -266,8 +259,8 @@ export function RedRose3() {
 export function RedRose4() {
     return (
       <Svg
-    width={341}
-    height={315}
+    width={189}
+    height={175}
     viewBox="0 0 341 315"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -395,7 +388,7 @@ export function RedRose4() {
 export function DeadRose() {
     return (
       <Svg
-    width={150}
+    width={141}
     height={150}
     viewBox="0 0 239 254"
     fill="none"

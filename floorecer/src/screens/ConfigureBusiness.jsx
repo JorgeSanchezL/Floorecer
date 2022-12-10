@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
-import CustomButton from '../components/CustomButton';
+import FinalButton from '../components/FinalButton';
 import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
 import FinalustomDropDownPicker from '../components/FinalCustomDropDownPiker';
 import DropDownTimePicker from "../components/DropDownTimePicker";
@@ -9,12 +9,20 @@ import { ScrollView, Switch } from "react-native-gesture-handler";
 import { Image, TouchableOpacity, Modal, Icon} from "react-native";
 import MapView from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native';
+import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
+import { useFonts } from 'expo-font';
+import FinalTextInput from '../components/FinalTextInput';
 
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
 
 const ConfigureBusiness = ({ route }) => {
+  const [fontLoaded] = useFonts({
+    PoppinsMedium: require("../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf"),
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+  })
   const navigation=useNavigation();
 
   const [shopName, setShopName] = useState(route.params.name);
@@ -79,16 +87,16 @@ const ConfigureBusiness = ({ route }) => {
   const onCancelPressed = () =>{
     navigation.navigate('myShops');
   }
-
+  if(!fontLoaded) { return null; }
   return(
   <View style={[styles.mainContainer]}>
 
-    <Text style={[styles.title,{marginTop:height * 0.05}]}>{shopName}</Text>
 
     <ScrollView 
       nestedScrollEnabled={true}
-      style={{width,height: height * 0.79, paddingHorizontal:10}}>
-        
+      style={{width,height: height * 0.79, paddingHorizontal:0}}>
+
+      <Text style={[styles.title,{marginTop:height * 0.05}]}>{shopName}</Text>
       <MyTextInput name = 'Nombre' value={shopName} setValue={setShopName}/>
       <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
 
@@ -105,8 +113,8 @@ const ConfigureBusiness = ({ route }) => {
         location={location} 
         setLocation={setLocation}
       />}
-      <Text style={styles.header2}>Categoría</Text>
-      <FinalCustomDropDownPicker value={category} setValue={setCategory} ></FinalCustomDropDownPicker>
+      <Text style={styles.header1}>Categoría</Text>
+      <FinalCustomDropDowPicker value={category} setValue={setCategory} ></FinalCustomDropDowPicker>
 
       <Text style={styles.header2}>Horario de apertura</Text>
       {
@@ -123,18 +131,18 @@ const ConfigureBusiness = ({ route }) => {
         })
       }
 
-      <ImageCarouselPickingImages images = {images}/>
+      
     
       <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
       
-        <CustomButton 
+        <FinalButton 
             text="Cancelar" 
-            type = 'cuaterciario'
+            type = 'Mapa2'
             onPress={onCancelPressed}
             />
-        <CustomButton 
+        <FinalButton 
             text="Guardar" 
-            type = 'cuaterciario'
+            type = 'Mapa'
             onPress={onSavePressed}
             />
   
@@ -152,15 +160,15 @@ export const MyTextInput = (props) => {
     <View
       style={{width:'100%',}}
     >
-      <Text style={{ marginTop: props.name ? 10 : 0 ,height: !props.name ? 10 : null, fontSize:20, fontWeight:"bold" }}>
+      <Text style={styles.header1}>
         {props.name}
       </Text>
       <View style={styles.sectionStyle}>
-        <TextInput
-            style = {{flex:1, padding:10}}
-            placeholder={props.info}
-            value={props.value}
-            onChangeText={props.setValue}
+        
+        <FinalTextInput
+          info ={props.info}
+          value = {props.value}
+          setValue = {props.setValue}
         />
         { props.isLocation && 
             <TouchableOpacity onPress={()=>props.setIsVisibleMap(true)}>
@@ -294,17 +302,17 @@ function Mapa ({isVisibleMap, setIsVisibleMap, location,setLocation}){
                                 }   
                             </MapView>
                             <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
-                                <CustomButton 
+                                <FinalButton 
                                     text="Cancelar" 
-                                    type = 'cuaterciario'
+                                    type = 'Mapa2'
                                     onPress={() => {
                                         setIsVisibleMap(false);
                                         setNewRegion(location)
                                       }}
                                     />
-                                <CustomButton 
+                                <FinalButton 
                                     text="Guardar ubicación" 
-                                    type = 'cuaterciario'
+                                    type = 'Mapa'
                                     onPress={confirmLocation}
                                     />
                             </View>
@@ -323,11 +331,10 @@ const styles = StyleSheet.create({
       backgroundColor:'white'
     },
     title: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      color: 'black',
       textAlign:'center',
-      textTransform:"uppercase"
+      fontFamily:'MuseoModernoBold',
+      fontSize:27,
+      marginBottom:10,
     },
     sectionStyle:{
         flexDirection: 'row',
@@ -335,7 +342,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 40,
         borderRadius: 5,
-        marginTop:10
     },
     imageStyle: {
       padding: 15,
@@ -345,11 +351,21 @@ const styles = StyleSheet.create({
       resizeMode: 'stretch',
       alignItems: 'center',
     },
-    header2:{
+    header1:{
       marginTop:10, 
-      fontSize:20, 
-      fontWeight:"bold",
-      margin:16
+      fontSize:20,
+      marginBottom:3,
+      marginLeft:20,
+      fontFamily:'PoppinsRegular',
+      fontSize:12,
+    },
+    header2:{
+      marginTop:25, 
+      fontSize:20,
+      marginBottom:10,
+      marginLeft:20,
+      fontFamily:'PoppinsRegular',
+      fontSize:12,
     },
     header3:{
       fontSize:15, 
@@ -391,6 +407,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginLeft:5,
+        width:20
     },
     closeButtonView:{
         flexDirection:'column', position:'absolute', top: 35, alignSelf:'flex-end'
@@ -400,8 +417,8 @@ const styles = StyleSheet.create({
 
     },
     addButton:{
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         marginBottom:23,
         marginTop:-10,
         alignSelf:'flex-start'

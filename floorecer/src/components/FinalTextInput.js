@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import {StyleSheet, Text, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-
+import { useFonts } from 'expo-font';
 
 
 
 const FinalTextInput = (props) => {
-
+    const [fontLoaded] = useFonts({
+      PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf"),
+    })
   
 
-      
+    if(!fontLoaded) { return null; }  
     return (
         <TextInput
             style={styles.input}
@@ -17,8 +19,6 @@ const FinalTextInput = (props) => {
             placeholderTextColor='#959494'
             onChangeText=  {props.setValue}
             value ={props.value}
-            placeholderStyle = {{fontFamily:'Poppins_300Light'}}
-            
       />
     );
         
@@ -35,7 +35,7 @@ const FinalTextInput = (props) => {
             borderRadius:10,
             padding: 10,
            /*  alignSelf : 'center', */
-            textAlign : "auto"
+            textAlign : "auto",
           },
       });
 
