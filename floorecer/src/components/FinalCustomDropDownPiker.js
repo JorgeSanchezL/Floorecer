@@ -32,7 +32,7 @@ const FinalCustomDropDownPicker= (props) => {
             selectedItemLabelStyle={{
               fontWeight: "bold"
             }}
-            listItemLabelStyle={{color:'grey'}}
+            listItemLabelStyle={{color:'grey',fontFamily:'PoppinsRegular'}}
         />
     
     
@@ -70,7 +70,9 @@ const styles = StyleSheet.create({
       
     },
     placeholder:{
-      color:'#959494'
+      color:'#959494',
+      fontFamily:'PoppinsRegular',
+      fontSize:12
     },
 });
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 
-import { AddIcon } from './flowers/AddIcon'
+import { AddIcon } from './flowers/addIcon'
 
 import { Bonsai0, Bonsai1, Bonsai2, Bonsai3, Bonsai4, DeadBonsai } from './flowers/bonsais'
 import { Cactus0, Cactus1, Cactus2, Cactus3, Cactus4, DeadCactus } from './flowers/cactus'
