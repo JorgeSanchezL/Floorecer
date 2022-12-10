@@ -80,7 +80,7 @@ const progressBar =  () => {
     sethealthBar(result[pos].health)
     
     }else{
-        Alert.alert('Aviso', 'No tienes ninguno.Compralo', [
+        Alert.alert('Aviso', 'No tienes ninguno. Cómpralo', [
             
             { text: 'OK' },
           ]);
@@ -107,7 +107,7 @@ const progressBar =  () => {
         
 
     }else{
-        Alert.alert('Aviso', 'No tienes ninguno.Compralo', [
+        Alert.alert('Aviso', 'No tienes ninguno. Cómpralo', [
             
             { text: 'OK' },
           ]);

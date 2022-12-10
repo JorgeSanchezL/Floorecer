@@ -4,8 +4,8 @@ import Svg, { Path, Rect, G } from "react-native-svg"
 export function Bonsai0() {
   return (
     <Svg
-    width={260}
-    height={142}
+    width={38}
+    height={90}
     viewBox="0 0 60 142"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -19,8 +19,8 @@ export function Bonsai0() {
 export function Bonsai1() {
   return (
     <Svg
-    width={260}
-    height={142}
+    width={56}
+    height={100}
     viewBox="0 0 80 142"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -36,15 +36,12 @@ export function Bonsai1() {
 export function Bonsai2() {
   return (
     <Svg
-    width={260}
-    height={150}
-    viewBox="0 0 306 272"
+    width={140}
+    height={125}
+    viewBox="0 0 306 256"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <Path d="M197 45V271.5" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M196 123H117.5V37" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M59 130.5V209H197.5" stroke="#0C4D53" strokeWidth={2} />
     <G
       style={{
         mixBlendMode: "multiply",
@@ -60,6 +57,9 @@ export function Bonsai2() {
     >
       <Rect y={79} width={144} height={97} rx={15} fill="#A3A2D9" />
     </G>
+    <Path d="M197 45V256" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M196 123H117.5V37" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M59 130.5V209H197.5" stroke="#0C4D53" strokeWidth={2} />
   </Svg>
   );
 }
@@ -67,17 +67,12 @@ export function Bonsai2() {
 export function Bonsai3() {
   return (
     <Svg
-    width={260}
-    height={190}
+    width={169}
+    height={150}
     viewBox="0 0 306 272"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <Path d="M197 45V271.5" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M196 96.5H249.5V76" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M196 123H117.5V37" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M118.5 63.5H144V46.5" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M59 130.5V209H197.5" stroke="#0C4D53" strokeWidth={2} />
     <G
       style={{
         mixBlendMode: "multiply",
@@ -101,6 +96,11 @@ export function Bonsai3() {
       transform="matrix(-1 0 0 1 45 97)"
       fill="#DCEEF5"
     />
+    <Path d="M197 45V271.5" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M196 96.5H249.5V76" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M196 123H117.5V37" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M118.5 63.5H144V46.5" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M59 130.5V209H197.5" stroke="#0C4D53" strokeWidth={2} />
     <Rect x={100} y={18} width={28} height={28} rx={14} fill="#DCEEF5" />
     <Rect x={234} y={55} width={31} height={31} rx={15.5} fill="#DCEEF5" />
   </Svg>
@@ -110,21 +110,12 @@ export function Bonsai3() {
 export function Bonsai4() {
   return (
     <Svg
-    width={260}
-    height={230}
+    width={216}
+    height={175}
     viewBox="0 0 429 348"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <Path d="M208 158L208 348" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M207 186H331V138" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M207 199H129V59" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M41 170.5V194H70.5" stroke="#A5A2DA" />
-    <Path d="M130 140H240V71" stroke="#0C4D53" strokeWidth={2} />
-    <Path d="M240.5 114.5H289.5V98.5H279" stroke="#A5A2DA" strokeWidth={2} />
-    <Path d="M247 59.5H362V22.5" stroke="#A5A2DA" strokeWidth={2} />
-    <Path d="M362 39.5H394" stroke="#A5A2DA" strokeWidth={2} />
-    <Path d="M71.5 193.5V262H207.5" stroke="#0C4D53" strokeWidth={2} />
     <G
       style={{
         mixBlendMode: "multiply",
@@ -157,6 +148,15 @@ export function Bonsai4() {
       transform="matrix(-1 0 0 1 53 156)"
       fill="#DCEEF5"
     />
+        <Path d="M208 158L208 348" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M207 186H331V138" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M207 199H129V59" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M41 170.5V194H70.5" stroke="#A5A2DA" />
+    <Path d="M130 140H240V71" stroke="#0C4D53" strokeWidth={2} />
+    <Path d="M240.5 114.5H289.5V98.5H279" stroke="#A5A2DA" strokeWidth={2} />
+    <Path d="M247 59.5H362V22.5" stroke="#A5A2DA" strokeWidth={2} />
+    <Path d="M362 39.5H394" stroke="#A5A2DA" strokeWidth={2} />
+    <Path d="M71.5 193.5V262H207.5" stroke="#0C4D53" strokeWidth={2} />
     <Rect x={119} y={39} width={40} height={40} rx={20} fill="#DCEEF5" />
     <Rect x={313} y={105} width={37} height={37} rx={18.5} fill="#DCEEF5" />
     <Rect x={263} y={177} width={19} height={19} rx={9.5} fill="#DCEEF5" />
@@ -176,8 +176,8 @@ export function Bonsai4() {
 export function DeadCactus() {
   return (
     <Svg
-  width={230}
-  height={190}
+  width={146}
+  height={150}
   viewBox="0 0 211 217"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"

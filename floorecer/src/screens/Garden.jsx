@@ -1,5 +1,5 @@
-import React ,{ useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, ImageBackground, Dimensions, Modal, Text, FlatList } from 'react-native';
+import React ,{ useEffect, useState } from 'react';
+import { StyleSheet, View, Dimensions, Modal, Text } from 'react-native';
 import { getItemAsync } from 'expo-secure-store';
 import BotonFlor from '../components/BotonFlor';
 import BotonImagen from '../components/BotonImagen'
@@ -60,8 +60,30 @@ const Garden = () => {
       let newStyles = []
       newStyles[0] = body[0].type === 'noflower' ? styles.hueco0 : styles.flor0
       newStyles[1] = body[1].type === 'noflower' ? styles.hueco1 : styles.flor1
-      newStyles[2] = body[2].type === 'noflower' ? styles.hueco2 : styles.flor2
-      newStyles[3] = body[3].type === 'noflower' ? styles.hueco3 : styles.flor3
+      if (body[2].type !== 'noflower') {
+        if (body[2].type === 'bonsai') {
+          newStyles[2] = styles.bonsai2
+        } else if (body[2].type === 'sunflower') {
+          newStyles[2] = styles.sunflower2
+        } else {
+          newStyles[2] = styles.flor2
+        }
+      } else {
+        newStyles[2] = styles.hueco2
+      }
+      if (body[3].type !== 'noflower') {
+        if (body[3].type === 'bonsai') {
+          newStyles[3] = styles.bonsai3
+        } else if (body[3].type === 'sunflower') {
+          newStyles[3] = styles.sunflower3
+        } else if (body[3].type === 'redRose') {
+          newStyles[3] = body[3].petals < 4 ? styles.smallRedFlower3 : styles.bigRedFlower3
+        } else {
+          newStyles[3] = styles.flor3
+        }
+      } else {
+        newStyles[3] = styles.hueco3
+      }
       setFlowerStyles(newStyles)
     } catch(error) {
       alert((typeof error === 'string' || error instanceof String) ? error : error.message)
@@ -178,7 +200,6 @@ const Garden = () => {
 
     return (
       <View style={styles.container}>
-        <Text>Mi jardín</Text>
         <View style={styles.garden}>
           <View style={flowerStyles[0]}>
             <BotonFlor id="1" plant={myPlants[0]} onClick={() => getOnHoleClick(0)} />
@@ -255,7 +276,7 @@ const Garden = () => {
     flor0: {
       position:"absolute",
       bottom:0,
-      right:width/3
+      left: width/10
     },
     hueco0: {
       position:"absolute",
@@ -265,28 +286,64 @@ const Garden = () => {
     flor1: {
       position:"absolute",
       bottom:0,
-      left:width/2
+      right:width/5
     },
     hueco1: {
       position:"absolute",
       top:height/5.5*3,
       right:width/18
     },
+    bonsai2: {
+      position:"absolute",
+      top:height/4,
+      left:-37,
+      transform: [{ rotate: '55deg'}]
+    },
+    sunflower2: {
+      position:"absolute",
+      top:height/4,
+      left:0,
+      transform: [{ rotate: '55deg'}]
+    },
     flor2: {
       position:"absolute",
-      top:height/9,
-      left:-125,
-      transform: [{ rotate: '45deg'}]
+      top:height/4,
+      left:20,
+      transform: [{ rotate: '55deg'}]
     },
     hueco2: {
       position:"absolute",
       top:height/5.5*2,
       left:width/6
     },
+    bonsai3: {
+      position:"absolute",
+      top:height/2.5,
+      right:-10,
+      transform: [{ rotate: '-55deg'}]
+    },
+    sunflower3: {
+      position:"absolute",
+      top:height/2.5,
+      right:-5,
+      transform: [{ rotate: '-55deg'}]
+    },
+    smallRedFlower3: {
+      position:"absolute",
+      top:height/2.5,
+      right:10,
+      transform: [{ rotate: '-55deg'}]
+    },
+    bigRedFlower3: {
+      position:"absolute",
+      top:height/2.5,
+      right:-20,
+      transform: [{ rotate: '-55deg'}]
+    },
     flor3: {
       position:"absolute",
-      top:height/4,
-      right:-125,
+      top:height/2.5,
+      right:20,
       transform: [{ rotate: '-55deg'}]
     },
     hueco3: {
