@@ -89,11 +89,7 @@ export const Map = () => {
       {business && <BusinessDetailsCard  business={business} setBusiness={setBusiness}/>}
   
 
-      <Button 
-    title = "hello"
-    onPress = {animate}
-    />  
-   
+     
     </View>
    <SearchBar
         searchPhrase={searchPhrase}
