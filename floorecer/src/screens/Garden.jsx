@@ -5,7 +5,7 @@ import BotonFlor from '../components/BotonFlor';
 import BotonImagen from '../components/BotonImagen'
 import CustomButton from '../components/CustomButton'
 import close from '../../assets/close.png'
-
+import { useNavigation } from '@react-navigation/native';
 import { BACKEND_URL } from '@env';
 
 export const width = Dimensions.get('window').width;
@@ -19,6 +19,7 @@ Date.prototype.addDays = function(days) {
 
 const Garden = () => {
 
+  const navigation = useNavigation();
   const [UUID, setUUID] = useState()
   const [openSeedsMenu, setOpenSeedsMenu] = useState(false)
   const [inventory, setInventory] = useState(null)
@@ -194,7 +195,11 @@ const Garden = () => {
     setHoleClicked(clicked)
     if (myPlants[clicked].type === 'noflower')
       setOpenSeedsMenu(true)
-    else {}
+    else {
+      navigation.navigate('inventory', {
+        position: clicked
+    })
+    }
       //Abrir menu inventario
   }
 
