@@ -108,7 +108,6 @@ export const Map = () => {
   data={data}
   setClicked={setClicked}
   animate = {animate}
-  setCoordinations ={setCoordinations}
 />
 
 )}
