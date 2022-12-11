@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { StyleSheet, View, SafeAreaView, Image} from 'react-native';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps'
+import React, { Fragment, useEffect, useState ,useRef} from 'react';
+import { StyleSheet, View, SafeAreaView, Image, Button} from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE,animateToRegion} from 'react-native-maps'
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
@@ -17,9 +17,10 @@ import SearchBar from "../components/SearchBar";
 export const Map = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
-  const [fakeData, setFakeData] = useState();
   const [data, setData] = useState(null);
+
   const navigation=useNavigation();
+
   const navigate = (screen) => {
     navigation.navigate(screen)
   }
@@ -30,9 +31,12 @@ export const Map = () => {
   }
 
   useEffect(() => {getMapMarkers(null)}, [])
-  console.log(data)
 
   const [business,setBusiness] = useState(null)
+  const animate = (coordin) => {
+    setSearchPhrase("")
+    this.mapView.animateToRegion(coordin, 2000);
+}
   return (
     <SafeAreaView
           style={{flex: 1}}
@@ -42,17 +46,19 @@ export const Map = () => {
               barStyle='dark-content'
               backgroundColor={'#fff'}
           />
-    
+      
     <View style={styles.container}>
       <MapFilters
         setData={setData}
       />
-      <MapView 
+   
+    <MapView 
         style={styles.map} 
         showsPointsOfInterest={false}
         customMapStyle={mapStyle}
         onMapReady={() => askLocationPermissions()}
         provider={PROVIDER_GOOGLE}
+        ref={ref => (this.mapView = ref)}
         showsUserLocation={true} 
         showsMyLocationButton={true}
       >
@@ -81,7 +87,13 @@ export const Map = () => {
       
       </MapView>
       {business && <BusinessDetailsCard  business={business} setBusiness={setBusiness}/>}
+  
 
+      <Button 
+    title = "hello"
+    onPress = {animate}
+    />  
+   
     </View>
    <SearchBar
         searchPhrase={searchPhrase}
@@ -89,6 +101,18 @@ export const Map = () => {
         clicked={clicked}
         setClicked={setClicked}
       />
+ {  (
+
+<List
+  searchPhrase={searchPhrase}
+  data={data}
+  setClicked={setClicked}
+  animate = {animate}
+  setCoordinations ={setCoordinations}
+/>
+
+)}
+
     
       
     </SafeAreaView>

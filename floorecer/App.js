@@ -88,7 +88,7 @@ export default App = () => {
     const authContext = React.useMemo(() => ({
         signIn: async (email, password) => {
           try {
-            const response = await fetch(`${BACKEND_URL}/user-authe/userSign/${email}&${password}`, {
+            const response = await fetch(`http://192.168.1.143:5000/user-authe/userSign/${email}&${password}`, {
               method: 'GET',
                 headers: {
                 'Content-Type': 'application/json'
