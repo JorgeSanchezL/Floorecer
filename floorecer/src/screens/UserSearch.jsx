@@ -6,17 +6,18 @@ import { Ionicons } from '@expo/vector-icons';
 import buscadorUs1 from '../../assets/buscarUs1.png';
 import buscadorUs2 from '../../assets/buscarUs2.png';
 import { BACKEND_URL } from '@env';
-import { useFonts, Poppins_300Light } from '@expo-google-fonts/poppins';
+import { useFonts} from '@expo-google-fonts/poppins';
 const { width, height } = Dimensions.get('screen');
 const UserSearch = () => {
     const navigation=useNavigation();
     const [filteredData,setFilteredData]=useState([]);
     const [text,setText]=useState('');
-    const[noUser,setNoUser]=useState(false)
+    const[noUser,setNoUser]=useState(true)
     let backImage=buscadorUs2
     const [fontsLoaded] = useFonts({
-      Poppins_300Light,
-    });
+      MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
+      MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+  })
     
     if (!fontsLoaded) {
       return null;
@@ -39,6 +40,7 @@ const UserSearch = () => {
             
             if(!Array.isArray(body)){
                 body=[];
+                setNoUser(true)
             }
             setFilteredData(body);
         }catch(error){
@@ -138,14 +140,13 @@ const UserSearch = () => {
         )
       }
       const renderEmpty=()=>{
-        setNoUser(true)
         return(
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
  
-          <Text style={{ marginTop:30,fontSize: 24, fontWeight: 'bold',color:'white' }}>
+          <Text style={{ marginTop:30,fontSize: 24, fontWeight: 'bold',color:'white',fontFamily:'MuseoModernoRegular' }}>
             No se han 
           </Text>
-          <Text style={{ marginTop:10,fontSize: 24, fontWeight: 'bold',color:'white', }}>
+          <Text style={{ marginTop:10,fontSize: 24, fontWeight: 'bold',color:'white',fontFamily:'MuseoModernoBold' }}>
             encontrado usuarios
           </Text>
    
