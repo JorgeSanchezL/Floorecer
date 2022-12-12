@@ -1,5 +1,5 @@
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { ref, getDownloadURL, deleteObject } from 'firebase/storage';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { database, storage } from '../../firebase.js';
 
 export const getUser = async (req, res) => {
@@ -73,4 +73,28 @@ export const getActualPlan = async (req,res)=>{
 
     if (userSnap.exists()) { res.json(userSnap.data().subscription); }
     else { res.json(null); }
+}
+
+export const getUsersByIds = async (req, res) => {
+    try{
+        const { ids } = req.body;
+
+        const body = await getUsers(ids)
+        if(!body.length===0)res.json(JSON.stringify(body))
+    }catch(err){
+        console.log(err)
+    }
+}
+
+const getUsers = async(ids) => {
+    let body = []
+    ids.forEach(async (id)=>{
+        const userRef = doc(database, 'users', id);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.empty) {
+            body.push({owner:id,data:userSnap.data()})
+            console.log(body)
+        } 
+    })
+    return body
 }

@@ -134,9 +134,10 @@ export const getAllBusinesses = async (req, res) => {
     const querySnapshot = await getDocs(collection(database, "business"));
     let body = []
     querySnapshot.forEach((doc) => {
-      body.push(doc.data())
+      let data = doc.data()
+      data['docId'] = doc.id
+      body.push(data)
     });
-    
     res.json(body)
 }
 
