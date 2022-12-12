@@ -58,26 +58,64 @@ const Garden = () => {
       let body=await response.json();
       setMyPlants(body);
       let newStyles = []
-      newStyles[0] = body[0].type === 'noflower' ? styles.hueco0 : styles.flor0
-      newStyles[1] = body[1].type === 'noflower' ? styles.hueco1 : styles.flor1
+
+      if (body[0].type !== 'noflower') {
+        if (body[0].type === 'bonsai' || body[0].type == 'redRose' && body[0].petals >= 4) {
+          newStyles[0] = styles.bigFlower0
+        } else {
+          newStyles[0] = styles.flor0
+        }
+      } else {
+        newStyles[0] = styles.hueco0
+      }
+      
+      if (body[1].type !== 'noflower') {
+        if (body[1].type === 'bonsai' || body[1].type == 'redRose' && body[1].petals >= 4) {
+          newStyles[1] = styles.bigFlower1
+        } else {
+          newStyles[1] = styles.flor1
+        }
+      } else {
+        newStyles[1] = styles.hueco1
+      }
+
       if (body[2].type !== 'noflower') {
         if (body[2].type === 'bonsai') {
-          newStyles[2] = styles.bonsai2
+          if (body[2].petals > 2) {
+            newStyles[2] = styles.bigBonsai2
+          } else {
+            newStyles[2] = styles.smallBonsai2
+          }
         } else if (body[2].type === 'sunflower') {
           newStyles[2] = styles.sunflower2
+        } else if (body[2].type === 'redRose') {
+          if (body[2].petals > 3) {
+            newStyles[2] = styles.bigRedRose2
+          } else {
+            newStyles[2] = styles.smallRedRose2
+          }
         } else {
           newStyles[2] = styles.flor2
         }
       } else {
         newStyles[2] = styles.hueco2
       }
+
       if (body[3].type !== 'noflower') {
         if (body[3].type === 'bonsai') {
-          newStyles[3] = styles.bonsai3
+          if (body[3].petals == 5) {
+            newStyles[3] = styles.veryBigBonsai3
+          } else if (body[3].petals > 2) {
+            newStyles[3] = styles.bigBonsai3
+          } else {
+            newStyles[3] = styles.smallBonsai3
+          }
         } else if (body[3].type === 'sunflower') {
           newStyles[3] = styles.sunflower3
         } else if (body[3].type === 'redRose') {
-          newStyles[3] = body[3].petals < 4 ? styles.smallRedFlower3 : styles.bigRedFlower3
+          newStyles[3] = body[3].petals < 4 ? styles.smallRedRose3 : styles.bigRedRose3
+        } else if (body[3].type === 'cactus' && body[3].petals == 3) {
+          newStyles[3] = styles.midCactus3
         } else {
           newStyles[3] = styles.flor3
         }
@@ -216,23 +254,21 @@ const Garden = () => {
           <Modal visible={openSeedsMenu}>
             <View style={styles.modal}>
               <Text style={styles.title}>Mis objetos</Text>
+              {inventory != null && 
+                <View style={styles.card} key={0}>
+                  <Text style={styles.itemText}>Abono x{inventory.Abono}</Text>
+                  <CustomButton onPress={() => {fertilizeHole(); setOpenSeedsMenu(false)}} text='Usar' type="cuaterciario" alignRight={true}/>
+                </View>
+              }
               {inventory != null && inventory.seeds.map((element, index) => {
                 return (
-                  <View style={styles.container} key={index + 1}>
-                    <Text style={{alignSelf: 'flex-start'}} >{element.itemName}</Text>
-                    <Text style={{alignSelf: 'center'}} >{element.amount}</Text>
+                  <View style={styles.card} key={index + 1}>
+                    <Text style={styles.itemText}>{element.itemName} x{element.amount}</Text>
                     <CustomButton onPress={() => {plantSeed(index); setOpenSeedsMenu(false)}} text='Plantar' type="cuaterciario" alignRight={true}/>
                   </View>
                 )
               })}
-              {inventory != null && 
-                <View style={styles.container} key={0}>
-                  <Text style={{alignSelf: 'flex-start'}} >Abono</Text>
-                  <Text style={{alignSelf: 'center'}} >{inventory.Abono}</Text>
-                  <CustomButton onPress={() => {fertilizeHole(); setOpenSeedsMenu(false)}} text='Usar' type="cuaterciario" alignRight={true}/>
-                </View>
-              }
-              <View style={styles.topRight}>
+              <View style={styles.bottom}>
                 <BotonImagen image={close} onClick={() => setOpenSeedsMenu(false)} size='small'/>
               </View>
             </View>
@@ -243,23 +279,40 @@ const Garden = () => {
   }
   
   const styles = StyleSheet.create({
-    container:{
+    container: {
       flex: 1
     },
-    garden:{
+    garden: {
       backgroundColor: '#F3FEFF',
       flex: 1
     },
     modal: {
-      backgroundColor: '#D7FFE7',
-      flex: 1,
-      alignItems: 'center',
+      backgroundColor: '#F3FEFF',
+      flex: 1
     },
     title: {
       top: 20,
       fontSize: 35,
       fontWeight: 'bold',
-      color: '#00996D'
+      color: '#00996D',
+      alignSelf: 'center',
+      marginBottom: 20
+    },
+    card: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      margin: 20,
+    },
+    itemText: {
+      alignSelf: 'center',
+      fontWeight: 'bold',
+      fontSize: 17
+    },
+    bottom: {
+      position: "absolute",
+      bottom: 20,
+      alignSelf: 'center'
     },
     logo: {
       width:'70%',
@@ -278,6 +331,11 @@ const Garden = () => {
       bottom:0,
       left: width/10
     },
+    bigFlower0: {
+      position:"absolute",
+      bottom:0,
+      left: width/20 - 10
+    },
     hueco0: {
       position:"absolute",
       top:height/5.5*4,
@@ -288,15 +346,26 @@ const Garden = () => {
       bottom:0,
       right:width/5
     },
+    bigFlower1: {
+      position:"absolute",
+      bottom:0,
+      right:width/20 -10
+    },
     hueco1: {
       position:"absolute",
       top:height/5.5*3,
       right:width/18
     },
-    bonsai2: {
+    bigBonsai2: {
       position:"absolute",
       top:height/4,
       left:-37,
+      transform: [{ rotate: '55deg'}]
+    },
+    smallBonsai2: {
+      position:"absolute",
+      top:height/4,
+      left:-10,
       transform: [{ rotate: '55deg'}]
     },
     sunflower2: {
@@ -305,10 +374,22 @@ const Garden = () => {
       left:0,
       transform: [{ rotate: '55deg'}]
     },
+    bigRedRose2: {
+      position:"absolute",
+      top:height/4,
+      left:-37,
+      transform: [{ rotate: '55deg'}]
+    },
+    smallRedRose2: {
+      position:"absolute",
+      top:height/4,
+      left:6,
+      transform: [{ rotate: '55deg'}]
+    },
     flor2: {
       position:"absolute",
       top:height/4,
-      left:20,
+      left:8,
       transform: [{ rotate: '55deg'}]
     },
     hueco2: {
@@ -316,10 +397,28 @@ const Garden = () => {
       top:height/5.5*2,
       left:width/6
     },
-    bonsai3: {
+    smallBonsai3: {
       position:"absolute",
       top:height/2.5,
-      right:-10,
+      right:15,
+      transform: [{ rotate: '-55deg'}]
+    },
+    veryBigBonsai3: {
+      position:"absolute",
+      top:height/2.5,
+      right:-40,
+      transform: [{ rotate: '-55deg'}]
+    },
+    bigBonsai3: {
+      position:"absolute",
+      top:height/2.5,
+      right:-30,
+      transform: [{ rotate: '-55deg'}]
+    },
+    midCactus3: {
+      position:"absolute",
+      top:height/2.5,
+      right:5,
       transform: [{ rotate: '-55deg'}]
     },
     sunflower3: {
@@ -328,16 +427,16 @@ const Garden = () => {
       right:-5,
       transform: [{ rotate: '-55deg'}]
     },
-    smallRedFlower3: {
+    smallRedRose3: {
       position:"absolute",
       top:height/2.5,
-      right:10,
+      right:5,
       transform: [{ rotate: '-55deg'}]
     },
-    bigRedFlower3: {
+    bigRedRose3: {
       position:"absolute",
       top:height/2.5,
-      right:-20,
+      right:-27,
       transform: [{ rotate: '-55deg'}]
     },
     flor3: {
@@ -349,7 +448,7 @@ const Garden = () => {
     hueco3: {
       position:"absolute",
       top:height/5.5,
-      left:width/2
+      right:width/18
     },
   });
   
