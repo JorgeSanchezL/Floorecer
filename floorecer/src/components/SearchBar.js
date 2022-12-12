@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
             alignItems: 'flex-start',
             justifyContent: 'center',
             height: 40*2.5,
-            zIndex: 1,
+            zIndex: -2,
             position: 'absolute',
             width: "90%",
             marginVertical: 25,

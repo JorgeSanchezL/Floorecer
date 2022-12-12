@@ -31,7 +31,7 @@ export const Map = () => {
   }
 
   useEffect(() => {getMapMarkers(null)}, [])
-
+  
   const [business,setBusiness] = useState(null)
   const animate = (coordin) => {
     setSearchPhrase("")
@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
-    zIndex: 0,
-    elevation: 0,
+    zIndex: -5,
+    elevation: -5,
     position: 'absolute'
   },
   appButtonContainer: {
