@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
 import { useFonts } from 'expo-font';
 import FinalTextInput from '../components/FinalTextInput';
-
+import { BACKEND_URL } from '@env';
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 
@@ -39,7 +39,7 @@ const ConfigureBusiness = ({ route }) => {
 
   const updateBusiness = async () => {
     try {
-      const api_call = await fetch('http://192.168.43.205:5000/business/updateBusiness', {
+      const api_call = await fetch(`${BACKEND_URL}/business/updateBusiness`, {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

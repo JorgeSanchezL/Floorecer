@@ -52,7 +52,7 @@ export default function RegisterNew() {
     const SignUpNowCliente = async () => { 
       
       try {
-        const response = await fetch(`http:192.168.1.143:5000/user-authe/userRegister`, {
+        const response = await fetch(`${BACKEND_URL}/user-authe/userRegister`, {
           method: 'POST',
           body: JSON.stringify({
             email: email,

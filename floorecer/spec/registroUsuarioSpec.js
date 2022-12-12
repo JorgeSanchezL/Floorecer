@@ -1,5 +1,7 @@
+import { BACKEND_URL } from '@env';
+
 const registrar = async (email, username, usernameForSearch, password, numerodetelefono, isBusinessOwner) => {
-  const response = await fetch(`http://192.168.0.72:5000/user-authe/userRegister`, {
+  const response = await fetch(`${BACKEND_URL}0/user-authe/userRegister`, {
     method: 'POST',
     body: JSON.stringify({
       email: email,

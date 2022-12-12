@@ -18,13 +18,13 @@ export const getCategories = async () => {
   }
 
 export const getAllBusinesses = async ( category) => {
-
+  console.log('getAllBusiness')
   let type = 'getAllBusinesses'
   if(category != null && category.length > 0) type = `getAllBusinessesByCategory/${category}`
   
   try {
     
-    const response = await fetch(`http://192.168.1.143:5000/business/${type}`, {
+    const response = await fetch(`${BACKEND_URL}/business/${type}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
