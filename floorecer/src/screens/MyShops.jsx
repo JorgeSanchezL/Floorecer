@@ -14,7 +14,6 @@ const MyShops = () => {
   const navigation=useNavigation();
   const isFocused = useIsFocused();
 
-
   const getActualPlan = async()=>{
     try {
         const auth0 = JSON.parse(await getItemAsync('auth0'));
@@ -158,7 +157,7 @@ const Item = ({ shop }) => (
 
     <View >
         <Text style={styles.textData }>
-            {shop.Address}
+            {shop.address}
         </Text>
     </View>
     

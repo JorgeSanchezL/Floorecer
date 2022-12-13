@@ -16,6 +16,8 @@ import { BACKEND_URL } from '@env';
 import dots from '../../assets/dotsNewBusiness.png';
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
+const {width} = Dimensions.get("window");
+const height = width * 0.6;
 
 const NewBusiness = () => {
   const [fontLoaded] = useFonts({
@@ -26,6 +28,7 @@ const NewBusiness = () => {
   
 
   const [shopName, setShopName] = useState("");
+  const [description, setDescription] = useState("");
   const [nif, setNif] = useState("");
   const [address, setAddress] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -49,6 +52,7 @@ const NewBusiness = () => {
       // uid from the business owner
       formData.append('owner', auth0.uid)
       formData.append('name', shopName);
+      formData.append('description', description);
       formData.append('nif', nif);
       formData.append('address', address);
       formData.append('location', JSON.stringify(location));
@@ -151,7 +155,8 @@ const NewBusiness = () => {
       
       <Text style={[styles.title,{marginTop:height * 0.05}]}>Nuevo Comercio</Text>  
       <Image source = {dots} style={{alignSelf:'center'}}/>
-      <MyTextInput name = 'Shop Name' value={shopName} setValue={setShopName}/>
+      <MyTextInput name = 'Nombre' value={shopName} setValue={setShopName}/>
+      <MyTextInput name = 'Descripción' value={description} setValue={setDescription}/>
       <MyTextInput name = 'NIF' value={nif} setValue={setNif} info ={'Ejemplo: B–76365789'}/>
       <MyTextInput 
             name = 'Dirección' 
@@ -225,7 +230,8 @@ const NewBusiness = () => {
         }
       </View>
 
-      <View style = {{flex:0, alignItems:'center'}}>
+    </ScrollView>
+    <View style = {{flex:0, alignItems:'center'}}>
         <FinalButton 
           text="Publicar comercio" 
           type = 'cuaterciario'
@@ -233,7 +239,6 @@ const NewBusiness = () => {
           />
     
     </View>
-    </ScrollView>
   </View>
   
 );}
@@ -445,9 +450,9 @@ const styles = StyleSheet.create({
       marginVertical: 20
     },
     imgPicker: {
-      width: '100%',
-      height: 200,
-      borderRadius: 4
+      width,height,
+      resizeMode: 'contain',
+      alignItems: 'center',
     },
   });
 

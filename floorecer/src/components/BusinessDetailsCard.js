@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable} from 'react
 import ImageCarousel from '../components/ImageCarousel';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import { getItemAsync } from 'expo-secure-store';
 
 import * as Animatable from 'react-native-animatable';
 import { BACKEND_URL } from '@env';
@@ -12,9 +13,6 @@ import CustomInput from '../components/CustomInput';
 
 const diasDeLaSemana = ["Domingo","Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado"]
 const diasDeLaSemanaEuropa = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
-
-//De momento ir cambiando el UUID para probar hasta tener la sesión del user
-const uuid = '5KF6bzTUJLak6MbrO4jcyRcHULu2'
 
 function getOpeningText(openingHours){
     const date = new Date()
@@ -54,8 +52,8 @@ function getStarsValue(reviews){
   reviews.forEach(review => {
     value+=review.value
   });
-  value = Math.round(( value / reviews.length) * 100) / 100
-  return value
+  value = reviews.length > 0 ? Math.round(( value / reviews.length) * 100) / 100 : 0
+  return value 
 }
 
 
@@ -65,12 +63,11 @@ const BusinessDetailsCard = (props) => {
     const [isHorizontalScrolling, setIsHorizontalScrolling] = useState(false)
     const [isVisibleOpeningHours, setIsVisibleOpeningHours] = useState(false)
     const [reviews, setReviews] = useState(props.business.reviews)
+    const [uuid, setUuid] = useState(null)
     //get images from DB
-    const images =[
-      'https://www.larazon.es/resizer/rq4rbnMC9g_5NTEuTH25LhXXcMg=/600x400/smart/filters:format(jpg)/cloudfront-eu-central-1.images.arcpublishing.com/larazon/7IGMFSY4XRG3RJ54HLFULH5VP4.JPG',
-      'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg',
-      'https://frutasmontijo.com/wp-content/uploads/2018/10/fruterias.jpg'
-    ]  
+    const images =[]
+    console.log(props.business.imageURL)
+    images.push(props.business.imageURL || '')  
     const onChange = (index ) => {
       if(index===-1)props.setBusiness(undefined)
       setIndex(index)
@@ -79,14 +76,18 @@ const BusinessDetailsCard = (props) => {
     const [profile, setProfile] = useState(null);
 
     const getProfile = async () => {
-        const api_call = await fetch(`${BACKEND_URL}/users/${uuid}`);
+      try {
+        const auth0 = JSON.parse(await getItemAsync('auth0'));
+        setUuid(auth0.uid);
+        const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
         const response = await api_call.json();
         setProfile(response);
+      } catch(e) { Alert.alert(e); }
+      
     }
     useEffect(() => {
         getProfile();
     }, []);
-    console.log(profile)
 
     return (
         <BottomSheet 
@@ -114,14 +115,14 @@ const BusinessDetailsCard = (props) => {
                 <View>
                   {index!==2 && <Text style={styles[`title_${index}`]}>{props.business.name}</Text>}
                   <Text style={styles.infoText}>{props.business.category || "unknown category"}</Text>
-                  <View style={{flex:0, flexDirection:'row', marginLeft:5}}>
+                  <View style={{flex:0, flexDirection:'row'}}>
                     <Text style={styles.infoText}>{getStarsValue(reviews)}</Text>
                     <CurrentRating value={Math.floor(getStarsValue(reviews))}/>
                     <Text style={[styles.infoText,{marginLeft:10}]}>{`(${reviews.length})`}</Text>
                   </View>
                   {index!==2 && <Text style={styles.infoText}>{getOpeningText(props.business.openingHours)}</Text>}
                 </View> 
-                {index===0 && <Image source = {{uri: images[0]}} style ={styles.image}/>}
+                {index===0 && (images[0] !== '') && <Image source = {{uri: images[0]}} style ={styles.image}/>}
               </View>
             </Animatable.View>
             <View 
@@ -138,7 +139,7 @@ const BusinessDetailsCard = (props) => {
                     <Divider />
                     <View style={{flex:0, flexDirection:'row', alignItems:"center"}}>
                         <Image style={styles.icon} source={require(`../../assets/location.png`)} />
-                        <Text style={styles.text}>{props.business.Address}</Text>
+                        <Text style={styles.text}>{props.business.address}</Text>
                     </View>
                     <Divider />
                     <View>
@@ -175,7 +176,7 @@ const BusinessDetailsCard = (props) => {
                         <Text style={styles.subTitle}>Valorar y escribir una reseña</Text>
                         <Text style={styles.text}>Comparte tu experiencia para ayudar a otros usuarios</Text>
                         <View style={{flex:1,flexDirection:'row'}}>
-                          <CustomRatingBar reviews={reviews} profile={profile} businessId={props.business.docId} setReviews={setReviews}/>
+                          <CustomRatingBar reviews={reviews} uuid = {uuid} profile={profile} businessId={props.business.docId} setReviews={setReviews}/>
                         </View>
                     </View>
                     <Divider />
@@ -223,9 +224,9 @@ const BusinessDetailsCard = (props) => {
   const CustomRatingBar = (props) => {
     let reviews = props.reviews
     const userHasReview = () => {
-      if(reviews.some((review)=>{return review.uuid===uuid})){
+      if(reviews.some((review)=>{return review.uuid===props.uuid})){
         for(let i=0;i<reviews.length;i++){
-          if(reviews[i].uuid===uuid){
+          if(reviews[i].uuid===props.uuid){
             return reviews[i]
           }
         }
@@ -242,17 +243,15 @@ const BusinessDetailsCard = (props) => {
 
     const publishReview = async () => {
       setExistsReview(true)
-      console.log("publicando review")
       reviews.unshift({
         name: props.profile.username,
         profileImage: props.profile.profileImage,
-        uuid: uuid,
+        uuid: props.uuid,
         value: defaultRating,
         comment: comment
       })
       //Meter alerta se ha guardado correctamente
       if(updateBusiness(props.businessId,{reviews: reviews})) {
-        console.log("saved")
         props.setReviews(reviews)
       }
 
@@ -306,7 +305,7 @@ const BusinessDetailsCard = (props) => {
     const starImgCorner = `../../assets/star_corner.png`
     return (
       <View style={{flexDirection:"row"}}>
-        {maxRating.map((item,key) => {return(
+        {maxRating.map((item) => {return(
             <Image 
               style={styles.stars}
               source={item<=defaultRating?require(starImgFilled):require(starImgCorner)}

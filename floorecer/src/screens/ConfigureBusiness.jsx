@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
 import FinalButton from '../components/FinalButton';
-import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
-import FinalustomDropDownPicker from '../components/FinalCustomDropDownPiker';
 import DropDownTimePicker from "../components/DropDownTimePicker";
 import SelectionButton from "../components/SelectionButton";
 import { ScrollView, Switch } from "react-native-gesture-handler";
@@ -13,9 +11,12 @@ import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
 import { useFonts } from 'expo-font';
 import FinalTextInput from '../components/FinalTextInput';
 import { BACKEND_URL } from '@env';
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
-
+const {width} = Dimensions.get("window");
+const height = width * 0.6;
 
 const ConfigureBusiness = ({ route }) => {
   const [fontLoaded] = useFonts({
@@ -26,6 +27,7 @@ const ConfigureBusiness = ({ route }) => {
   const navigation=useNavigation();
 
   const [shopName, setShopName] = useState(route.params.name);
+  const [description, setDescription] = useState(route.params.description);
   const [nif, setNif] = useState(route.params.NIF);
   const [address, setAddress] = useState(route.params.address);
   const [openingHours, setOpeningHours] = useState(route.params.openingHours);
@@ -34,32 +36,44 @@ const ConfigureBusiness = ({ route }) => {
   const [location, setLocation] = useState(route.params.location)
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
-  
-  const images =[]
+  const [image, setImage] = useState(route.params.imageURL)
+  const [newImage, setNewImage] = useState(null)
 
   const updateBusiness = async () => {
+      const formData = new FormData();
+
+      formData.append('name', shopName);
+      formData.append('description', description);
+      formData.append('nif', nif);
+      formData.append('address', address);
+      formData.append('location', JSON.stringify(location));
+      formData.append('openingHours',
+        JSON.stringify(openingHours));
+      formData.append('category', category);
+      if(newImage){
+        const imgName = image.split('/').pop();
+        const imgType = imgName.split('.').pop();
+        formData.append('image', {
+          uri: image,
+          type: `image/${imgType}`,
+          name: imgName
+        });
+      }else{
+        formData.append('imageURL',image)
+      }
+
+      formData.append('uid', route.params.uid)
     try {
+      console.log(route.params)
       const api_call = await fetch(`${BACKEND_URL}/business/updateBusiness`, {
                 method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    uid: 'VWFVMwQ5Q2gxpRENlPbS',
-                    body: {
-                      name:shopName,
-                      NIF:nif,
-                      address:address,
-                      openingHours:openingHours,
-                      location:location
-                    }
-                })
+                headers: { 'Content-Type': 'multipart/form-data' },
+                body: formData
             });
             const response = await api_call.json();
 
             if (response.saved) {
-                navigation.navigate('myshops');
+                navigation.navigate('myShops');
             } else { throw -1; }
     } catch (error) {
       Alert.alert(error)
@@ -87,6 +101,25 @@ const ConfigureBusiness = ({ route }) => {
   const onCancelPressed = () =>{
     navigation.navigate('myShops');
   }
+  const pickImage = async () => {
+    let permission = await ImagePicker.getMediaLibraryPermissionsAsync(true);
+    if (!permission.granted) {
+        permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!permission.granted) { return; }
+    }
+    
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+    
+    if (!result.cancelled && result.type === 'image') {
+        setImage(result.uri);
+        setNewImage(result.uri)
+    }
+  };
   if(!fontLoaded) { return null; }
   return(
   <View style={[styles.mainContainer]}>
@@ -98,6 +131,7 @@ const ConfigureBusiness = ({ route }) => {
 
       <Text style={[styles.title,{marginTop:height * 0.05}]}>{shopName}</Text>
       <MyTextInput name = 'Nombre' value={shopName} setValue={setShopName}/>
+      <MyTextInput name = 'Descripción' value={description} setValue={setDescription}/>
       <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
 
       <MyTextInput 
@@ -130,26 +164,41 @@ const ConfigureBusiness = ({ route }) => {
     
         })
       }
-
-      
-    
-      <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
-      
-        <FinalButton 
-            text="Cancelar" 
-            type = 'Mapa2'
-            onPress={onCancelPressed}
-            />
-        <FinalButton 
-            text="Guardar" 
-            type = 'Mapa'
-            onPress={onSavePressed}
-            />
-  
-        </View>
-  
+      <Image source = {{uri: image}} style={styles.image}/>
+      <View style={styles.container}>
+        
+            <TouchableOpacity
+                onPress={pickImage}
+                activeOpacity={0.8}
+                style={{alignItems: 'center' ,backgroundColor:'rgb(229,226,243)', borderRadius:10, width:350,alignSelf:'center'}}
+            >
+                <MaterialIcons
+                    name='image-search'
+                    size={35}
+                    color={'#606060'}
+                    style={{paddingTop: 10}}
+                />
+                <Text style={{ color: '#000',paddingVertical: 10}}>
+                  Pulsa para seleccionar una imagen
+                </Text>
+            </TouchableOpacity>
+        
+      </View>
     </ScrollView>
+    <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
+      
+      <FinalButton 
+          text="Cancelar" 
+          type = 'Mapa2'
+          onPress={onCancelPressed}
+          />
+      <FinalButton 
+          text="Guardar" 
+          type = 'Mapa'
+          onPress={onSavePressed}
+          />
 
+    </View>
   </View>
   
 );}
@@ -330,6 +379,11 @@ const styles = StyleSheet.create({
       height:'100%',
       backgroundColor:'white'
     },
+    container:{
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      marginVertical: 20
+    },
     title: {
       textAlign:'center',
       fontFamily:'MuseoModernoBold',
@@ -342,6 +396,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 40,
         borderRadius: 5,
+    },
+    image:{
+      width,height,
+      resizeMode: 'contain',
+      alignItems: 'center',
     },
     imageStyle: {
       padding: 15,

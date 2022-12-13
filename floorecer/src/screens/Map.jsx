@@ -29,7 +29,7 @@ export const Map = () => {
     setData(await getAllBusinesses(category))
     
   }
-
+  console.log(data)
   useEffect(() => {getMapMarkers(null)}, [])
   
   const [business,setBusiness] = useState(null)

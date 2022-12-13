@@ -13,7 +13,7 @@ const router = Router();
 
 router.post('/newBusiness', upload, newBusiness);
 router.get('/getBusiness',getBusiness);
-router.post('/updateBusiness',updateBusiness);
+router.post('/updateBusiness', upload, updateBusiness);
 router.post('/getbusinesses',getBusinesses);
 router.post('/promotebusiness',promoteBusiness);
 router.get('/getCategories',getCategories);
