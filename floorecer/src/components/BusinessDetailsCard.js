@@ -1,7 +1,5 @@
 import React, { useState, useMemo, useEffect} from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
-
-import ImageCarousel from '../components/ImageCarousel';
+import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable, useWindowDimensions, Dimensions} from 'react-native';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import { getItemAsync } from 'expo-secure-store';
@@ -55,7 +53,8 @@ function getStarsValue(reviews){
   value = reviews.length > 0 ? Math.round(( value / reviews.length) * 100) / 100 : 0
   return value 
 }
-
+const {width} = Dimensions.get("window");
+const height = width * 0.6;
 
 const BusinessDetailsCard = (props) => {
     const snapPoints = useMemo(()=> ['20%','55%', '100%'],[])
@@ -64,16 +63,17 @@ const BusinessDetailsCard = (props) => {
     const [isVisibleOpeningHours, setIsVisibleOpeningHours] = useState(false)
     const [reviews, setReviews] = useState(props.business.reviews)
     const [uuid, setUuid] = useState(null)
-    //get images from DB
-    const images =[]
-    console.log(props.business.imageURL)
-    images.push(props.business.imageURL || '')  
+    const image = props.business.imageURL 
     const onChange = (index ) => {
       if(index===-1)props.setBusiness(undefined)
       setIndex(index)
     }
 
     const [profile, setProfile] = useState(null);
+
+    useEffect(()=>{
+      setReviews(props.business.reviews)
+    },[props.business])
 
     const getProfile = async () => {
       try {
@@ -122,20 +122,21 @@ const BusinessDetailsCard = (props) => {
                   </View>
                   {index!==2 && <Text style={styles.infoText}>{getOpeningText(props.business.openingHours)}</Text>}
                 </View> 
-                {index===0 && (images[0] !== '') && <Image source = {{uri: images[0]}} style ={styles.image}/>}
+                {index===0 && <Image source = {{uri: image}} style ={styles.image}/>}
               </View>
             </Animatable.View>
             <View 
               onTouchStart={()=>setIsHorizontalScrolling(true)} 
               onTouchCancel={()=>setIsHorizontalScrolling(false)}
             >
-            <ImageCarousel images = {images}/>
+            {image ? <Image source = {{uri: image}} style={styles.cardImage}/> :
+              <Text style={{fontSize: 16, justifyContent:'center', alignSelf:'center', marginTop: index==1?'25%':0}}>Este comercio no tiene ninguna imágen disponible</Text>}
             </View>
             {index===2 && reviews!==null &&
                   <View>
                     <TopDivider />               
                     <Text style={styles.subTitle}>Descripción</Text>
-                    <Text style={styles.text}>{props.business.descripcion || "Descripción no disponible" }</Text>
+                    <Text style={styles.text}>{props.business.description || "Descripción no disponible" }</Text>
                     <Divider />
                     <View style={{flex:0, flexDirection:'row', alignItems:"center"}}>
                         <Image style={styles.icon} source={require(`../../assets/location.png`)} />
@@ -371,6 +372,11 @@ const BusinessDetailsCard = (props) => {
       marginTop:2,
       flex:1,
       justifyContent:"flex-end"
+    },
+    cardImage:{
+      width,height,
+      resizeMode: 'contain',
+      alignItems: 'center',
     },
     icon:{
       height: 25,
