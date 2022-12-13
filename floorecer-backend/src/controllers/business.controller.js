@@ -213,6 +213,20 @@ export const promoteBusiness = async (req,res) => {
     }
     
 }
+export const changeStatus = async (req,res) => {
+    const uid=req.body.uid
+    const active=req.body.active
+    console.log(uid)
+    console.log(active)
+    try {
+        const docRef = doc(database, "business", uid);
+      await updateDoc(docRef, { active: active});
+    } catch(error) {
+        Alert.alert(error)
+        console.log(error)
+    }
+    
+}
 
 export const getBusiness = async(req,res) => {
     
@@ -276,6 +290,7 @@ export const upgradePoints = async (req,res) => {
 export const updateBusiness = async (req, res) => {
     console.log('updateBusiness')
     const {
+        active,
         name,
         nif,
         address,
@@ -287,6 +302,7 @@ export const updateBusiness = async (req, res) => {
         description
     } = req.body
     const file = req.file;
+    console.log(active)
     if(file){
         const fileName = randomatic('Aa0', 32) + path.extname(file.originalname);
         const storageRef = ref(storage, fileName);
@@ -297,6 +313,7 @@ export const updateBusiness = async (req, res) => {
             try {
                 const docRef = doc(database, 'business', uid);
                 await updateDoc(docRef, {
+                    active: active,
                     name: name,
                     address: address,
                     NIF: nif,
