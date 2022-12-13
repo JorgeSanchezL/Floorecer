@@ -43,7 +43,7 @@ const getImage = (gardenPlant) => {
       else if (gardenPlant.petals == 5) return <RedRose4 />
       break
     default:
-      return <AddIcon />
+      break
   }
 }
 

@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import buscadorUs1 from '../../assets/buscarUs1.png';
 import buscadorUs2 from '../../assets/buscarUs2.png';
 import { BACKEND_URL } from '@env';
-import { useFonts} from '@expo-google-fonts/poppins';
+import { useFonts } from 'expo-font';
 const { width, height } = Dimensions.get('screen');
 const UserSearch = () => {
     const navigation=useNavigation();
@@ -126,27 +126,15 @@ const UserSearch = () => {
         )
       }
     
-      const renderFooter = () => {
-        
-        return (
-          <View
-            style={{
-              paddingVertical: 20,
-              borderTopWidth: 1,
-              borderColor: '#CED0CE'
-            }}>
-            <ActivityIndicator animating size='large' />
-          </View>
-        )
-      }
+      
       const renderEmpty=()=>{
         return(
           <View style={{ justifyContent: 'center', alignItems: 'center' }}>
  
-          <Text style={{ marginTop:30,fontSize: 24, fontWeight: 'bold',color:'white',fontFamily:'MuseoModernoRegular' }}>
+          <Text style={{ marginTop:30,fontSize: 24,color:'white',fontFamily:'MuseoModernoBold' }}>
             No se han 
           </Text>
-          <Text style={{ marginTop:10,fontSize: 24, fontWeight: 'bold',color:'white',fontFamily:'MuseoModernoBold' }}>
+          <Text style={{ marginTop:10,fontSize: 24,color:'white',fontFamily:'MuseoModernoBold' }}>
             encontrado usuarios
           </Text>
    
@@ -189,7 +177,7 @@ const UserSearch = () => {
                   <Text
                     category='s1'
                     style={{
-                      color: '#000',fontSize: 17, fontWeight: 'bold',marginLeft:10
+                      color: '#000',fontSize: 17,marginLeft:10,fontFamily:'MuseoModernoBold'
                     }}>{`${item.username}`}</Text>
                 </View>
               </TouchableOpacity>
