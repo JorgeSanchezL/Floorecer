@@ -125,7 +125,8 @@ export const getAllBusinesses = async (req, res) => {
     querySnapshot.forEach((doc) => {
       let data = doc.data()
       data['docId'] = doc.id
-      body.push(data)
+      if(data.active) body.push(data)
+      
     });
     res.json(body)
 }
@@ -139,7 +140,7 @@ export const getAllBusinessesByCategory = async (req, res) => {
         var promise = new Promise((resolve,reject)=>{
             category.split(',').forEach(async(cat, index, array) => {
                 
-                const q = query(b, where("category", "==", cat));
+                const q = query(b, where("category", "==", cat, 'active','==', 'true'));
                 const businessquery = await getDocs(q);
             
                 businessquery.forEach((doc) => {
