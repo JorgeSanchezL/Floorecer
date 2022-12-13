@@ -126,7 +126,6 @@ export const getAllBusinesses = async (req, res) => {
       let data = doc.data()
       data['docId'] = doc.id
       if(data.active) body.push(data)
-      
     });
     res.json(body)
 }

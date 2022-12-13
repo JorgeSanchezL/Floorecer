@@ -56,12 +56,13 @@ const styles = StyleSheet.create({
             alignItems: 'flex-start',
             justifyContent: 'center',
             height: 40*2.5,
-            zIndex: -2,
+            zIndex: 0,
             position: 'absolute',
             width: "90%",
             marginVertical: 25,
             borderRadius: 8,
-            marginLeft :"15%"
+            marginLeft :"10%",
+            marginTop:-20,
 
 
   },
