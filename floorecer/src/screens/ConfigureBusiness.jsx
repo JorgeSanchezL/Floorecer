@@ -40,8 +40,7 @@ const ConfigureBusiness = ({ route }) => {
   const [newImage, setNewImage] = useState(null)
 
   const updateBusiness = async () => {
-      const formData = new FormData();
-
+      formData.append('active', route.params.active);
       formData.append('name', shopName);
       formData.append('description', description);
       formData.append('nif', nif);
@@ -64,7 +63,6 @@ const ConfigureBusiness = ({ route }) => {
 
       formData.append('uid', route.params.uid)
     try {
-      console.log(route.params)
       const api_call = await fetch(`${BACKEND_URL}/business/updateBusiness`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'multipart/form-data' },
@@ -114,7 +112,6 @@ const ConfigureBusiness = ({ route }) => {
         aspect: [4, 3],
         quality: 1,
     });
-    
     if (!result.cancelled && result.type === 'image') {
         setImage(result.uri);
         setNewImage(result.uri)
