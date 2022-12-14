@@ -7,6 +7,7 @@ import CustomButton from '../components/CustomButton'
 import close from '../../assets/close.png'
 import { useNavigation } from '@react-navigation/native';
 import { BACKEND_URL } from '@env';
+import { useFonts } from 'expo-font';
 
 export const width = Dimensions.get('window').width;
 export const height = Dimensions.get('window').height;
@@ -26,6 +27,14 @@ const Garden = () => {
   const [myPlants, setMyPlants] = useState([{type: "cactus", petals: 3, health: 3, fertilizer: new Date()}, {type: "sunflower", petals: 2, health: 3, fertilizer: new Date()}, {type: "bonsai", petals: 1, health: 3, fertilizer: new Date()}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date()}])
   const [flowerStyles, setFlowerStyles] = useState([styles.flor0, styles.flor1, styles.flor2, styles.flor3])
   const [holeClicked, setHoleClicked] = useState()
+
+  const [fontLoaded] = useFonts({
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
+    PoppinsBold: require("../../assets/fonts/Poppins-Bold.ttf"),
+  })
+
+  if(!fontLoaded) { return null; }
+
 
   useEffect(() => {
     fetchUserData()
@@ -151,6 +160,70 @@ const Garden = () => {
           "Content-type": "application/json; charset=UTF-8"
         },     
       });
+      if (body[0].type !== 'noflower') {
+        if (body[0].type === 'bonsai' || body[0].type == 'redRose' && body[0].petals >= 4) {
+          newStyles[0] = styles.bigFlower0
+        } else {
+          newStyles[0] = styles.flor0
+        }
+      } else {
+        newStyles[0] = styles.hueco0
+      }
+      
+      if (body[1].type !== 'noflower') {
+        if (body[1].type === 'bonsai' || body[1].type == 'redRose' && body[1].petals >= 4) {
+          newStyles[1] = styles.bigFlower1
+        } else {
+          newStyles[1] = styles.flor1
+        }
+      } else {
+        newStyles[1] = styles.hueco1
+      }
+
+      if (body[2].type !== 'noflower') {
+        if (body[2].type === 'bonsai') {
+          if (body[2].petals > 2) {
+            newStyles[2] = styles.bigBonsai2
+          } else {
+            newStyles[2] = styles.smallBonsai2
+          }
+        } else if (body[2].type === 'sunflower') {
+          newStyles[2] = styles.sunflower2
+        } else if (body[2].type === 'redRose') {
+          if (body[2].petals > 3) {
+            newStyles[2] = styles.bigRedRose2
+          } else {
+            newStyles[2] = styles.smallRedRose2
+          }
+        } else {
+          newStyles[2] = styles.flor2
+        }
+      } else {
+        newStyles[2] = styles.hueco2
+      }
+
+      if (body[3].type !== 'noflower') {
+        if (body[3].type === 'bonsai') {
+          if (body[3].petals == 5) {
+            newStyles[3] = styles.veryBigBonsai3
+          } else if (body[3].petals > 2) {
+            newStyles[3] = styles.bigBonsai3
+          } else {
+            newStyles[3] = styles.smallBonsai3
+          }
+        } else if (body[3].type === 'sunflower') {
+          newStyles[3] = styles.sunflower3
+        } else if (body[3].type === 'redRose') {
+          newStyles[3] = body[3].petals < 4 ? styles.smallRedRose3 : styles.bigRedRose3
+        } else if (body[3].type === 'cactus' && body[3].petals == 3) {
+          newStyles[3] = styles.midCactus3
+        } else {
+          newStyles[3] = styles.flor3
+        }
+      } else {
+        newStyles[3] = styles.hueco3
+      }
+      setFlowerStyles(newStyles)
     } catch (error) {
       alert((typeof error === 'string' || error instanceof String) ? error : error.message)
     }
@@ -298,7 +371,7 @@ const Garden = () => {
     title: {
       top: 20,
       fontSize: 35,
-      fontWeight: 'bold',
+      fontFamily:'MuseoModernoBold',
       color: '#00996D',
       alignSelf: 'center',
       marginBottom: 20
@@ -312,6 +385,7 @@ const Garden = () => {
     itemText: {
       alignSelf: 'center',
       fontWeight: 'bold',
+      fontFamily:'PoppinsBold',
       fontSize: 17
     },
     bottom: {
