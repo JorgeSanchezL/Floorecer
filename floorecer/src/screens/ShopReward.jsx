@@ -1,84 +1,45 @@
 import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Dimensions,TouchableOpacity,ImageBackground,Alert} from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text,Modal,Dimensions,TouchableOpacity,ImageBackground} from 'react-native';
 
-import {BACKEND_URL} from '@env';
-import { getItemAsync } from 'expo-secure-store';
-import itemShop1 from '../../assets/itemShop1.png';
+import itemShop2 from '../../assets/itemShop2.png';
 import ItemsImage from '../components/itemShop/ItemsImage.js';
 import { useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get('screen');
 
-const ItemShop = () => {
-  const [items, setItems] = useState(null);
+export const rewards = [
+    {
+        name: 'Descuento',
+        description: "¡Descuento del 10% en ",
+        description2:"cualquier frutería de Valencia!"
+    },
+    {
+      name: 'Descuento ',
+      description: "¡Descuento del 30% en compras ",
+      description2:"de más de 15€ en EcoMarket!"
+    },
+    {
+      name: 'Promocion',
+      description: "¡Compra 2Kg de manzanas por el ",
+      description2:"precio de uno en Frutería Antonio!"
+    },
+  ];
+
+const ShopReward = () => {
   const [itemName, setItemName]=useState ('');
-  const [itemUid, setItemUid]=useState ();
-  const [itemPrice, setItemPrice]=useState ();
   const [selectedItem2, setSelectedItem2]=useState (null);
-  const [uid, setUid] = useState(null);
-  const [imagen,setImagen]=useState(false);
   const navigation = useNavigation();
-  const getImage= () => {
-    setImagen(!imagen);
-
-}
-  const getAllItems = async () => {
-    const api_call = await fetch(`${BACKEND_URL}/garden/items/all`);
-    const response = await api_call.json();
-    setItems(response);
-}
- useEffect(() => {
-  getAllItems();
-  getUid();
-  }, [])
-
-const getUid = async () => {
-  try {
-    auth0 = JSON.parse(await getItemAsync('auth0'));
-    setUid(auth0.uid);
-  } catch(e) { Alert.alert(e); }
-}
-const  onPressBuy= async() =>{
-    try {
-      const response = await fetch(`${BACKEND_URL}/garden/buyItem`, { 
-        method: 'POST',
-        body: JSON.stringify({
-         uid : uid,
-         name: itemName,
-         points: itemPrice,
-         
-      }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8"
-          },     
-      }   
-      );
-      const res=await response.json()
-      Alert.alert('Aviso', res, [
-            
-        { text: 'OK' },
-      ]);
-      
-      }
-      
-   catch (err) {
-    Alert.alert(err)
-   }
-
-}
 
 
 const Item = ({ shopItem }) => (
-  <TouchableOpacity style={styles.greenBox} activeOpacity={1} onPress={() => {{
+  <View style={styles.greenBox} onStartShouldSetResponder={() => {{
     setItemName(shopItem.name),
-    setItemPrice(shopItem.price) ,
     setSelectedItem2(shopItem)
 
     }}}>  
-        <View style={styles.userCircle}>
+        <View >
       <ItemsImage name={shopItem.name}></ItemsImage>
     </View>
      <View style={styles.info}>
-         <Text style = {styles.green}> {shopItem.price+" Tokens"} </Text>
     
     <Text style={styles.textData}>
        {shopItem.name} {"\n"}
@@ -94,7 +55,7 @@ const Item = ({ shopItem }) => (
     </Text>
     </View>
 
-</TouchableOpacity>
+</View>
 );
 
 
@@ -105,20 +66,20 @@ const Item = ({ shopItem }) => (
   );
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={itemShop1} resizeMode="cover" style={styles.background} ></ImageBackground>
+      <ImageBackground source={itemShop2} resizeMode="cover" style={styles.background} ></ImageBackground>
       <View style={styles.sameLine}>
-        <TouchableOpacity  >
-          <Text style={styles.textData2}>Items</Text>
+        <TouchableOpacity onPress={()=>{navigation.navigate('itemShop')}}>
+          <Text style={styles.textData3} >Items</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>{navigation.navigate('shopReward')}}>
-          <Text style={styles.textData3}>Premio</Text>
+        <TouchableOpacity >
+          <Text style={styles.textData2}>Premio</Text>
         </TouchableOpacity>
       </View>
        <Modal visible={selectedItem2 !== null} transparent={true} >
             <View style={[{borderWidth: 0},styles.centeredView]}>
             <View style={styles.modalView}>
             <ItemsImage name={itemName}></ItemsImage>
-              <Text>Quieres comprar {itemName} por {itemPrice} tokens ? </Text>
+              <Text>Quieres canjear esta oferta?</Text>
               <View style={styles.sameLine}>
               <TouchableOpacity style={styles.button} onPress={() => setSelectedItem2(null)}>
                 <Text>Cancelar</Text>
@@ -129,7 +90,7 @@ const Item = ({ shopItem }) => (
             </View></View></View>
           </Modal>
       <FlatList
-        data={items}
+        data={rewards}
         renderItem={renderItem}
       />
     </SafeAreaView>
@@ -146,11 +107,9 @@ const styles = StyleSheet.create({
   },
   greenBox: {
     backgroundColor: '#transparent',
-    height: 100,
     marginTop : '15%',
     marginLeft : '10%',
     marginRight : '5%',
-    borderRadius: 20,
     flexDirection: "row",
     justifyContent: "space-around",
   },
@@ -221,7 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#7D7ACD",
+    backgroundColor: "#FC993D",
     marginLeft: 10
   },
   buttonClose: {
@@ -242,11 +201,8 @@ const styles = StyleSheet.create({
     right:0,
     zIndex:-1
   },
-  userCircle: {
-    marginTop : '10%',
-}
 });
 
 
 
-export default ItemShop;
+export default ShopReward;

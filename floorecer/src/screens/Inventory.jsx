@@ -232,7 +232,13 @@ const progressBarColor =  () => {
   }
   return (
     <SafeAreaView style={styles.container}>
+      
         <Text style={[styles.textHeader,{fontFamily:'MuseoModernoBold'}]}>Mis Plantas</Text>
+        <View style={styles.butLeft}>
+        <TouchableOpacity style={[styles.button,,{backgroundColor:colorProgressBack}]} onPress={() => navigation1.navigate('garden')}>
+                <Text style={styles.textButton}>Volver a mi jardín</Text>
+              </TouchableOpacity>
+        </View>
         <View style={styles.flowerContainer}>
             <ImageFlower plant={myPlants[position]}></ImageFlower>
         <View style={[styles.containerStyle,{backgroundColor:colorProgressBack}]}>
@@ -241,9 +247,6 @@ const progressBarColor =  () => {
             styles.innerStyle,{width, backgroundColor:colorProgressFront},
             ]}
             />
-            <Animated.Text style={styles.label}>
-            {progressBar()}
-            </Animated.Text>
         </View>
         {petal!=5 ?
           <View>
@@ -336,8 +339,20 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       padding: 10,
       elevation: 2,
-      backgroundColor: "#7D7ACD",
       marginTop:20
+    },
+    button: {
+      borderTopRightRadius:20,
+      borderBottomRightRadius:20,
+      backgroundColor: "#7D7ACD",
+    },
+    textButton: {
+      color:'white'
+    },
+    butLeft: {
+      top:5,
+      width:65,
+      position:'absolute',
     }
   
 });
