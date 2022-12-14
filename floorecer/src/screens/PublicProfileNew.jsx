@@ -30,7 +30,7 @@ export default function Prueba() {
   const [fontsLoaded] = useFonts({
     MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
     MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
-    Poppins : Poppins_300Light,
+    Poppins : Poppins_300Light
 })
   
  const updateState = ()  => {
@@ -44,7 +44,11 @@ export default function Prueba() {
 
    }
 
+
  }
+ if (!fontsLoaded) {
+    return null;
+  }
  
   return (
 
@@ -52,7 +56,7 @@ export default function Prueba() {
       <ScrollView>
       <PerfilPublicoNew/>     
       <Text style = {styles.UserName} >
-          Alexandra
+          @Alexandra
         </Text>
       <Text style = {styles.followers} >
           10
