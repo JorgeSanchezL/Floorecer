@@ -34,7 +34,7 @@ const getImage = (imageName) => {
     case "Descuento ":
         return <Descuento30 />
         break;   
-    case "Promocion ":
+    case "Promocion":
         return <Promocion2x1 />
         break;           
     default:
