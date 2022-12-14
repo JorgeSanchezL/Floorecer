@@ -229,16 +229,16 @@ const NewBusiness = () => {
             </TouchableOpacity>
         }
       </View>
-
-    </ScrollView>
-    <View style = {{flex:0, alignItems:'center'}}>
+      <View style = {{flex:0, alignItems:'center'}}>
         <FinalButton 
           text="Publicar comercio" 
           type = 'cuaterciario'
           onPress={onSavePressed}
           />
     
-    </View>
+      </View>
+    </ScrollView>
+    
   </View>
   
 );}

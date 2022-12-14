@@ -165,8 +165,9 @@ const ScanQr = ()=> {
       style = {styles.dropDown}
       placeholder = 'Selecciona un comercio'
       placeholderStyle ={{fontFamily:'PoppinsRegular'}}
-      listItemLabelStyle  ={{fontFamily:'PoppinsRegular'}}
       dropDownContainerStyle = {styles.dropDownContainer}
+      listItemLabelStyle={{color:'grey',fontFamily:'PoppinsRegular'}}
+      scrollViewProps={{showsVerticalScrollIndicator:false}}
     />
  <Text  style = {styles.textData}> Importe  </Text>
  <TextInput
@@ -288,11 +289,13 @@ const ScanQr = ()=> {
            
           },
           dropDownContainer:{
-            backgroundColor:'rgb(229,226,243)',
+            /* backgroundColor:'rgb(229,226,243)', */
+            backgroundColor:'#D8D6E5',
             borderWidth:0, 
             width:'80%',
             alignSelf:'center', 
-            zIndex:25,
+            marginTop:10,
+            zIndex:200,
             elevation:2
           }
           
