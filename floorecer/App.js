@@ -104,6 +104,7 @@ export default App = () => {
                 expirationTime: new Date().getTime()+4.32e+8,
                 isBusinessOwner: body.isBusinessOwner,
                 uid : body.uid,
+                name : body.username,
               };
               await saveData('auth0', JSON.stringify(auth0));
               dispatch({ type: 'SIGN_IN', session: {
