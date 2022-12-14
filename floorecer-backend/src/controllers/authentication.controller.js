@@ -82,8 +82,35 @@ export const register = async (req,res) => {
       numero : numberphone,
       email:email,
       password:password,
-      items: {seeds: {}},
-    garden: [{type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}, {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}],
+      items: {
+        Abono: 0,
+        Elixir: 0,
+        Suplemento: 0,
+        seeds: [
+          {
+            itemName: "Semilla verde",
+            amount: 0
+          },
+          {
+            itemName: "Semilla rosa",
+            amount: 0
+          },
+          {
+            itemName: "Semilla naranja",
+            amount: 0
+          },
+          {
+            itemName: "Semilla morada",
+            amount: 0
+          }
+        ]
+      },
+    garden: [
+      {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)},
+      {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)},
+      {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)},
+      {type: "noflower", petals: 3, health: 3, fertilizer: new Date(2001, 12, 13, 0, 0, 0)}
+    ],
       profileImage : 'testing.png',
       historico : [],
     }
