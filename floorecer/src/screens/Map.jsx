@@ -4,8 +4,8 @@ import MapView, {Marker, PROVIDER_GOOGLE,animateToRegion} from 'react-native-map
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
 import * as Location from 'expo-location';
-import shop from '../../assets/map-icons/shop.png'
-import promotedshop from '../../assets/promoted.png'
+import shop from '../../assets/map-icons/shop2.png'
+import promotedshop from '../../assets/promoted2.png'
 import { getAllBusinesses } from '../../utils/actions';
 import { useNavigation } from '@react-navigation/native';
 
@@ -193,7 +193,112 @@ const mapStyle = [
         "visibility": "off"
       }
     ]
-  }
+  },
+{
+  "featureType": "all",
+  "elementType": "labels.text",
+  "stylers": [
+      {
+          "color": "#878787"
+      }
+  ]
+},
+{
+    "featureType": "all",
+    "elementType": "labels.text.stroke",
+    "stylers": [
+        {
+            "visibility": "off"
+        }
+    ]
+},
+{
+    "featureType": "landscape",
+    "elementType": "all",
+    "stylers": [
+        {
+            "color": "#f9f5ed"
+        }
+    ]
+},
+{
+    "featureType": "road.highway",
+    "elementType": "all",
+    "stylers": [
+        {
+            "color": "#f5f5f5"
+        }
+    ]
+},
+{
+    "featureType": "road.highway",
+    "elementType": "geometry.stroke",
+    "stylers": [
+        {
+            "color": "#c9c9c9"
+        }
+    ]
+},
+{
+    "featureType": "water",
+    "elementType": "all",
+    "stylers": [
+        {
+            "color": "#aee0f4"
+        }
+    ]
+},
+{
+  "featureType": "transit",
+  "stylers": [
+      {
+          "visibility": "off"
+      }
+  ]
+},
+{
+  "featureType": "administrative.land_parcel",
+  "stylers": [
+    {
+      "visibility": "off"
+    }
+  ]
+},
+{
+  "featureType": "administrative.neighborhood",
+  "stylers": [
+    {
+      "visibility": "off"
+    }
+  ]
+},
+{
+  "featureType": "poi",
+  "elementType": "labels.text",
+  "stylers": [
+    {
+      "visibility": "off"
+    }
+  ]
+},
+{
+  "featureType": "road",
+  "elementType": "labels",
+  "stylers": [
+    {
+      "visibility": "off"
+    }
+  ]
+},
+{
+  "featureType": "water",
+  "elementType": "labels.text",
+  "stylers": [
+    {
+      "visibility": "off"
+    }
+  ]
+}
 ]
 
 export default Map;
