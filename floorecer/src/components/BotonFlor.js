@@ -6,7 +6,6 @@ import { AddIcon } from './flowers/addIcon'
 
 import { Bonsai0, Bonsai1, Bonsai2, Bonsai3, Bonsai4, DeadBonsai } from './flowers/bonsais'
 import { Cactus0, Cactus1, Cactus2, Cactus3, Cactus4, DeadCactus } from './flowers/cactus'
-import { Heart0, Heart1, Heart2, Heart3 } from './flowers/hearts'
 import { RedRose0, RedRose1, RedRose2, RedRose3, RedRose4, DeadRedRose } from './flowers/redRoses'
 import { Sunflower0, Sunflower1, Sunflower2, Sunflower3, Sunflower4, DeadSunflower } from './flowers/sunflowers'
 

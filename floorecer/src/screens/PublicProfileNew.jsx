@@ -30,7 +30,7 @@ export default function Prueba() {
   const [fontsLoaded] = useFonts({
     MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
     MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
-    Poppins : Poppins_300Light,
+    Poppins : Poppins_300Light
 })
   
  const updateState = ()  => {
@@ -44,7 +44,11 @@ export default function Prueba() {
 
    }
 
+
  }
+ if (!fontsLoaded) {
+    return null;
+  }
  
   return (
 
@@ -169,6 +173,7 @@ pasos : {
       },
       button1 : {
         "position": "absolute",
+        alignItems : "center",
         "width": 116.97,
         "height": 42,
         "left": 138,
@@ -177,16 +182,12 @@ pasos : {
         "borderTopLeftRadius": 25,
         "borderTopRightRadius": 25,
         "borderBottomRightRadius": 25,
-        "borderBottomLeftRadius": 25
+        "borderBottomLeftRadius": 25,
       },
      seguir : {
-
-            "position": "absolute",
-            "height": 21.6,
-            "left": "25%",
-            "top": windowHeight*0.012,
             "fontFamily": "Poppins",
             "fontStyle": "normal",
+            "top":"19%",
             "fontSize": 14,
             "color": "#F3FEFF"
         },
