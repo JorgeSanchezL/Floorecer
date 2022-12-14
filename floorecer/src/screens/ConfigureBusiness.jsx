@@ -184,8 +184,7 @@ const ConfigureBusiness = ({ route }) => {
             </TouchableOpacity>
         
       </View>
-    </ScrollView>
-    <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
+      <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
       
       <FinalButton 
           text="Cancelar" 
@@ -198,7 +197,9 @@ const ConfigureBusiness = ({ route }) => {
           onPress={onSavePressed}
           />
 
-    </View>
+      </View>
+    </ScrollView>
+    
   </View>
   
 );}

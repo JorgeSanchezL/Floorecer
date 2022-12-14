@@ -82,6 +82,7 @@ const DropDownTimePicker= (props) => {
               fontWeight: "bold"
             }}
             listItemLabelStyle={{color:'grey',fontFamily:'PoppinsRegular', fontSize:12}}
+            scrollViewProps={{showsVerticalScrollIndicator:false}}
         />
     
     
@@ -114,12 +115,11 @@ const styles = StyleSheet.create({
       alignSelf:'center',
     }, */
     dropDownContainer:{
-      backgroundColor:'rgb(229,226,243)',
+      backgroundColor:'#D8D6E5',
       borderWidth:0, 
       width:123,
-      zIndex:200,
+      zIndex:300,
       elevation:2,
-      direction:'ltr',
     }
 });
 
