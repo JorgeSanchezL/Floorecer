@@ -7,6 +7,7 @@ import CustomButton from '../components/CustomButton'
 import close from '../../assets/close.png'
 import { useNavigation } from '@react-navigation/native';
 import { BACKEND_URL } from '@env';
+import Sun from '../components/flowers/Sun';
 import { useFonts } from 'expo-font';
 
 export const width = Dimensions.get('window').width;
@@ -330,6 +331,9 @@ const Garden = () => {
           <View style={flowerStyles[3]}>
             <BotonFlor id="1" plant={myPlants[3]} onClick={() => getOnHoleClick(3)} />
           </View>
+          <View style={styles.centered}>
+            <Sun />
+          </View>
           <Modal visible={openSeedsMenu}>
             <View style={styles.modal}>
               <Text style={styles.title}>Mis objetos</Text>
@@ -374,6 +378,15 @@ const Garden = () => {
     garden: {
       backgroundColor: '#F3FEFF',
       flex: 1
+    },
+    centered: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     modal: {
       backgroundColor: '#F3FEFF',
