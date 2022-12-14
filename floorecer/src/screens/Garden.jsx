@@ -280,13 +280,13 @@ const Garden = () => {
     result[holeClicked].health = health
     result[holeClicked].petals = petals
     switch (inventory.seeds[pos].itemName) {
-      case "Cactus seeds":
+      case "Semilla verde":
         result[holeClicked].type = "cactus"
         break
-      case "Red Rose seeds":
+      case "Semilla rosa":
         result[holeClicked].type = "redRose"
         break
-      case "Sunflower seeds":
+      case "Semilla naranja":
         result[holeClicked].type = "sunflower"
         break
       default:
