@@ -7,13 +7,13 @@ import Suplemento from '../components/inventory/Suplemento.js'
 import Elixir from '../components/inventory/Elixir.js'
 import ImageFlower from '../components/ImageFlowerInventory';
 import Lock from '../components/inventory/lockfill'
-
+import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 
 
 const Inventory = ({navigation,route}) => {
   const{position}=route.params
-  
+  const navigation1 = useNavigation();
   const [uid, setUid] = useState(null);
   const [healthBar,sethealthBar]=useState(0);
   const [suplemento,setSuplemento]=useState(0);
@@ -88,7 +88,8 @@ const progressBar =  () => {
   else if(healthBar==0){return 0}
 }
 const timeLeft =  () => { 
-  if(petal==1){ return "2 días 1h"}
+  if(health==0){return "Revive la planta con el Elixir !!!"}
+  else if(petal==1){ return "2 días 1h"}
   else if(petal==2){ return "1 día 19h"}
   else if(petal==3){ return "1 día 9h"}
   else if(petal==4){return "18h"}
@@ -244,10 +245,15 @@ const progressBarColor =  () => {
             {progressBar()}
             </Animated.Text>
         </View>
-        {
+        {petal==5?
           <View>
           <Lock></Lock>
           <Text>Queda {timeLeft()}</Text>
+          </View>:
+          <View>
+              <TouchableOpacity style={styles.button} onPress={() => navigation1.navigate('premio')}>
+                <Text>Floorecer</Text>
+              </TouchableOpacity>
           </View>
         
         }
@@ -310,7 +316,6 @@ const styles = StyleSheet.create({
         borderColor: "transparent",
         borderWidth: 3,
         borderRadius: 30,
-        marginTop: 50,
         justifyContent: "center",
         },
     innerStyle:{
@@ -324,6 +329,13 @@ const styles = StyleSheet.create({
         position: "absolute",
         zIndex: 1,
         alignSelf: "center",
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2,
+      backgroundColor: "#7D7ACD",
+      marginTop:20
     }
   
 });

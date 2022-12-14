@@ -4,8 +4,8 @@ import Svg, { Path, Line } from "react-native-svg"
 export function Sunflower0() {
   return (
     <Svg
-    width={129}
-    height={89}
+    width={100}
+    height={200}
     viewBox="0 0 129 89"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +22,8 @@ export function Sunflower0() {
 export function Sunflower1() {
     return (
       <Svg
-      width={160}
-      height={341}
+      width={120}
+      height={320}
       viewBox="0 0 160 341"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -84,8 +84,8 @@ export function Sunflower1() {
 export function Sunflower2() {
     return (
       <Svg
-      width={160}
-      height={342}
+      width={120}
+      height={320}
       viewBox="0 0 160 342"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -158,8 +158,8 @@ export function Sunflower2() {
 export function Sunflower3() {
     return (
       <Svg
-      width={209}
-      height={440}
+      width={120}
+      height={320}
       viewBox="0 0 209 440"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -244,8 +244,8 @@ export function Sunflower3() {
 export function Sunflower4() {
     return (
       <Svg
-      width={209}
-      height={440}
+      width={120}
+      height={320}
       viewBox="0 0 209 440"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -342,8 +342,8 @@ export function Sunflower4() {
 export function DeadSunflower() {
     return (
       <Svg
-      width={219}
-      height={449}
+      width={120}
+      height={320}
       viewBox="0 0 219 449"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

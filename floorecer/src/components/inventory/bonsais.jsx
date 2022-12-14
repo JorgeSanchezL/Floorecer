@@ -5,7 +5,7 @@ export function Bonsai0() {
   return (
     <Svg
     width={100}
-    height={320}
+    height={200}
     viewBox="0 0 129 89"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@ export function Bonsai1() {
   return (
     <Svg
     width={100}
-    height={320}
+    height={200}
     viewBox="0 0 129 216"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +197,7 @@ export function Bonsai4() {
   );
 }
 
-export function DeadCactus() {
+export function DeadBonsai() {
   return (
     <Svg
     width={200}

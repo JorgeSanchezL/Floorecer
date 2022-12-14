@@ -173,7 +173,7 @@ export function Bonsai4() {
   );
 }
 
-export function DeadCactus() {
+export function DeadBonsai() {
   return (
     <Svg
   width={146}

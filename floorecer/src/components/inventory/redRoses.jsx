@@ -4,8 +4,8 @@ import Svg, { G, Line, Path, Circle, Defs, ClipPath, Rect } from "react-native-s
 export function RedRose0() {
   return (
     <Svg
-    width={129}
-    height={89}
+    width={100}
+    height={200}
     viewBox="0 0 129 89"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +22,8 @@ export function RedRose0() {
 export function RedRose1() {
     return (
       <Svg
-      width={254}
-      height={388}
+      width={160}
+      height={320}
       viewBox="0 0 254 388"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -84,8 +84,8 @@ export function RedRose1() {
 export function RedRose2() {
     return (
       <Svg
-      width={254}
-      height={388}
+      width={150}
+      height={320}
       viewBox="0 0 254 388"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -170,8 +170,8 @@ export function RedRose2() {
 export function RedRose3() {
   return (
     <Svg
-    width={254}
-    height={388}
+    width={150}
+    height={320}
     viewBox="0 0 254 388"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -266,8 +266,8 @@ export function RedRose3() {
 export function RedRose4() {
     return (
       <Svg
-      width={341}
-      height={404}
+      width={200}
+      height={320}
       viewBox="0 0 341 404"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -399,11 +399,11 @@ export function RedRose4() {
     );
 }
 
-export function DeadRose() {
+export function DeadRedRose() {
     return (
       <Svg
-      width={244}
-      height={369}
+      width={200}
+      height={320}
       viewBox="0 0 244 369"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

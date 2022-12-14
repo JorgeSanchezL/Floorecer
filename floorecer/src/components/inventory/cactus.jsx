@@ -5,7 +5,7 @@ export function Cactus0() {
   return (
     <Svg
     width={100}
-    height={320}
+    height={200}
     viewBox="0 0 129 168"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@ export function Cactus1() {
     return (
       <Svg
       width={100}
-      height={320}
+      height={200}
       viewBox="0 0 129 215"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ export function Cactus1() {
 export function Cactus2() {
     return (
       <Svg
-      width={129}
+      width={120}
       height={320}
       viewBox="0 0 129 296"
       fill="none"
@@ -146,8 +146,8 @@ export function Cactus2() {
 export function Cactus3() {
     return (
       <Svg
-      width={129}
-      height={371}
+      width={90}
+      height={320}
       viewBox="0 0 129 371"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -233,8 +233,8 @@ export function Cactus3() {
 export function Cactus4() {
     return (
       <Svg
-      width={129}
-      height={421}
+      width={90}
+      height={320}
       viewBox="0 0 129 421"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -320,8 +320,8 @@ export function Cactus4() {
 export function DeadCactus() {
     return (
       <Svg
-      width={137}
-      height={364}
+      width={100}
+      height={330}
       viewBox="0 0 137 364"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
