@@ -36,8 +36,8 @@ const UserTabs = () => {
                 },
                 headerShown: false,
                 tabBarShowLabel: false,
-                tabBarActiveTintColor: '#367c1e',
-                tabBarInactiveTintColor: '#4b4b4b',
+                tabBarActiveTintColor: '#494693',
+                tabBarInactiveTintColor: '#7d7acd',
             })}
         >
             <Tab.Screen name='home' component={Map} />

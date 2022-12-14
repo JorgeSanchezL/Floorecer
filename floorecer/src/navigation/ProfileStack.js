@@ -2,10 +2,10 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import PublicProfile from '../screens/PublicProfile';
-import UserProfile from '../screens/UserProfile';
+import UserProfile from '../screens/UserPorfileNew';
 import Garden from '../screens/Garden'
 import Inventory from '../screens/Inventory';
-import Premio from '../screens/Prueba';
+import Premio from '../screens/UserPorfileNew';
 
 const Stack = createStackNavigator();
 

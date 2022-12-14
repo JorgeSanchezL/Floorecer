@@ -68,7 +68,7 @@ const  onPressBuy= async() =>{
 
 
 const Item = ({ shopItem }) => (
-  <View style={styles.greenBox} onStartShouldSetResponder={() => {{
+  <TouchableOpacity style={styles.greenBox} activeOpacity={1} onPress={() => {{
     setItemName(shopItem.name),
     setItemPrice(shopItem.price) ,
     setSelectedItem2(shopItem)
@@ -94,7 +94,7 @@ const Item = ({ shopItem }) => (
     </Text>
     </View>
 
-</View>
+</TouchableOpacity>
 );
 
 

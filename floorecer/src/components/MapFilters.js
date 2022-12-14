@@ -41,7 +41,7 @@ const MapFilters = (props) => {
        
         const renderItem = ({ item }) => {
           const backgroundColor = categories.includes(item.value)
-            ? "#88c484" : 'white';
+            ? "#7d7acd" : 'white';
           const color = categories.includes(item.value) ? 'white' : 'black';
       
           return (
