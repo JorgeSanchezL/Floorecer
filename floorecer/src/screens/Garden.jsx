@@ -335,14 +335,24 @@ const Garden = () => {
               {inventory != null && 
                 <View style={styles.card} key={0}>
                   <Text style={styles.itemText}>Abono x{inventory.Abono}</Text>
-                  <CustomButton onPress={() => {fertilizeHole(); setOpenSeedsMenu(false)}} text='Usar' type="cuaterciario" alignRight={true}/>
+                  {
+                    inventory.Abono > 0 ? 
+                      <CustomButton onPress={() => {fertilizeHole(); setOpenSeedsMenu(false)}} text='Usar' type="cuaterciario" alignRight={true}/> 
+                      : 
+                      <></>
+                  }
                 </View>
               }
               {inventory != null && inventory.seeds.map((element, index) => {
                 return (
                   <View style={styles.card} key={index + 1}>
                     <Text style={styles.itemText}>{element.itemName} x{element.amount}</Text>
-                    <CustomButton onPress={() => {plantSeed(index); setOpenSeedsMenu(false)}} text='Plantar' type="cuaterciario" alignRight={true}/>
+                    {
+                      element.amount > 0 ?
+                        <CustomButton onPress={() => {plantSeed(index); setOpenSeedsMenu(false)}} text='Plantar' type="cuaterciario" alignRight={true}/>
+                        :
+                        <></>
+                    }
                   </View>
                 )
               })}
