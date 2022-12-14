@@ -49,19 +49,19 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setCLicked}) => {
   );
 };
 export default SearchBar;
-
+const width= 310
 // styles
 const styles = StyleSheet.create({
   container: {
             alignItems: 'flex-start',
             justifyContent: 'center',
             height: 40*2.5,
-            zIndex: 0,
+            zIndex: -1,
             position: 'absolute',
-            width: "90%",
-            marginVertical: 25,
+            width: width,
+            marginTop: 26,
             borderRadius: 8,
-            marginLeft :"10%",
+            marginLeft :"3%",
             marginTop:-20,
 
 
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   searchBar__unclicked: {
     padding: 5,
     flexDirection: "row",
-    width: "80%",
+    width: width,
     backgroundColor: "white",
     borderRadius: 8,
     alignItems: "center",
