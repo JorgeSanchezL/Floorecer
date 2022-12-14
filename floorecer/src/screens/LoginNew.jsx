@@ -16,6 +16,7 @@ export default function LoginNew() {
 const [email,setEmail]=useState('');
 const [password,setPassword]=useState('');
 const {height}=useWindowDimensions();
+const [coordinations , setCoordinations] =useState("")
 
 const { signIn } = React.useContext(AuthContext);
 

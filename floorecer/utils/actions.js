@@ -18,7 +18,7 @@ export const getCategories = async () => {
   }
 
 export const getAllBusinesses = async ( category) => {
-
+  console.log('getAllBusiness')
   let type = 'getAllBusinesses'
   if(category != null && category.length > 0) type = `getAllBusinessesByCategory/${category}`
   
@@ -39,4 +39,31 @@ export const getAllBusinesses = async ( category) => {
   }
 
 
+}
+
+export const updateBusiness = async (uid, body) => {
+  console.log(uid)
+  console.log(body)
+  try {
+    const api_call = await fetch(`${BACKEND_URL}/business/updateBusiness`, {
+              method: 'POST',
+              headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  uid: uid,
+                  body: body
+              })
+          });
+          const response = await api_call.json();
+
+          if (response.saved) {
+            return true;
+          } else { 
+            return false; 
+          }
+  } catch (error) {
+    console.log(err)
+  }
 }

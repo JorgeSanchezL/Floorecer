@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
-import CustomButton from '../components/CustomButton';
-import ImageCarouselPickingImages from '../components/ImageCarouselPickingImages';
-import FinalustomDropDownPicker from '../components/FinalCustomDropDownPiker';
+import { View, Text, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
+import FinalButton from '../components/FinalButton';
 import DropDownTimePicker from "../components/DropDownTimePicker";
 import SelectionButton from "../components/SelectionButton";
 import { ScrollView, Switch } from "react-native-gesture-handler";
 import { Image, TouchableOpacity, Modal, Icon} from "react-native";
 import MapView from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native';
-
+import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
+import { useFonts } from 'expo-font';
+import FinalTextInput from '../components/FinalTextInput';
+import { BACKEND_URL } from '@env';
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
-
+const {width} = Dimensions.get("window");
+const height = width * 0.6;
 
 const ConfigureBusiness = ({ route }) => {
+  const [fontLoaded] = useFonts({
+    PoppinsMedium: require("../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf"),
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+  })
   const navigation=useNavigation();
 
   const [shopName, setShopName] = useState(route.params.name);
+  const [description, setDescription] = useState(route.params.description);
   const [nif, setNif] = useState(route.params.NIF);
   const [address, setAddress] = useState(route.params.address);
   const [openingHours, setOpeningHours] = useState(route.params.openingHours);
@@ -26,32 +36,44 @@ const ConfigureBusiness = ({ route }) => {
   const [location, setLocation] = useState(route.params.location)
   const {height}= useWindowDimensions();
   const {width} = Dimensions.get("window");
-  
-  const images =[]
+  const [image, setImage] = useState(route.params.imageURL)
+  const [newImage, setNewImage] = useState(null)
 
   const updateBusiness = async () => {
+      const formData = new FormData();
+
+      formData.append('name', shopName);
+      formData.append('description', description);
+      formData.append('nif', nif);
+      formData.append('address', address);
+      formData.append('location', JSON.stringify(location));
+      formData.append('openingHours',
+        JSON.stringify(openingHours));
+      formData.append('category', category);
+      if(newImage){
+        const imgName = image.split('/').pop();
+        const imgType = imgName.split('.').pop();
+        formData.append('image', {
+          uri: image,
+          type: `image/${imgType}`,
+          name: imgName
+        });
+      }else{
+        formData.append('imageURL',image)
+      }
+
+      formData.append('uid', route.params.uid)
     try {
-      const api_call = await fetch('http://192.168.43.205:5000/business/updateBusiness', {
+      console.log(route.params)
+      const api_call = await fetch(`${BACKEND_URL}/business/updateBusiness`, {
                 method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    uid: 'VWFVMwQ5Q2gxpRENlPbS',
-                    body: {
-                      name:shopName,
-                      NIF:nif,
-                      address:address,
-                      openingHours:openingHours,
-                      location:location
-                    }
-                })
+                headers: { 'Content-Type': 'multipart/form-data' },
+                body: formData
             });
             const response = await api_call.json();
 
             if (response.saved) {
-                navigation.navigate('myshops');
+                navigation.navigate('myShops');
             } else { throw -1; }
     } catch (error) {
       Alert.alert(error)
@@ -79,17 +101,37 @@ const ConfigureBusiness = ({ route }) => {
   const onCancelPressed = () =>{
     navigation.navigate('myShops');
   }
-
+  const pickImage = async () => {
+    let permission = await ImagePicker.getMediaLibraryPermissionsAsync(true);
+    if (!permission.granted) {
+        permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!permission.granted) { return; }
+    }
+    
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+    
+    if (!result.cancelled && result.type === 'image') {
+        setImage(result.uri);
+        setNewImage(result.uri)
+    }
+  };
+  if(!fontLoaded) { return null; }
   return(
   <View style={[styles.mainContainer]}>
 
-    <Text style={[styles.title,{marginTop:height * 0.05}]}>{shopName}</Text>
 
     <ScrollView 
       nestedScrollEnabled={true}
-      style={{width,height: height * 0.79, paddingHorizontal:10}}>
-        
+      style={{width,height: height * 0.79, paddingHorizontal:0}}>
+
+      <Text style={[styles.title,{marginTop:height * 0.05}]}>{shopName}</Text>
       <MyTextInput name = 'Nombre' value={shopName} setValue={setShopName}/>
+      <MyTextInput name = 'Descripción' value={description} setValue={setDescription}/>
       <MyTextInput name = 'NIF' value={nif} setValue={setNif}/>
 
       <MyTextInput 
@@ -105,8 +147,8 @@ const ConfigureBusiness = ({ route }) => {
         location={location} 
         setLocation={setLocation}
       />}
-      <Text style={styles.header2}>Categoría</Text>
-      <FinalCustomDropDownPicker value={category} setValue={setCategory} ></FinalCustomDropDownPicker>
+      <Text style={styles.header1}>Categoría</Text>
+      <FinalCustomDropDowPicker value={category} setValue={setCategory} ></FinalCustomDropDowPicker>
 
       <Text style={styles.header2}>Horario de apertura</Text>
       {
@@ -122,26 +164,42 @@ const ConfigureBusiness = ({ route }) => {
     
         })
       }
-
-      <ImageCarouselPickingImages images = {images}/>
-    
+      <Image source = {{uri: image}} style={styles.image}/>
+      <View style={styles.container}>
+        
+            <TouchableOpacity
+                onPress={pickImage}
+                activeOpacity={0.8}
+                style={{alignItems: 'center' ,backgroundColor:'rgb(229,226,243)', borderRadius:10, width:350,alignSelf:'center'}}
+            >
+                <MaterialIcons
+                    name='image-search'
+                    size={35}
+                    color={'#606060'}
+                    style={{paddingTop: 10}}
+                />
+                <Text style={{ color: '#000',paddingVertical: 10}}>
+                  Pulsa para seleccionar una imagen
+                </Text>
+            </TouchableOpacity>
+        
+      </View>
       <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
       
-        <CustomButton 
-            text="Cancelar" 
-            type = 'cuaterciario'
-            onPress={onCancelPressed}
-            />
-        <CustomButton 
-            text="Guardar" 
-            type = 'cuaterciario'
-            onPress={onSavePressed}
-            />
-  
-        </View>
-  
-    </ScrollView>
+      <FinalButton 
+          text="Cancelar" 
+          type = 'Mapa2'
+          onPress={onCancelPressed}
+          />
+      <FinalButton 
+          text="Guardar" 
+          type = 'Mapa'
+          onPress={onSavePressed}
+          />
 
+      </View>
+    </ScrollView>
+    
   </View>
   
 );}
@@ -152,15 +210,15 @@ export const MyTextInput = (props) => {
     <View
       style={{width:'100%',}}
     >
-      <Text style={{ marginTop: props.name ? 10 : 0 ,height: !props.name ? 10 : null, fontSize:20, fontWeight:"bold" }}>
+      <Text style={styles.header1}>
         {props.name}
       </Text>
       <View style={styles.sectionStyle}>
-        <TextInput
-            style = {{flex:1, padding:10}}
-            placeholder={props.info}
-            value={props.value}
-            onChangeText={props.setValue}
+        
+        <FinalTextInput
+          info ={props.info}
+          value = {props.value}
+          setValue = {props.setValue}
         />
         { props.isLocation && 
             <TouchableOpacity onPress={()=>props.setIsVisibleMap(true)}>
@@ -294,17 +352,17 @@ function Mapa ({isVisibleMap, setIsVisibleMap, location,setLocation}){
                                 }   
                             </MapView>
                             <View style = {{flex:0, flexDirection:'row', justifyContent:"center"}}>
-                                <CustomButton 
+                                <FinalButton 
                                     text="Cancelar" 
-                                    type = 'cuaterciario'
+                                    type = 'Mapa2'
                                     onPress={() => {
                                         setIsVisibleMap(false);
                                         setNewRegion(location)
                                       }}
                                     />
-                                <CustomButton 
+                                <FinalButton 
                                     text="Guardar ubicación" 
-                                    type = 'cuaterciario'
+                                    type = 'Mapa'
                                     onPress={confirmLocation}
                                     />
                             </View>
@@ -322,12 +380,16 @@ const styles = StyleSheet.create({
       height:'100%',
       backgroundColor:'white'
     },
+    container:{
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      marginVertical: 20
+    },
     title: {
-      fontSize: 30,
-      fontWeight: 'bold',
-      color: 'black',
       textAlign:'center',
-      textTransform:"uppercase"
+      fontFamily:'MuseoModernoBold',
+      fontSize:27,
+      marginBottom:10,
     },
     sectionStyle:{
         flexDirection: 'row',
@@ -335,7 +397,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: 40,
         borderRadius: 5,
-        marginTop:10
+    },
+    image:{
+      width,height,
+      resizeMode: 'contain',
+      alignItems: 'center',
     },
     imageStyle: {
       padding: 15,
@@ -345,11 +411,21 @@ const styles = StyleSheet.create({
       resizeMode: 'stretch',
       alignItems: 'center',
     },
-    header2:{
+    header1:{
       marginTop:10, 
-      fontSize:20, 
-      fontWeight:"bold",
-      margin:16
+      fontSize:20,
+      marginBottom:3,
+      marginLeft:20,
+      fontFamily:'PoppinsRegular',
+      fontSize:12,
+    },
+    header2:{
+      marginTop:25, 
+      fontSize:20,
+      marginBottom:10,
+      marginLeft:20,
+      fontFamily:'PoppinsRegular',
+      fontSize:12,
     },
     header3:{
       fontSize:15, 
@@ -391,6 +467,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginLeft:5,
+        width:20
     },
     closeButtonView:{
         flexDirection:'column', position:'absolute', top: 35, alignSelf:'flex-end'
@@ -400,8 +477,8 @@ const styles = StyleSheet.create({
 
     },
     addButton:{
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         marginBottom:23,
         marginTop:-10,
         alignSelf:'flex-start'

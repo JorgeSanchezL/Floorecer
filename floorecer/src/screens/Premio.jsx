@@ -7,7 +7,7 @@ import image from '../../assets/image/back2.jpeg'
 import Svg from 'react-native-svg';
 import { useFonts, Poppins_300Light } from '@expo-google-fonts/poppins';
 import * as SplashScreen from 'expo-splash-screen';
-export default function Register1() {
+export default function Premio() {
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
   });

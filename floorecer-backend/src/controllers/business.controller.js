@@ -1,7 +1,7 @@
 import { database, storage } from '../../firebase.js';
 import { doc, setDoc, collection, getDocs,
     getDoc, updateDoc, query, where,deleteDoc } from 'firebase/firestore';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import randomatic from 'randomatic';
 import path from 'path';
 
@@ -15,7 +15,8 @@ export const newBusiness = async(req,res) => {
         address,
         location,
         openingHours,
-        category
+        category,
+        description
     } = req.body
     
     if( await UpdateNumberBusiness(owner)){ 
@@ -29,11 +30,11 @@ export const newBusiness = async(req,res) => {
         
         uploadBytes(storageRef, file.buffer)
         .then(async (snapshot) => {
-            
+             const imageURL = await getDownloadURL(storageRef);
              await setDoc(doc(collection(database, "business")), {
                 owner: owner,
                 name: name,
-                Address: address,
+                address: address,
                 NIF: nif,
                 location: JSON.parse(location),
                 openingHours: JSON.parse(openingHours),
@@ -41,23 +42,11 @@ export const newBusiness = async(req,res) => {
                 category: category,
                 promoted: false,
                 reviews: [],
-                description:'',
-                imageURL: snapshot.ref._location.path_
+                description:description || '',
+                imageURL: imageURL
             }); 
         });
-       /* await setDoc(doc(collection(database, "business")), {
-            owner: owner,
-            name: name,
-            Address: address,
-            NIF: nif,
-            location: JSON.parse(location),
-            openingHours: JSON.parse(openingHours),
-            active: true,
-            category: category,
-            promoted: false,
-            //imageURL: snapshot.ref._location.path_
-        });*/
-        
+
         res.status(200);
         res.send('Creado con exito');
     }else{
@@ -134,9 +123,10 @@ export const getAllBusinesses = async (req, res) => {
     const querySnapshot = await getDocs(collection(database, "business"));
     let body = []
     querySnapshot.forEach((doc) => {
-      body.push(doc.data())
+      let data = doc.data()
+      data['docId'] = doc.id
+      if(data.active) body.push(data)
     });
-    
     res.json(body)
 }
 
@@ -149,7 +139,7 @@ export const getAllBusinessesByCategory = async (req, res) => {
         var promise = new Promise((resolve,reject)=>{
             category.split(',').forEach(async(cat, index, array) => {
                 
-                const q = query(b, where("category", "==", cat));
+                const q = query(b, where("category", "==", cat, 'active','==', 'true'));
                 const businessquery = await getDocs(q);
             
                 businessquery.forEach((doc) => {
@@ -223,6 +213,20 @@ export const promoteBusiness = async (req,res) => {
     }
     
 }
+export const changeStatus = async (req,res) => {
+    const uid=req.body.uid
+    const active=req.body.active
+    console.log(uid)
+    console.log(active)
+    try {
+        const docRef = doc(database, "business", uid);
+      await updateDoc(docRef, { active: active});
+    } catch(error) {
+        Alert.alert(error)
+        console.log(error)
+    }
+    
+}
 
 export const getBusiness = async(req,res) => {
     
@@ -284,15 +288,68 @@ export const upgradePoints = async (req,res) => {
 
 
 export const updateBusiness = async (req, res) => {
-    const { uid, body } = req.body;
+    console.log('updateBusiness')
+    const {
+        active,
+        name,
+        nif,
+        address,
+        location,
+        openingHours,
+        category,
+        uid,
+        imageURL,
+        description
+    } = req.body
+    const file = req.file;
+    console.log(active)
+    if(file){
+        const fileName = randomatic('Aa0', 32) + path.extname(file.originalname);
+        const storageRef = ref(storage, fileName);
 
-    try {
-        const docRef = doc(database, 'business', uid);
-        await updateDoc(docRef, body);
-        res.json({saved: true});
-    } catch (e) { 
-        res.status(500).json({saved: false});
+        uploadBytes(storageRef, file.buffer)
+        .then(async (snapshot) => {
+            const imageURL = await getDownloadURL(storageRef);
+            try {
+                const docRef = doc(database, 'business', uid);
+                await updateDoc(docRef, {
+                    active: active,
+                    name: name,
+                    address: address,
+                    NIF: nif,
+                    location: JSON.parse(location),
+                    openingHours: JSON.parse(openingHours),
+                    category: category,
+                    imageURL: imageURL,
+                    description: description
+                });
+                res.json({saved: true});
+            } catch (e) { 
+                res.status(500).json({saved: false});
+                console.log(e)
+            }
+        });
+    }else{
+        try {
+            const docRef = doc(database, 'business', uid);
+            await updateDoc(docRef, {
+                name: name,
+                address: address,
+                NIF: nif,
+                location: JSON.parse(location),
+                openingHours: JSON.parse(openingHours),
+                category: category,
+                imageURL: imageURL,
+                description: description
+            });
+            res.json({saved: true});
+        } catch (e) { 
+            res.status(500).json({saved: false});
+            console.log(e)
+        }
     }
+    
+
 }
 export const getCategories = async(req,res) => {
     const docSnap = await getDoc(doc(database, "Categories",'Categories'));

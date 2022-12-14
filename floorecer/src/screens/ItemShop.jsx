@@ -1,8 +1,12 @@
 import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Pressable,TouchableOpacity,Image,Alert} from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Dimensions,TouchableOpacity,ImageBackground,Alert} from 'react-native';
 
 import {BACKEND_URL} from '@env';
 import { getItemAsync } from 'expo-secure-store';
+import itemShop1 from '../../assets/itemShop1.png';
+import ItemsImage from '../components/itemShop/ItemsImage.js';
+import { useNavigation } from '@react-navigation/native';
+const { width, height } = Dimensions.get('screen');
 
 const ItemShop = () => {
   const [items, setItems] = useState(null);
@@ -11,16 +15,10 @@ const ItemShop = () => {
   const [itemPrice, setItemPrice]=useState ();
   const [selectedItem2, setSelectedItem2]=useState (null);
   const [uid, setUid] = useState(null);
-  const [imagen,setImagen]=useState('');
-
-  const getImage= async () => {
-    try{
-    const api_call = await fetch(`${BACKEND_URL}/garden/items/${itemUid}`);
-    const response = await api_call.json();
-    setImagen(response.imageURL);
-    }catch(error){
-      Alert.alert(error)
-    }
+  const [imagen,setImagen]=useState(false);
+  const navigation = useNavigation();
+  const getImage= () => {
+    setImagen(!imagen);
 
 }
   const getAllItems = async () => {
@@ -32,9 +30,6 @@ const ItemShop = () => {
   getAllItems();
   getUid();
   }, [])
-  useEffect(() => {
-    getImage();
-    }, [itemUid])
 
 const getUid = async () => {
   try {
@@ -73,21 +68,33 @@ const  onPressBuy= async() =>{
 
 
 const Item = ({ shopItem }) => (
-  <View style={styles.greenBox} onStartShouldSetResponder={() => {{
+  <TouchableOpacity style={styles.greenBox} activeOpacity={1} onPress={() => {{
     setItemName(shopItem.name),
     setItemPrice(shopItem.price) ,
-    setSelectedItem2(shopItem),
-    setItemUid(shopItem.uid)
+    setSelectedItem2(shopItem)
 
     }}}>  
+        <View style={styles.userCircle}>
+      <ItemsImage name={shopItem.name}></ItemsImage>
+    </View>
+     <View style={styles.info}>
          <Text style = {styles.green}> {shopItem.price+" Tokens"} </Text>
     
     <Text style={styles.textData}>
        {shopItem.name} {"\n"}
       
     </Text>
+    <Text style={styles.textData1}>
+       {shopItem.description} {"\n"}
+      
+    </Text>
+    <Text style={styles.textData1}>
+       {shopItem.description2} {"\n"}
+      
+    </Text>
+    </View>
 
-</View>
+</TouchableOpacity>
 );
 
 
@@ -98,16 +105,20 @@ const Item = ({ shopItem }) => (
   );
   return (
     <SafeAreaView style={styles.container}>
-       <Modal visible={selectedItem2 !== null} transparent={true}>
-            <View style={[{borderWidth: 1},styles.centeredView]}>
+      <ImageBackground source={itemShop1} resizeMode="cover" style={styles.background} ></ImageBackground>
+      <View style={styles.sameLine}>
+        <TouchableOpacity  >
+          <Text style={styles.textData2}>Items</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>{navigation.navigate('shopReward')}}>
+          <Text style={styles.textData3}>Premio</Text>
+        </TouchableOpacity>
+      </View>
+       <Modal visible={selectedItem2 !== null} transparent={true} >
+            <View style={[{borderWidth: 0},styles.centeredView]}>
             <View style={styles.modalView}>
-            <Image
-              style={styles.userCircle}
-              source={{
-                uri:`${imagen}`
-              }}
-            />
-              <Text>{itemName}</Text>
+            <ItemsImage name={itemName}></ItemsImage>
+              <Text>Quieres comprar {itemName} por {itemPrice} tokens ? </Text>
               <View style={styles.sameLine}>
               <TouchableOpacity style={styles.button} onPress={() => setSelectedItem2(null)}>
                 <Text>Cancelar</Text>
@@ -129,25 +140,47 @@ const Item = ({ shopItem }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+  },
+  info:{
+    marginLeft:20
   },
   greenBox: {
-    backgroundColor: '#D7E8DE',
-            height: 100,
-            marginTop : '10%',
-            marginLeft : '5%',
-            marginRight : '5%',
-            borderRadius: 20
+    backgroundColor: '#transparent',
+    height: 100,
+    marginTop : '15%',
+    marginLeft : '10%',
+    marginRight : '5%',
+    borderRadius: 20,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   title: {
     fontSize: 32,
   },
   textData: {
     fontWeight: 'bold',
+    fontSize:21,
+    textAlign : 'left',
+    marginTop : '-10%',
+    marginLeft : '5%'
+  },
+  textData1: {
     color: '#353535',
     textAlign : 'left',
+    marginLeft : '5%',
     marginTop : '-5%',
-    marginLeft : '5%'
+  },
+  textData2: {
+    color: 'white',
+    textAlign : 'left',
+    fontWeight: 'bold',
+    fontSize:21,
+  },
+  textData3: {
+    color: '#353535',
+    textAlign : 'left',
+    fontWeight: 'bold',
+    fontSize:21,
   },
   green : {
         fontWeight: 'bold',
@@ -163,6 +196,8 @@ const styles = StyleSheet.create({
     marginTop: 22
   },
   sameLine:{
+    height:50,
+    marginTop:10,
     flexDirection: "row",
     justifyContent: "space-around",
 
@@ -186,7 +221,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#5dc655",
+    backgroundColor: "#7D7ACD",
     marginLeft: 10
   },
   buttonClose: {
@@ -197,9 +232,18 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center"
   },
+  background:{
+    height:height,
+    width:width,
+    position:'absolute',
+    top:0,
+    bottom:0,
+    left:0,
+    right:0,
+    zIndex:-1
+  },
   userCircle: {
-    width: 130,
-    height: 130,
+    marginTop : '10%',
 }
 });
 

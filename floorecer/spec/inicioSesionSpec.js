@@ -1,5 +1,7 @@
+import { BACKEND_URL } from '@env';
+
 const login = async (email, password) => {
-    const response = await fetch(`http://192.168.0.72:5000/user-authe/userSign/${email}&${password}`, {
+    const response = await fetch(`${BACKEND_URL}/user-authe/userSign/${email}&${password}`, {
       method: 'GET',
       headers: {
         "Content-type": "application/json; charset=UTF-8"

@@ -12,6 +12,7 @@ import AuthContext from './src/context/AuthContext.js';
 import AuthStack from './src/navigation/AuthStack.js';
 import UserTabs from './src/navigation/UserTabs.js';
 import BusinessTabs from './src/navigation/BusinessTabs.js'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -103,6 +104,7 @@ export default App = () => {
                 expirationTime: new Date().getTime()+4.32e+8,
                 isBusinessOwner: body.isBusinessOwner,
                 uid : body.uid,
+                name : body.username,
               };
               await saveData('auth0', JSON.stringify(auth0));
               dispatch({ type: 'SIGN_IN', session: {
@@ -125,6 +127,7 @@ export default App = () => {
     if (state.isLoading) { return null; }
 
     return (
+      <GestureHandlerRootView style={{flex:1}}>
         <NavigationContainer>
             <AuthContext.Provider value={authContext}>
                 { state.userSession != null
@@ -135,5 +138,6 @@ export default App = () => {
                 }
             </AuthContext.Provider>
         </NavigationContainer>
+        </GestureHandlerRootView>
     );
 }

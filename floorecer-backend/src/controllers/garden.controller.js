@@ -21,9 +21,29 @@ export const buyItem = async (req, res) => {
         const docRef = doc(database, "users", uid);
         const docSnap=await getDoc(docRef)
         if(docSnap.data().points>points){
-            await updateDoc(docRef, {[`items.seeds.${name}`]: increment(1),points: increment(-points)});
+            let list = docSnap.data().items.seeds
+            if(name=="Semilla verde"){
+                list[0].amount=list[0].amount+1
+                list[0].itemName=name
+                await updateDoc(docRef, {[`items.seeds`]: list,points: increment(-points)});
+            }else if(name=="Semilla rosa"){
+                list[1].amount=list[1].amount+1
+                list[1].itemName=name
+                await updateDoc(docRef, {[`items.seeds`]: list,points: increment(-points)});
+            }else if(name=="Semilla naranja"){
+                list[2].amount=list[2].amount+1
+                list[2].itemName=name
+                await updateDoc(docRef, {[`items.seeds`]: list,points: increment(-points)});
+            }else if(name=="Semilla morada"){
+                list[3].amount=list[3].amount+1
+                list[3].itemName=name
+                await updateDoc(docRef, {[`items.seeds`]: list,points: increment(-points)});
+            }else{
+                await updateDoc(docRef, {[`items.${name}`]: increment(1),points: increment(-points)});
+            }
             
             res.json('Compra con exito')
+            await updateDoc(docRef, {[`items.seeds`]: list,points: increment(-points)});
         }else{
             
             res.json('No tiene suficientes puntos')

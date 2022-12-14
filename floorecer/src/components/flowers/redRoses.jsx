@@ -385,7 +385,7 @@ export function RedRose4() {
     );
 }
 
-export function DeadRose() {
+export function DeadRedRose() {
     return (
       <Svg
     width={141}

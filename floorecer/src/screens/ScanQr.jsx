@@ -11,7 +11,7 @@ import AuthContext from '../context/AuthContext';
 import { setItemAsync, getItemAsync,
   deleteItemAsync } from 'expo-secure-store';
 import IconCamera from '../../assets/image/IconCamera.png';
-import * as Font from 'expo-font';
+import { useFonts } from 'expo-font';
 
 
 var datos = null;
@@ -19,7 +19,11 @@ var datos = null;
 
 
 const ScanQr = ()=> {
-    
+    const [fontLoaded] = useFonts({
+      PoppinsMedium: require("../../assets/fonts/Poppins-Medium.ttf"),
+      PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf"),
+      MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+    })
     
     
 
@@ -127,6 +131,7 @@ const ScanQr = ()=> {
       return <Text>No access to camera</Text>;
     }
 
+    if(!fontLoaded) { return null; }
     return (
         <SafeAreaView
         style={{flex: 1,backgroundColor:'white'}}
@@ -159,9 +164,10 @@ const ScanQr = ()=> {
       setItems={setItems}
       style = {styles.dropDown}
       placeholder = 'Selecciona un comercio'
-      placeholderStyle ={{fontFamily:'Poppins_300Light'}}
-      listItemLabelStyle  ={{fontFamily:'Poppins_300Light'}}
+      placeholderStyle ={{fontFamily:'PoppinsRegular'}}
       dropDownContainerStyle = {styles.dropDownContainer}
+      listItemLabelStyle={{color:'grey',fontFamily:'PoppinsRegular'}}
+      scrollViewProps={{showsVerticalScrollIndicator:false}}
     />
  <Text  style = {styles.textData}> Importe  </Text>
  <TextInput
@@ -171,7 +177,7 @@ const ScanQr = ()=> {
         keyboardType="numeric"
         onChangeText=  {onChangeImporte}
         value ={importe}
-        placeholderStyle = {{fontFamily:'Poppins_300Light'}}
+        placeholderStyle = {{fontFamily:'PoppinsRegular'}}
         
       />
        <Text  style = {styles.Currency}> €</Text>  
@@ -218,7 +224,7 @@ const ScanQr = ()=> {
             textAlign : 'center',
             marginTop : '5%',
             marginBottom:-15,
-            "fontFamily": "Poppins_300Light",
+            "fontFamily": "PoppinsRegular",
         },
         Currency: {
             //fontWeight: 'bold',
@@ -226,7 +232,7 @@ const ScanQr = ()=> {
             color: '#353535',
             marginLeft : '80%',
             marginTop : '-24%',
-            fontFamily:'Poppins_300Light'
+            fontFamily:'PoppinsRegular'
         },
         input: {
             backgroundColor : 'rgb(229,226,243)',
@@ -283,11 +289,13 @@ const ScanQr = ()=> {
            
           },
           dropDownContainer:{
-            backgroundColor:'rgb(229,226,243)',
+            /* backgroundColor:'rgb(229,226,243)', */
+            backgroundColor:'#D8D6E5',
             borderWidth:0, 
             width:'80%',
             alignSelf:'center', 
-            zIndex:25,
+            marginTop:10,
+            zIndex:200,
             elevation:2
           }
           

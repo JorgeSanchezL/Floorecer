@@ -3,11 +3,16 @@ import { FlatList, View, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpa
 import { getCategories } from '../../utils/actions';
 import { getAllBusinesses } from '../../utils/actions';
 import { useIsFocused } from "@react-navigation/core";
+import { useFonts } from 'expo-font';
 
 const categories =  [];
 
 const MapFilters = (props) => {
-
+  const [fontLoaded] = useFonts({
+    PoppinsMedium: require("../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf"),
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+  })
   const isFocused = useIsFocused();
     const [choice, setChoice] = useState('');
     
@@ -36,7 +41,7 @@ const MapFilters = (props) => {
        
         const renderItem = ({ item }) => {
           const backgroundColor = categories.includes(item.value)
-            ? "#88c484" : 'white';
+            ? "#7d7acd" : 'white';
           const color = categories.includes(item.value) ? 'white' : 'black';
       
           return (
@@ -66,7 +71,7 @@ const MapFilters = (props) => {
             />
           );
         };
-      
+        if(!fontLoaded) { return null; }
         return (
           
             <View style={styles.container}>
@@ -88,12 +93,13 @@ const MapFilters = (props) => {
             alignItems: 'flex-start',
             justifyContent: 'center',
             height: Size*2.5,
-            zIndex: 2,
+            zIndex: -1,
             position: 'absolute',
-            marginVertical: 15
+            marginVertical: 65
           },
         title: {
           fontSize: Size,
+          fontFamily:'PoppinsRegular'
         },
         appButtonContainer: {
             borderRadius: 100,
