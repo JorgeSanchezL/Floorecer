@@ -70,7 +70,7 @@ const Garden = () => {
       let newStyles = []
 
       if (body[0].type !== 'noflower') {
-        if (body[0].type === 'bonsai' || body[0].type == 'redRose' && body[0].petals >= 4) {
+        if ((body[0].type === 'bonsai' || body[0].type == 'redRose') && (body[0].petals >= 4 || body[1].health == 0)) {
           newStyles[0] = styles.bigFlower0
         } else {
           newStyles[0] = styles.flor0
@@ -80,7 +80,7 @@ const Garden = () => {
       }
       
       if (body[1].type !== 'noflower') {
-        if (body[1].type === 'bonsai' || body[1].type == 'redRose' && body[1].petals >= 4) {
+        if ((body[1].type === 'bonsai' || body[1].type == 'redRose') && (body[1].petals >= 4 || body[1].health == 0)) {
           newStyles[1] = styles.bigFlower1
         } else {
           newStyles[1] = styles.flor1
@@ -91,7 +91,7 @@ const Garden = () => {
 
       if (body[2].type !== 'noflower') {
         if (body[2].type === 'bonsai') {
-          if (body[2].petals > 2) {
+          if (body[2].petals > 2 || body[2].health == 0) {
             newStyles[2] = styles.bigBonsai2
           } else {
             newStyles[2] = styles.smallBonsai2
@@ -99,7 +99,7 @@ const Garden = () => {
         } else if (body[2].type === 'sunflower') {
           newStyles[2] = styles.sunflower2
         } else if (body[2].type === 'redRose') {
-          if (body[2].petals > 3) {
+          if (body[2].petals > 3 || body[2].health == 0) {
             newStyles[2] = styles.bigRedRose2
           } else {
             newStyles[2] = styles.smallRedRose2
@@ -115,7 +115,7 @@ const Garden = () => {
         if (body[3].type === 'bonsai') {
           if (body[3].petals == 5) {
             newStyles[3] = styles.veryBigBonsai3
-          } else if (body[3].petals > 2) {
+          } else if (body[3].petals > 2 || body[3].health == 0) {
             newStyles[3] = styles.bigBonsai3
           } else {
             newStyles[3] = styles.smallBonsai3
@@ -123,7 +123,7 @@ const Garden = () => {
         } else if (body[3].type === 'sunflower') {
           newStyles[3] = styles.sunflower3
         } else if (body[3].type === 'redRose') {
-          newStyles[3] = body[3].petals < 4 ? styles.smallRedRose3 : styles.bigRedRose3
+          newStyles[3] = body[3].petals < 4 && body[3].health > 0 ? styles.smallRedRose3 : styles.bigRedRose3
         } else if (body[3].type === 'cactus' && body[3].petals == 3) {
           newStyles[3] = styles.midCactus3
         } else {
@@ -160,8 +160,10 @@ const Garden = () => {
           "Content-type": "application/json; charset=UTF-8"
         },     
       });
+      let newStyles = []
+
       if (body[0].type !== 'noflower') {
-        if (body[0].type === 'bonsai' || body[0].type == 'redRose' && body[0].petals >= 4) {
+        if ((body[0].type === 'bonsai' || body[0].type == 'redRose') && (body[0].petals >= 4 || body[1].health == 0)) {
           newStyles[0] = styles.bigFlower0
         } else {
           newStyles[0] = styles.flor0
@@ -171,7 +173,7 @@ const Garden = () => {
       }
       
       if (body[1].type !== 'noflower') {
-        if (body[1].type === 'bonsai' || body[1].type == 'redRose' && body[1].petals >= 4) {
+        if ((body[1].type === 'bonsai' || body[1].type == 'redRose') && (body[1].petals >= 4 || body[1].health == 0)) {
           newStyles[1] = styles.bigFlower1
         } else {
           newStyles[1] = styles.flor1
@@ -182,7 +184,7 @@ const Garden = () => {
 
       if (body[2].type !== 'noflower') {
         if (body[2].type === 'bonsai') {
-          if (body[2].petals > 2) {
+          if (body[2].petals > 2 || body[2].health == 0) {
             newStyles[2] = styles.bigBonsai2
           } else {
             newStyles[2] = styles.smallBonsai2
@@ -190,7 +192,7 @@ const Garden = () => {
         } else if (body[2].type === 'sunflower') {
           newStyles[2] = styles.sunflower2
         } else if (body[2].type === 'redRose') {
-          if (body[2].petals > 3) {
+          if (body[2].petals > 3 || body[2].health == 0) {
             newStyles[2] = styles.bigRedRose2
           } else {
             newStyles[2] = styles.smallRedRose2
@@ -206,7 +208,7 @@ const Garden = () => {
         if (body[3].type === 'bonsai') {
           if (body[3].petals == 5) {
             newStyles[3] = styles.veryBigBonsai3
-          } else if (body[3].petals > 2) {
+          } else if (body[3].petals > 2 || body[3].health == 0) {
             newStyles[3] = styles.bigBonsai3
           } else {
             newStyles[3] = styles.smallBonsai3
@@ -214,7 +216,7 @@ const Garden = () => {
         } else if (body[3].type === 'sunflower') {
           newStyles[3] = styles.sunflower3
         } else if (body[3].type === 'redRose') {
-          newStyles[3] = body[3].petals < 4 ? styles.smallRedRose3 : styles.bigRedRose3
+          newStyles[3] = body[3].petals < 4 && body[3].health > 0 ? styles.smallRedRose3 : styles.bigRedRose3
         } else if (body[3].type === 'cactus' && body[3].petals == 3) {
           newStyles[3] = styles.midCactus3
         } else {
