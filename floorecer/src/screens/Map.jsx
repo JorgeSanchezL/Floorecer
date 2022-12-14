@@ -48,6 +48,12 @@ export const Map = () => {
           />
       
     <View style={styles.container}>
+      <SearchBar
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
       <MapFilters
         setData={setData}
       />
@@ -91,12 +97,7 @@ export const Map = () => {
 
      
     </View>
-   <SearchBar
-        searchPhrase={searchPhrase}
-        setSearchPhrase={setSearchPhrase}
-        clicked={clicked}
-        setClicked={setClicked}
-      />
+   
  {  (
 
 <List
