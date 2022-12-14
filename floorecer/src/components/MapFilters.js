@@ -88,9 +88,9 @@ const MapFilters = (props) => {
             alignItems: 'flex-start',
             justifyContent: 'center',
             height: Size*2.5,
-            zIndex: -2,
+            zIndex: -1,
             position: 'absolute',
-            marginVertical: 15
+            marginVertical: 65
           },
         title: {
           fontSize: Size,

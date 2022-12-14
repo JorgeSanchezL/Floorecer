@@ -1,5 +1,5 @@
 import React, { useEffect,useState,useRef } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Animated,TouchableOpacity,Image,Alert,Dimensions} from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text,Animated,TouchableOpacity,Image,Alert,Dimensions} from 'react-native';
 
 import {BACKEND_URL} from '@env';
 import { getItemAsync } from 'expo-secure-store';
@@ -7,6 +7,9 @@ import Suplemento from '../components/inventory/Suplemento.js'
 import Elixir from '../components/inventory/Elixir.js'
 import ImageFlower from '../components/ImageFlowerInventory';
 import Lock from '../components/inventory/lockfill'
+
+import { useFonts } from 'expo-font';
+
 
 const Inventory = ({navigation,route}) => {
   const{position}=route.params
@@ -17,9 +20,10 @@ const Inventory = ({navigation,route}) => {
   const [elixir,setElixir]=useState(0);
   const [petal,setPetal]=useState(0);
   const [myPlants, setMyPlants] = useState([{type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}, {type: "noflower", petals: 3, health: 3}])
-  const pos=0;
   const counter = useRef(new Animated.Value(0)).current;
   const [count, setCount] = useState(0); 
+
+  
 
   const charge=(coun) => {
     setCount(coun)
@@ -83,8 +87,15 @@ const progressBar =  () => {
   else if(healthBar==3){ return 100}
   else if(healthBar==0){return 0}
 }
+const timeLeft =  () => { 
+  if(petal==1){ return "2 días 1h"}
+  else if(petal==2){ return "1 día 19h"}
+  else if(petal==3){ return "1 día 9h"}
+  else if(petal==4){return "18h"}
+}
 const[colorProgressFront,setColorProgressFront]=useState("")
 const[colorProgressBack,setColorProgressBack]=useState("")
+
 const progressBarColor =  () => { 
   switch (myPlants[position].type) {
     case "cactus":
@@ -210,10 +221,17 @@ const progressBarColor =  () => {
       Alert.alert(err)
     }
   }
-
+  const [fontsLoaded] = useFonts({
+    MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf")
+})
+  
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.textHeader}>Mis Plantas</Text>
+        <Text style={[styles.textHeader,{fontFamily:'MuseoModernoBold'}]}>Mis Plantas</Text>
         <View style={styles.flowerContainer}>
             <ImageFlower plant={myPlants[position]}></ImageFlower>
         <View style={[styles.containerStyle,{backgroundColor:colorProgressBack}]}>
@@ -226,14 +244,16 @@ const progressBarColor =  () => {
             {progressBar()}
             </Animated.Text>
         </View>
-        {<View>
+        {
+          <View>
           <Lock></Lock>
-          <Text>Queda 11h</Text>
+          <Text>Queda {timeLeft()}</Text>
           </View>
+        
         }
         </View>
         <View style={styles.itemContainer}>
-        <Text style={styles.textHeader}>Mis Items</Text>
+        <Text style={[styles.textHeader,,{fontFamily:'MuseoModernoBold'}]}>Mis Items</Text>
         <View style={styles.sameLine}>
                 <TouchableOpacity  style={{marginLeft:40}} onPress={updatePlantsNextPetal}>
                     <Suplemento />
@@ -269,7 +289,6 @@ const styles = StyleSheet.create({
       },
     textHeader:{
         fontSize: 25,
-        fontWeight: 'bold',
         marginTop: 10,
     },
     textItem:{
