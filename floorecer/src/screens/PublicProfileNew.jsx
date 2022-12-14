@@ -52,7 +52,7 @@ export default function Prueba() {
       <ScrollView>
       <PerfilPublicoNew/>     
       <Text style = {styles.UserName} >
-          @Alexandra
+          Alexandra
         </Text>
       <Text style = {styles.followers} >
           10
@@ -169,6 +169,7 @@ pasos : {
       },
       button1 : {
         "position": "absolute",
+        alignItems : "center",
         "width": 116.97,
         "height": 42,
         "left": 138,
@@ -177,16 +178,12 @@ pasos : {
         "borderTopLeftRadius": 25,
         "borderTopRightRadius": 25,
         "borderBottomRightRadius": 25,
-        "borderBottomLeftRadius": 25
+        "borderBottomLeftRadius": 25,
       },
      seguir : {
-
-            "position": "absolute",
-            "height": 21.6,
-            "left": "25%",
-            "top": windowHeight*0.012,
             "fontFamily": "Poppins",
             "fontStyle": "normal",
+            "top":"19%",
             "fontSize": 14,
             "color": "#F3FEFF"
         },
