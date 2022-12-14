@@ -28,12 +28,7 @@ const Garden = () => {
   const [flowerStyles, setFlowerStyles] = useState([styles.flor0, styles.flor1, styles.flor2, styles.flor3])
   const [holeClicked, setHoleClicked] = useState()
 
-  const [fontLoaded] = useFonts({
-    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
-    PoppinsBold: require("../../assets/fonts/Poppins-Bold.ttf"),
-  })
 
-  if(!fontLoaded) { return null; }
 
 
   useEffect(() => {
@@ -313,9 +308,13 @@ const Garden = () => {
         position: clicked
     })
     }
-      //Abrir menu inventario
   }
+  const [fontLoaded] = useFonts({
+    MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
+    PoppinsBold: require("../../assets/fonts/Poppins-Bold.ttf"),
+  })
 
+  if(!fontLoaded) { return null; }
     return (
       <View style={styles.container}>
         <View style={styles.garden}>

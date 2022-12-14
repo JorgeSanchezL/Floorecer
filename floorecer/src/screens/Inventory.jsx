@@ -88,7 +88,7 @@ const progressBar =  () => {
   else if(healthBar==0){return 0}
 }
 const timeLeft =  () => { 
-  if(health==0){return "Revive la planta con el Elixir !!!"}
+  if(healthBar==0){return "Revive la planta con el Elixir !!!"}
   else if(petal==1){ return "2 días 1h"}
   else if(petal==2){ return "1 día 19h"}
   else if(petal==3){ return "1 día 9h"}
@@ -245,9 +245,11 @@ const progressBarColor =  () => {
             {progressBar()}
             </Animated.Text>
         </View>
-        {petal==5?
+        {petal!=5 ?
           <View>
+            <View style={{marginLeft:25}}>
           <Lock></Lock>
+          </View>
           <Text>Queda {timeLeft()}</Text>
           </View>:
           <View>
@@ -259,7 +261,7 @@ const progressBarColor =  () => {
         }
         </View>
         <View style={styles.itemContainer}>
-        <Text style={[styles.textHeader,,{fontFamily:'MuseoModernoBold'}]}>Mis Items</Text>
+        <Text style={[styles.textHeader,,{fontFamily:'MuseoModernoBold'}]}> Mis Items</Text>
         <View style={styles.sameLine}>
                 <TouchableOpacity  style={{marginLeft:40}} onPress={updatePlantsNextPetal}>
                     <Suplemento />
