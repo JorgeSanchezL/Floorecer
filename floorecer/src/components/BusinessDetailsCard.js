@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect} from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, Pressable, useWindowDimensions, Dimensions} from 'react-native';
+import { useFonts } from 'expo-font';
 
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import { getItemAsync } from 'expo-secure-store';
@@ -71,6 +72,12 @@ const BusinessDetailsCard = (props) => {
 
     const [profile, setProfile] = useState(null);
 
+    const [fontLoaded] = useFonts({
+      MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
+      MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
+      PoppinsRegular: require("../../assets/fonts/Poppins-Regular.ttf")
+    })
+
     useEffect(()=>{
       setReviews(props.business.reviews)
     },[props.business])
@@ -88,6 +95,8 @@ const BusinessDetailsCard = (props) => {
     useEffect(() => {
         getProfile();
     }, []);
+
+    if (!fontLoaded) { return null; }
 
     return (
         <BottomSheet 
@@ -114,7 +123,7 @@ const BusinessDetailsCard = (props) => {
               <View style={{flex:0, flexDirection:'row', marginLeft:5}}>
                 <View>
                   {index!==2 && <Text style={styles[`title_${index}`]}>{props.business.name}</Text>}
-                  <Text style={styles.infoText}>{props.business.category || "unknown category"}</Text>
+                  <Text style={styles.infoText}>{props.business.category ? props.business.category.charAt(0).toUpperCase() + props.business.category.slice(1) : "Sin categoría"}</Text>
                   <View style={{flex:0, flexDirection:'row'}}>
                     <Text style={styles.infoText}>{getStarsValue(reviews)}</Text>
                     <CurrentRating value={Math.floor(getStarsValue(reviews))}/>
@@ -153,14 +162,15 @@ const BusinessDetailsCard = (props) => {
                         {isVisibleOpeningHours && <View style={{flex:0, flexDirection:'row'}}>
                           <Image style={styles.icon} source={require(`../../assets/schedule.png`)} />
                           <View>
-                            { diasDeLaSemanaEuropa.map((day)=>{
+                            { diasDeLaSemanaEuropa.map((day, index)=>{
                               return(
-                              <View style={{flex:1,flexDirection:'row'}}>
+                              <View key={index} style={{flex:1,flexDirection:'row'}}>
                                 <Text style={styles.text}>{day}</Text>
                                 <View style={{position:"relative",marginLeft:"auto",alignSelf:"flex-end"}}>
-                                  {props.business.openingHours[day].length!=0?props.business.openingHours[day].map((slot)=>{
+                                  {props.business.openingHours[day].length!=0?props.business.openingHours[day].map((slot, index)=>{
                                     return(
-                                      <Text style={[styles.text,{marginLeft:80}]}>{`${slot.from}-${slot.to}`}</Text>
+                                      <View key={index}>
+                                      <Text style={[styles.text,{marginLeft:80}]}>{`${slot.from}-${slot.to}`}</Text></View>
                                     )
                                     }) : <Text style={styles.text}>Cerrado</Text>
                                   }
@@ -264,7 +274,7 @@ const BusinessDetailsCard = (props) => {
           {maxRating.map((item,key) => {return(
             <TouchableOpacity
               activeOpacity={0.7}
-              key={item}
+              key={key}
               onPress={()=>setdefaultRating(item)}
               disabled={existsReview}
             >
@@ -306,11 +316,12 @@ const BusinessDetailsCard = (props) => {
     const starImgCorner = `../../assets/star_corner.png`
     return (
       <View style={{flexDirection:"row"}}>
-        {maxRating.map((item) => {return(
+        {maxRating.map((item, index) => {return(
+          <View key={index}>
             <Image 
               style={styles.stars}
               source={item<=defaultRating?require(starImgFilled):require(starImgCorner)}
-              ></Image>
+              ></Image></View>
         )})}
       </View>
     )
@@ -322,17 +333,17 @@ const BusinessDetailsCard = (props) => {
     },
     title_0:{
       fontSize:24,
-      fontWeight:'bold',
+      fontFamily: 'MuseoModernoBold',
       color:"black",
     },
     title_1:{
       fontSize:24,
-      fontWeight:'bold',
+      fontFamily: 'MuseoModernoBold',
       color:"black"
     },
     title_2:{
       fontSize:24,
-      fontWeight:'bold',
+      fontFamily: 'MuseoModernoBold',
       color:"black",
       textAlign:"center"
     },
@@ -340,11 +351,13 @@ const BusinessDetailsCard = (props) => {
       marginTop:2,
       fontSize:16,
       color:"gray",
+      fontFamily: 'MuseoModernoRegular',
       marginRight:10
     },
     text:{
         marginTop:10,
         fontSize:16,
+        fontFamily: 'PoppinsRegular',
         color:"black",
         marginLeft:10,
         marginRight:10
@@ -352,14 +365,13 @@ const BusinessDetailsCard = (props) => {
     boldText:{
       marginTop:10,
       fontSize:16,
-      color:"black",
+      fontFamily: 'MuseoModernoBold',
       marginLeft:10,
       marginRight:10,
-      fontWeight:'bold'
     },
     subTitle:{
         fontSize:20,
-        fontWeight:'bold',
+        fontFamily: 'MuseoModernoBold',
         color:"black",
         marginTop:10,
         marginLeft:10
@@ -387,7 +399,7 @@ const BusinessDetailsCard = (props) => {
       resizeMode: 'stretch',
     },
     textButton:{
-      backgroundColor:'#5dc655',
+      backgroundColor:'#65AB73',
       marginTop:10,
       marginLeft: 10,
       marginRight:10,
@@ -396,7 +408,7 @@ const BusinessDetailsCard = (props) => {
       width:'100%'
     },
     textButtonDisabled:{
-      backgroundColor:'#B4F4AC',
+      backgroundColor:'#ACD5B4',
       marginTop:10,
       marginLeft: 10,
       marginRight:10,
@@ -406,14 +418,14 @@ const BusinessDetailsCard = (props) => {
     },
     buttonText:{
       fontSize:16,
-      color:"black",
-      fontWeight:"bold",
+      color: '#fff',
+      fontFamily: 'MuseoModernoBold',
       padding:5
     },
     buttonTextDisabled:{
       fontSize:16,
-      color:"#595959",
-      fontWeight:"bold",
+      color:"#fff",
+      fontFamily: 'MuseoModernoBold',
       padding:5
     },
     smallIcon:{

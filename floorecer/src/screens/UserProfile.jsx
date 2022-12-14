@@ -236,9 +236,10 @@ const UserProfile = () => {
                     </View>
                   </View>
                   <Text style ={styles.title}>Últimas compras</Text>
-                  { profile.historico.map((purchase)=>{
+                  { profile.historico && profile.historico.map((purchase, index)=>{
                               return(
-                              <View style={{flex:1, flexDirection:'row',
+                              <View key={index}
+                              style={{flex:1, flexDirection:'row',
                               backgroundColor: '#FFFFFF',
                               height:55,
                               borderRadius: 25,
