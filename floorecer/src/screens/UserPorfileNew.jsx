@@ -24,6 +24,7 @@ import { getItemAsync } from 'expo-secure-store';
 export default function Prueba() {
   const [modalVisible, setModalVisible] = useState(false);
   const [profile, setProfile] = useState(null);
+  const [auth0,setAuth0] = useState([]);
   const navigation=useNavigation();
   const [fontsLoaded] = useFonts({
     MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
@@ -33,7 +34,16 @@ export default function Prueba() {
   const openGarden = () => {
     navigation.navigate('garden')
   }
- 
+  useEffect(()=> {
+   const loadAuth = async () => {
+    const auth =  JSON.parse( await getItemAsync('auth0'));
+     setAuth0(auth);
+   }
+
+     loadAuth();
+  }
+  
+  , []);
   return (
 
     <SafeAreaView  styles = {styles.container}>
