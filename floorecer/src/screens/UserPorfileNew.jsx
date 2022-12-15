@@ -69,7 +69,7 @@ export default function Prueba() {
             { auth0 != null &&
               <SvgQRCode
                 style = {{width: '100%'}} 
-                value={auth0.id}
+                value={auth0.uid}
               /> 
             }
             <View style={{marginTop:20, marginBottom:-25}}><ProfileButton

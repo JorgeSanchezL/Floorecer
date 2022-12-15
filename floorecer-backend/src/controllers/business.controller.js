@@ -250,6 +250,7 @@ export const getBusiness = async(req,res) => {
 }
 
 export const upgradePoints = async (req,res) => {
+    console.log("hola")
     const {uid , shopName,wonpoints }=req.body;
     
     try {
@@ -257,17 +258,17 @@ export const upgradePoints = async (req,res) => {
         const docRef = doc(database, "users", uid);
         const user = await getDoc(docRef);
         const actualPoints = user.data().points;
-        const Historico = user.data().Historico;
+        const Historico = user.data().historico;
+        console.log(Historico)
         let newUpdate = {
            shopName : shopName,
            points : wonpoints,
 
         }
          Historico.push (newUpdate);
-        
       await updateDoc(docRef, { 
         points: actualPoints+wonpoints,
-        Historico : Historico, 
+        historico : Historico, 
     
     }
         
@@ -276,7 +277,7 @@ export const upgradePoints = async (req,res) => {
         res.send();
 
     } catch(error) {
-        Alert.alert(error)
+       // Alert.alert(error)
     }
 
 
