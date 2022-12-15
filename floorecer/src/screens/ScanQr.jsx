@@ -59,7 +59,7 @@ const ScanQr = ()=> {
     
      catch (err) {
     
-      Alert.alert(err)
+      console.log(err)
     
      }}
      useEffect(() => {getbusiness()}, [])
@@ -74,7 +74,7 @@ const ScanQr = ()=> {
   
     const handleBarCodeScanned = async ({ type, data }) => {
       setScanned(true);
-
+     console.log(value)
       let importeInt = parseInt(importe);
       let wonpoints = 0;
       switch(true) {
@@ -94,7 +94,7 @@ const ScanQr = ()=> {
             wonpoints = 10;
             break;
      }
-      
+      console.log(data +":" +wonpoints +":" + value)
       try {
         var response = await fetch(`${BACKEND_URL}/business/upgradePoints`, {
           method: 'POST',
@@ -113,7 +113,7 @@ const ScanQr = ()=> {
     }
     
         catch(error) {
-          Alert.alert(error)
+          console.log(error)
         }
         if(response.status = 200 ) {
           Alert.alert('Alerta',
