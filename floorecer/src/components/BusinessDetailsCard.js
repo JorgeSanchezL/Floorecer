@@ -60,7 +60,6 @@ const height = width * 0.6;
 const BusinessDetailsCard = (props) => {
     const snapPoints = useMemo(()=> ['20%','55%', '100%'],[])
     const [index, setIndex] = useState(0)
-    const [isHorizontalScrolling, setIsHorizontalScrolling] = useState(false)
     const [isVisibleOpeningHours, setIsVisibleOpeningHours] = useState(false)
     const [reviews, setReviews] = useState(props.business.reviews)
     const [uuid, setUuid] = useState(null)
@@ -103,7 +102,6 @@ const BusinessDetailsCard = (props) => {
           snapPoints={snapPoints}
           index={index}
           onChange = {onChange}
-          enableContentPanningGesture={!isHorizontalScrolling}
           enablePanDownToClose
         >
            {index===2 && 
@@ -134,13 +132,9 @@ const BusinessDetailsCard = (props) => {
                 {index===0 && <Image source = {{uri: image}} style ={styles.image}/>}
               </View>
             </Animatable.View>
-            <View 
-              onTouchStart={()=>setIsHorizontalScrolling(true)} 
-              onTouchCancel={()=>setIsHorizontalScrolling(false)}
-            >
+
             {image ? <Image source = {{uri: image}} style={styles.cardImage}/> :
               <Text style={{fontSize: 16, justifyContent:'center', alignSelf:'center', marginTop: index==1?'25%':0}}>Este comercio no tiene ninguna imágen disponible</Text>}
-            </View>
             {index===2 && reviews!==null &&
                   <View>
                     <TopDivider />               

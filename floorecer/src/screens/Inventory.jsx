@@ -232,21 +232,20 @@ const progressBarColor =  () => {
   }
   return (
     <SafeAreaView style={styles.container}>
-      
-        <Text style={[styles.textHeader,{fontFamily:'MuseoModernoBold'}]}>Mis Plantas</Text>
-        <View style={styles.butLeft}>
-        <TouchableOpacity style={[styles.button,,{backgroundColor:colorProgressBack}]} onPress={() => navigation1.navigate('garden')}>
-                <Text style={styles.textButton}>Volver a mi jardín</Text>
-              </TouchableOpacity>
-        </View>
-        <View style={styles.flowerContainer}>
-            <ImageFlower plant={myPlants[position]}></ImageFlower>
+      <Text style={[styles.textHeader,{fontFamily:'MuseoModernoBold'}]}>Mis Plantas</Text>
+      <View style={styles.butLeft}>
+        <TouchableOpacity style={[styles.button,{backgroundColor:colorProgressBack}]} onPress={() => navigation1.navigate('garden')}>
+          <Text style={styles.textButton}>Volver a mi jardín</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.flowerContainer}>
+        <ImageFlower plant={myPlants[position]}></ImageFlower>
         <View style={[styles.containerStyle,{backgroundColor:colorProgressBack}]}>
-            <Animated.View
+          <Animated.View
             style={[
             styles.innerStyle,{width, backgroundColor:colorProgressFront},
             ]}
-            />
+          />
         </View>
         {petal!=5 ?
           <View>
@@ -257,27 +256,25 @@ const progressBarColor =  () => {
           <Text>{timeLeft()}</Text>
           </View>:
           <View>
-              <TouchableOpacity style={styles.button} onPress={() => navigation1.navigate('premio')}>
-                <Text>Floorecer</Text>
-              </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation1.navigate('premio')}>
+              <Text>Floorecer</Text>
+            </TouchableOpacity>
           </View>
-        
         }
-        </View>
-        <View style={styles.itemContainer}>
-        <Text style={[styles.textHeader,,{fontFamily:'MuseoModernoBold'}]}> Mis Items</Text>
+      </View>
+      <View style={styles.itemContainer}>
+        <Text style={[styles.textHeader,{fontFamily:'MuseoModernoBold'}]}>     Mis Items</Text>
         <View style={styles.sameLine}>
-                <TouchableOpacity  style={{marginLeft:40}} onPress={updatePlantsNextPetal}>
-                    <Suplemento />
-                    <Text style={styles.textItem}>Suplemento  x {suplemento}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{marginLeft:50}} onPress={updatePlantsNextHealth}>
-                    
-                    <Elixir/>
-                    <Text style={styles.textItem}>Elixir  x  {elixir}</Text>
-                </TouchableOpacity>
-            </View>
+          <TouchableOpacity  style={{marginLeft:40}} onPress={updatePlantsNextPetal}>
+            <Suplemento />
+            <Text style={styles.textItem}>Suplemento  x {suplemento}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginLeft:50}} onPress={updatePlantsNextHealth}>
+            <Elixir/>
+            <Text style={styles.textItem}>Elixir  x  {elixir}</Text>
+          </TouchableOpacity>
         </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -302,6 +299,7 @@ const styles = StyleSheet.create({
     textHeader:{
         fontSize: 25,
         marginTop: 10,
+        textAlign: 'center'
     },
     textItem:{
         textAlign: 'center',
@@ -343,16 +341,18 @@ const styles = StyleSheet.create({
       marginTop:20
     },
     button: {
-      borderTopRightRadius:20,
-      borderBottomRightRadius:20,
+      borderRadius:20,
+      borderRadius:20,
       backgroundColor: "#7D7ACD",
     },
     textButton: {
+      textAlign: 'center',
       color:'white'
     },
     butLeft: {
-      top:5,
-      width:65,
+      top:12,
+      left: 15,
+      width:90,
       position:'absolute',
     }
   

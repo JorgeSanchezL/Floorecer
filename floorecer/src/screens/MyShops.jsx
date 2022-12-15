@@ -231,7 +231,7 @@ const Item = ({ shop }) => {
           </Text>
       </View>
       <View style = {{flex:0, flexDirection:'row', justifyContent:"space-between", marginTop: '2%', marginBottom:'5%'}}>
-        {active == true ? 
+        {active === true || active === 'true' ? 
         <TouchableOpacity 
           onPress={()=>{onPressButtonPromotion(shop)}} 
           style={styles.appButtonContainer1}
