@@ -89,10 +89,10 @@ const progressBar =  () => {
 }
 const timeLeft =  () => { 
   if(healthBar==0){return "Revive la planta con el Elixir !!!"}
-  else if(petal==1){ return "2 días 1h"}
-  else if(petal==2){ return "1 día 19h"}
-  else if(petal==3){ return "1 día 9h"}
-  else if(petal==4){return "18h"}
+  else if(petal==1){ return "Queda 2 días 1h"}
+  else if(petal==2){ return "Queda 1 día 19h"}
+  else if(petal==3){ return "Queda 1 día 9h"}
+  else if(petal==4){return "Queda 18h"}
 }
 const[colorProgressFront,setColorProgressFront]=useState("")
 const[colorProgressBack,setColorProgressBack]=useState("")
@@ -250,10 +250,11 @@ const progressBarColor =  () => {
         </View>
         {petal!=5 ?
           <View>
-            <View style={{marginLeft:25}}>
+            <View style={{    justifyContent: "center",
+    alignItems: "center",}}>
           <Lock></Lock>
           </View>
-          <Text>Queda {timeLeft()}</Text>
+          <Text>{timeLeft()}</Text>
           </View>:
           <View>
               <TouchableOpacity style={styles.button} onPress={() => navigation1.navigate('premio')}>

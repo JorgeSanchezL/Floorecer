@@ -48,8 +48,46 @@ const UserSearch = () => {
 
         }
     }
-    const renderHeader = () => (
+
+    
+      const renderSeparator = () => {
+        return (
+          <View
+            style={{
+              height: 1,
+              width: '86%',
+              backgroundColor: '#CED0CE',
+              marginLeft: '5%'
+            }}
+          />
+        )
+      }
+    
+      
+      const renderEmpty=()=>{
+        return(
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+ 
+          <Text style={{ marginTop:30,fontSize: 24,color:'white',fontFamily:'MuseoModernoBold' }}>
+            No se han 
+          </Text>
+          <Text style={{ marginTop:10,fontSize: 24,color:'white',fontFamily:'MuseoModernoBold' }}>
+            encontrado usuarios
+          </Text>
+   
+        </View>
+        )
+      }
+    return(
+        
         <View
+          style={{
+            flex: 1,
+            paddingHorizontal: 20,
+            paddingVertical: 20,
+          }}>
+            <ImageBackground source={backImage} resizeMode="cover" style={styles.background} >
+            <View
           style={{
             backgroundColor: 'rgba(255, 255, 255, 0.5)',
             padding: 10,
@@ -111,50 +149,13 @@ const UserSearch = () => {
             </TouchableOpacity>
 
         </View>
-      )
-    
-      const renderSeparator = () => {
-        return (
-          <View
-            style={{
-              height: 1,
-              width: '86%',
-              backgroundColor: '#CED0CE',
-              marginLeft: '5%'
-            }}
-          />
-        )
-      }
-    
-      
-      const renderEmpty=()=>{
-        return(
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
- 
-          <Text style={{ marginTop:30,fontSize: 24,color:'white',fontFamily:'MuseoModernoBold' }}>
-            No se han 
-          </Text>
-          <Text style={{ marginTop:10,fontSize: 24,color:'white',fontFamily:'MuseoModernoBold' }}>
-            encontrado usuarios
-          </Text>
-   
-        </View>
-        )
-      }
-    return(
-        
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: 20,
-            paddingVertical: 20,
-          }}>
-            <ImageBackground source={backImage} resizeMode="cover" style={styles.background} >
            <FlatList
             
             data={filteredData}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate('publicProfile')}>
+              <TouchableOpacity onPress={() => navigation.navigate('publicProfile', {
+                name: item.username
+            })}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -183,7 +184,6 @@ const UserSearch = () => {
               </TouchableOpacity>
             )}
             ItemSeparatorComponent={renderSeparator}
-            ListHeaderComponent={renderHeader}
             ListEmptyComponent={renderEmpty}
             
           />

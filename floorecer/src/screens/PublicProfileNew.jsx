@@ -21,12 +21,13 @@ import gardenbackground from '../../assets/image/gardenbackground.jpeg'
 import Profileimage from '../components/profile/Profileimage'
 import { useNavigation } from '@react-navigation/native';
 import { getItemAsync } from 'expo-secure-store'; 
-export default function Prueba() {
+export default function PublicProfile({navigation,route}) {
+
+  const{name}=route.params
   const [modalVisible, setModalVisible] = useState(false);
   const [profile, setProfile] = useState(null);
   const [followers,setFollowers] = useState(14);
   const [estado,setEstado] = useState("follow")
-  const navigation=useNavigation();
   const [fontsLoaded] = useFonts({
     MuseoModernoRegular: require("../../assets/fonts/MuseoModerno-Regular.ttf"),
     MuseoModernoBold: require("../../assets/fonts/MuseoModerno-Bold.ttf"),
@@ -56,7 +57,7 @@ export default function Prueba() {
       <ScrollView>
       <PerfilPublicoNew/>     
       <Text style = {styles.UserName} >
-          @Alexandra
+          @{name}
         </Text>
       <Text style = {styles.followers} >
           10
