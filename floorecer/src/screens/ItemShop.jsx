@@ -11,7 +11,7 @@ const { width, height } = Dimensions.get('screen');
 const ItemShop = () => {
   const [items, setItems] = useState(null);
   const [itemName, setItemName]=useState ('');
-  const [itemUid, setItemUid]=useState ();
+  const [tokens, setTokens]=useState ();
   const [itemPrice, setItemPrice]=useState ();
   const [selectedItem2, setSelectedItem2]=useState (null);
   const [uid, setUid] = useState(null);
@@ -21,6 +21,15 @@ const ItemShop = () => {
     setImagen(!imagen);
 
 }
+const getProfile = async () => {
+  try {
+    const auth0 = JSON.parse(await getItemAsync('auth0'));
+    const api_call = await fetch(`${BACKEND_URL}/users/${auth0.uid}`);
+    const response = await api_call.json();
+    setTokens(response.points);
+  } catch(e) { Alert.alert(e); }
+  
+}
   const getAllItems = async () => {
     const api_call = await fetch(`${BACKEND_URL}/garden/items/all`);
     const response = await api_call.json();
@@ -29,6 +38,7 @@ const ItemShop = () => {
  useEffect(() => {
   getAllItems();
   getUid();
+  getProfile()
   }, [])
 
 const getUid = async () => {
@@ -57,7 +67,7 @@ const  onPressBuy= async() =>{
             
         { text: 'OK' },
       ]);
-      
+      setTokens(tokens-itemPrice)
       }
       
    catch (err) {
@@ -128,6 +138,7 @@ const Item = ({ shopItem }) => (
               </TouchableOpacity>
             </View></View></View>
           </Modal>
+          <Text style = {styles.green2}>Tienes {tokens} Tokens</Text>
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -189,6 +200,13 @@ const styles = StyleSheet.create({
         marginTop : '10%',
         alignItems : 'center',
   },
+  green2 : {
+    fontWeight: 'bold',
+    color: 'green',
+    marginLeft : '65%',
+    marginTop : '3%',
+    alignItems : 'center',
+},
   centeredView: {
     flex: 1,
     justifyContent: "center",

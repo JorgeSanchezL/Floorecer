@@ -32,6 +32,18 @@ const List = (props) => {
     }
    
   };
+  const renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: '86%',
+          backgroundColor: '#CED0CE',
+          marginLeft: '5%'
+        }}
+      />
+    )
+  }
   if(props.searchPhrase != "" ) {
   return (
     <SafeAreaView style={styles.list__container}>
@@ -43,6 +55,7 @@ const List = (props) => {
         <FlatList
           data={props.data}
           renderItem={renderItem}
+          
           keyExtractor={(item) => item.name}
         />  
       </View>
@@ -63,6 +76,16 @@ const styles = StyleSheet.create({
     margin: 30,
     borderBottomWidth: 2,
     borderBottomColor: "lightgrey",
+    flexDirection: 'row',
+                    padding: 16,
+                    alignItems: 'center',
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    padding: 10,
+                    marginLeft:15,
+                    marginRight:20,
+                    borderColor: '#333',
+                    borderRadius:25,
+                    marginTop:10
   },
   title: {
     fontSize: 20,
