@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, useWindowDimensions, Dimensions } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions, Dimensions, Alert } from "react-native";
 import FinalButton from '../components/FinalButton';
 import DropDownTimePicker from "../components/DropDownTimePicker";
 import SelectionButton from "../components/SelectionButton";
@@ -92,6 +92,7 @@ const ConfigureBusiness = ({ route }) => {
         ]
       )
     }else{
+      Alert.alert("¡Comercio modificado con éxito!", "",[{text: "OK",},])
       updateBusiness();
     }
     
