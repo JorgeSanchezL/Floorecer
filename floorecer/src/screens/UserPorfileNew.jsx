@@ -1,6 +1,6 @@
 import React ,{useEffect, useState} from 'react';
 import { useCallback } from 'react';
-import { Modal,Image, Text, StyleSheet, StatusBar,View, SafeAreaView,ImageBackground,Dimensions, TouchableOpacity,ScrollView } from 'react-native';
+import { Modal,Image, Text, StyleSheet, StatusBar,View, SafeAreaView,ImageBackground,Dimensions, TouchableOpacity,ScrollView,LogBox } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import CustomInput from '../components/CustomInput';
 import PerfilPublico from '../components/PerfiloSVG'
@@ -21,6 +21,8 @@ import gardenbackground from '../../assets/image/gardenbackground.jpeg'
 import Profileimage from '../components/profile/Profileimage'
 import { useNavigation } from '@react-navigation/native';
 import { getItemAsync } from 'expo-secure-store'; 
+LogBox.ignoreAllLogs();
+
 export default function Prueba() {
   const [modalVisible, setModalVisible] = useState(false);
   const [profile, setProfile] = useState(null);

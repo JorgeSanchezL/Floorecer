@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState ,useRef} from 'react';
-import { StyleSheet, View, SafeAreaView, Image, Button} from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image, Button,LogBox} from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE,animateToRegion} from 'react-native-maps'
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import MapFilters from '../components/MapFilters';
@@ -13,6 +13,7 @@ import BusinessDetailsCard from '../components/BusinessDetailsCard';
 import List from "../components/List";
 import SearchBar from "../components/SearchBar";
 
+LogBox.ignoreAllLogs();
 
 export const Map = () => {
   const [searchPhrase, setSearchPhrase] = useState("");

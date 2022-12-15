@@ -1,9 +1,11 @@
 import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text,Modal,Dimensions,TouchableOpacity,ImageBackground} from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text,Modal,Dimensions,TouchableOpacity,ImageBackground,LogBox} from 'react-native';
 
 import itemShop2 from '../../assets/itemShop2.png';
 import ItemsImage from '../components/itemShop/ItemsImage.js';
 import { useNavigation } from '@react-navigation/native';
+LogBox.ignoreAllLogs();
+
 const { width, height } = Dimensions.get('screen');
 
 export const rewards = [

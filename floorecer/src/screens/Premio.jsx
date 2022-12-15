@@ -1,12 +1,14 @@
 import React from 'react';
 import { useCallback } from 'react';
-import { Image, Text, StyleSheet, View, SafeAreaView,ImageBackground,Dimensions, TouchableOpacity } from 'react-native';
+import { Image, Text, StyleSheet, View, SafeAreaView,ImageBackground,Dimensions, TouchableOpacity ,LogBox} from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import CustomInput from '../components/CustomInput';
 import image from '../../assets/image/back2.jpeg'
 import Svg from 'react-native-svg';
 import { useFonts, Poppins_300Light } from '@expo-google-fonts/poppins';
 import * as SplashScreen from 'expo-splash-screen';
+LogBox.ignoreAllLogs();
+
 export default function Premio() {
   const [fontsLoaded] = useFonts({
     Poppins_300Light,

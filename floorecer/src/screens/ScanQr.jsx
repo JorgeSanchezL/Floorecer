@@ -1,5 +1,5 @@
 import React, { useContext, useEffect,useState } from 'react';
-import { SafeAreaView, View, Alert, StyleSheet, Text, StatusBar ,TouchableOpacity,Image,Modal} from 'react-native';
+import { SafeAreaView, View, Alert, StyleSheet, Text, StatusBar ,TouchableOpacity,Image,Moda,LogBox} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomButton from '../components/CustomButton';
 import { TextInput } from 'react-native-gesture-handler';
@@ -12,6 +12,7 @@ import { setItemAsync, getItemAsync,
   deleteItemAsync } from 'expo-secure-store';
 import IconCamera from '../../assets/image/IconCamera.png';
 import { useFonts } from 'expo-font';
+LogBox.ignoreAllLogs();
 
 
 var datos = null;

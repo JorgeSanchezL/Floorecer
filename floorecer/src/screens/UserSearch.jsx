@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import { View,Text,StyleSheet,TouchableOpacity,Image  ,FlatList,TextInput,ActivityIndicator,ImageBackground,Dimensions,Keyboard} from "react-native";
+import { View,Text,StyleSheet,TouchableOpacity,Image  ,FlatList,TextInput,ActivityIndicator,ImageBackground,Dimensions,Keyboard,LogBox} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import user from '../../assets/image/user.png';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import buscadorUs1 from '../../assets/buscarUs1.png';
 import buscadorUs2 from '../../assets/buscarUs2.png';
 import { BACKEND_URL } from '@env';
 import { useFonts } from 'expo-font';
+LogBox.ignoreAllLogs();
 const { width, height } = Dimensions.get('screen');
 const UserSearch = () => {
     const navigation=useNavigation();
@@ -62,7 +63,7 @@ const UserSearch = () => {
           />
         )
       }
-    
+     
       
       const renderEmpty=()=>{
         return(

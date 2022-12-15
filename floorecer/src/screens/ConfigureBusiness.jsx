@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, useWindowDimensions, Dimensions, Alert } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions, Dimensions, Alert,LogBox } from "react-native";
 import FinalButton from '../components/FinalButton';
 import DropDownTimePicker from "../components/DropDownTimePicker";
 import SelectionButton from "../components/SelectionButton";
@@ -13,7 +13,7 @@ import FinalTextInput from '../components/FinalTextInput';
 import { BACKEND_URL } from '@env';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialIcons } from '@expo/vector-icons';
-
+LogBox.ignoreAllLogs();
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 const {width} = Dimensions.get("window");
 const height = width * 0.6;

@@ -1,11 +1,11 @@
 import React from 'react'
 import { SafeAreaView, StyleSheet, View, Text,
-    TouchableOpacity, Alert } from 'react-native';
+    TouchableOpacity, Alert ,LogBox} from 'react-native';
 import { useForm } from 'react-hook-form';
 import { BACKEND_URL } from '@env';
 import FocusAwareStatusBar from '../components/FocusAwareStatusBar';
 import CustomTextInput from '../components/CustomTextInput';
-
+LogBox.ignoreAllLogs();
 const Payment = ({ navigation, route }) => {
     const { plan } = route.params;
 

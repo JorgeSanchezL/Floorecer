@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, StyleSheet, Alert,
   useWindowDimensions, Dimensions, Image, TouchableOpacity,
-  Modal } from "react-native";
+  Modal,LogBox } from "react-native";
 import FinalButton from '../components/FinalButton';
 import FinalCustomDropDowPicker from '../components/FinalCustomDropDownPiker';
 import FinalTextInput from '../components/FinalTextInput';
@@ -14,7 +14,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { BACKEND_URL } from '@env';
 import dots from '../../assets/dotsNewBusiness.png';
-
+LogBox.ignoreAllLogs();
 const diasDeLaSemana = ["Lunes", "Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]
 const {width} = Dimensions.get("window");
 const height = width * 0.6;

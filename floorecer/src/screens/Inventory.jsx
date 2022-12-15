@@ -1,5 +1,5 @@
 import React, { useEffect,useState,useRef } from 'react';
-import { SafeAreaView, View, StyleSheet, Text,Animated,TouchableOpacity,Image,Alert,Dimensions} from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text,Animated,TouchableOpacity,Image,Alert,Dimensions,LogBox} from 'react-native';
 
 import {BACKEND_URL} from '@env';
 import { getItemAsync } from 'expo-secure-store';
@@ -10,7 +10,7 @@ import Lock from '../components/inventory/lockfill'
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 
-
+LogBox.ignoreAllLogs();
 const Inventory = ({navigation,route}) => {
   const{position}=route.params
   const navigation1 = useNavigation();

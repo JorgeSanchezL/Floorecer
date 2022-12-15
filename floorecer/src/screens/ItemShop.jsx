@@ -1,11 +1,14 @@
 import React, { useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Dimensions,TouchableOpacity,ImageBackground,Alert} from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar,Modal,Dimensions,TouchableOpacity,ImageBackground,Alert,LogBox} from 'react-native';
 
 import {BACKEND_URL} from '@env';
 import { getItemAsync } from 'expo-secure-store';
 import itemShop1 from '../../assets/itemShop1.png';
 import ItemsImage from '../components/itemShop/ItemsImage.js';
 import { useNavigation } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
+LogBox.ignoreAllLogs();
+
 const { width, height } = Dimensions.get('screen');
 
 const ItemShop = () => {
@@ -21,6 +24,8 @@ const ItemShop = () => {
     setImagen(!imagen);
 
 }
+
+const isFocused = useIsFocused();
 const getProfile = async () => {
   try {
     const auth0 = JSON.parse(await getItemAsync('auth0'));
@@ -39,7 +44,7 @@ const getProfile = async () => {
   getAllItems();
   getUid();
   getProfile()
-  }, [])
+  }, [isFocused])
 
 const getUid = async () => {
   try {

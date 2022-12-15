@@ -1,5 +1,5 @@
 import React ,{ useEffect, useState } from 'react';
-import { StyleSheet, View, Dimensions, Modal, Text } from 'react-native';
+import { StyleSheet, View, Dimensions, Modal, Text ,LogBox} from 'react-native';
 import { getItemAsync } from 'expo-secure-store';
 import BotonFlor from '../components/BotonFlor';
 import BotonImagen from '../components/BotonImagen'
@@ -12,7 +12,7 @@ import { useFonts } from 'expo-font';
 
 export const width = Dimensions.get('window').width;
 export const height = Dimensions.get('window').height;
-
+LogBox.ignoreAllLogs();
 Date.prototype.addDays = function(days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);

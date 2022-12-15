@@ -1,5 +1,5 @@
 import React, { useContext, useEffect,useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity,Alert} from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar ,TouchableOpacity,Alert,LogBox} from 'react-native';
 var datos = null;
 import { useNavigation } from '@react-navigation/native';
 import { useIsFocused } from "@react-navigation/core";
@@ -8,6 +8,7 @@ import { BACKEND_URL } from '@env';
 import { useFonts } from 'expo-font';
 import Animated, { runOnJS, set, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+LogBox.ignoreAllLogs();
 
 const MyShops = () => {
   const [fontLoaded] = useFonts({
